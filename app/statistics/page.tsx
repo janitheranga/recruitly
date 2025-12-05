@@ -248,7 +248,7 @@ export default function StatisticsPage() {
       {/* Chart */}
       <Card>
         <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="text-base sm:text-lg md:text-xl break-words">
+          <CardTitle className="text-base sm:text-lg md:text-xl wrap-break-word">
             Applicant Trends - {jobStatus} Jobs
             {durationType === "custom" &&
               customStartDate &&

@@ -167,9 +167,9 @@ export default function HomePage() {
                   y="50%"
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="text-4xl font-bold fill-foreground"
+                  className="text-4xl font-bold"
                   onClick={() => setJobChartCenter("total")}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", fill: "var(--color-foreground)" }}
                 >
                   {getJobCenterText()}
                 </text>
@@ -226,9 +226,9 @@ export default function HomePage() {
                   y="50%"
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  className="text-4xl font-bold fill-foreground"
+                  className="text-4xl font-bold"
                   onClick={() => setApplicantChartCenter("total")}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", fill: "var(--color-foreground)" }}
                 >
                   {getApplicantCenterText()}
                 </text>
