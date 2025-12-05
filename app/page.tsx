@@ -1,65 +1,289 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+import { mockJobs, mockApplicants, mockApplicantData } from "@/lib/data";
+
+type ChartClickType = "total" | "active" | "closed";
+type ApplicantChartClickType = "total" | "top" | "potential" | "under";
+
+const COLORS = {
+  active: "#3b82f6",
+  closed: "#6366f1",
+  topPerformer: "#22c55e",
+  potential: "#eab308",
+  underPerformer: "#ef4444",
+};
+
+export default function HomePage() {
+  const [jobChartCenter, setJobChartCenter] = useState<ChartClickType>("total");
+  const [applicantChartCenter, setApplicantChartCenter] =
+    useState<ApplicantChartClickType>("total");
+
+  // Calculate job counts
+  const activeJobs = mockJobs.filter((job) => job.status === "Active").length;
+  const closedJobs = mockJobs.filter((job) => job.status === "Closed").length;
+  const totalJobs = mockJobs.length;
+
+  const jobData = [
+    { name: "Active", value: activeJobs, color: COLORS.active },
+    { name: "Closed", value: closedJobs, color: COLORS.closed },
+  ];
+
+  // Calculate applicant counts
+  const topPerformers = mockApplicants.filter(
+    (app) => app.jobMatch === "Top Performer"
+  ).length;
+  const potential = mockApplicants.filter(
+    (app) => app.jobMatch === "Potential"
+  ).length;
+  const underPerformers = mockApplicants.filter(
+    (app) => app.jobMatch === "Under Performer"
+  ).length;
+  const totalApplicants = mockApplicants.length;
+
+  const applicantData = [
+    {
+      name: "Top Performers",
+      value: topPerformers,
+      color: COLORS.topPerformer,
+    },
+    { name: "Potential", value: potential, color: COLORS.potential },
+    {
+      name: "Under Performers",
+      value: underPerformers,
+      color: COLORS.underPerformer,
+    },
+  ];
+
+  // Get job center text
+  const getJobCenterText = () => {
+    switch (jobChartCenter) {
+      case "active":
+        return activeJobs;
+      case "closed":
+        return closedJobs;
+      default:
+        return totalJobs;
+    }
+  };
+
+  // Get applicant center text
+  const getApplicantCenterText = () => {
+    switch (applicantChartCenter) {
+      case "top":
+        return topPerformers;
+      case "potential":
+        return potential;
+      case "under":
+        return underPerformers;
+      default:
+        return totalApplicants;
+    }
+  };
+
+  // Prepare line chart data (last 7 days)
+  const last7Days = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i));
+    return date;
+  });
+
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  const activeJobIds = mockJobs
+    .filter((job) => job.status === "Active")
+    .map((job) => job.id);
+
+  const lineChartData = last7Days.map((date) => {
+    const dayName = dayNames[date.getDay()];
+    const dataPoint: any = { day: dayName };
+
+    activeJobIds.forEach((jobId) => {
+      const job = mockJobs.find((j) => j.id === jobId);
+      const applicantsForDay = mockApplicantData.filter(
+        (data) =>
+          data.jobId === jobId &&
+          data.date.toDateString() === date.toDateString()
+      );
+
+      const count = applicantsForDay.reduce((sum, item) => sum + item.count, 0);
+      if (job) {
+        dataPoint[job.title] = count;
+      }
+    });
+
+    return dataPoint;
+  });
+
+  const lineColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="space-y-6">
+      <h1 className="text-3xl font-bold">Dashboard</h1>
+
+      {/* Doughnut Charts Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Job Count Chart */}
+        <Card className="bg-transparent">
+          <CardHeader>
+            <CardTitle>Job Status</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={jobData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={80}
+                  outerRadius={120}
+                  dataKey="value"
+                  onClick={(_, index) => {
+                    if (index === 0) setJobChartCenter("active");
+                    else if (index === 1) setJobChartCenter("closed");
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {jobData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="text-4xl font-bold fill-foreground"
+                  onClick={() => setJobChartCenter("total")}
+                  style={{ cursor: "pointer" }}
+                >
+                  {getJobCenterText()}
+                </text>
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="flex justify-center gap-4 mt-4">
+              {jobData.map((entry, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: entry.color }}
+                  />
+                  <span className="text-sm">
+                    {entry.name}: {entry.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Applicant Count Chart */}
+        <Card className="bg-transparent">
+          <CardHeader>
+            <CardTitle>Applicant Performance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={applicantData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={80}
+                  outerRadius={120}
+                  dataKey="value"
+                  onClick={(_, index) => {
+                    if (index === 0) setApplicantChartCenter("top");
+                    else if (index === 1) setApplicantChartCenter("potential");
+                    else if (index === 2) setApplicantChartCenter("under");
+                  }}
+                  style={{ cursor: "pointer" }}
+                >
+                  {applicantData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <text
+                  x="50%"
+                  y="50%"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="text-4xl font-bold fill-foreground"
+                  onClick={() => setApplicantChartCenter("total")}
+                  style={{ cursor: "pointer" }}
+                >
+                  {getApplicantCenterText()}
+                </text>
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="flex flex-col gap-2 mt-4">
+              {applicantData.map((entry, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: entry.color }}
+                  />
+                  <span className="text-sm">
+                    {entry.name}: {entry.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Line Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Weekly Applicant Trends</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={lineChartData}>
+              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+              <XAxis dataKey="day" className="text-xs" />
+              <YAxis className="text-xs" />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "hsl(var(--card))",
+                  border: "1px solid hsl(var(--border))",
+                  borderRadius: "0.75rem",
+                }}
+              />
+              <Legend />
+              {activeJobIds.map((jobId, index) => {
+                const job = mockJobs.find((j) => j.id === jobId);
+                return job ? (
+                  <Line
+                    key={jobId}
+                    type="monotone"
+                    dataKey={job.title}
+                    stroke={lineColors[index % lineColors.length]}
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                ) : null;
+              })}
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
     </div>
   );
 }

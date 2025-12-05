@@ -1,36 +1,171 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Recruitly - Applicant Tracking System
 
-## Getting Started
+A modern, feature-rich recruiter platform built with Next.js 16, React 19, TypeScript, and shadcn/ui components. Track and review job applicants with interactive dashboards, data visualizations, and comprehensive applicant management.
 
-First, run the development server:
+## ✨ Features
 
+### 🎨 Modern UI/UX
+- **Clean Design**: Built with shadcn/ui components for a professional look
+- **Dark/Light Mode**: Full theme support with smooth transitions
+- **Semi-Rounded Corners**: Consistent design language across all elements (cards, tables, buttons, sections)
+- **Responsive Layout**: Mobile-first design that works on all devices
+
+### 📊 Dashboard (Home Page)
+- **Interactive Doughnut Charts**:
+  - Job Status Chart: View Active vs Closed jobs
+  - Applicant Performance Chart: Top Performers, Potential, Under Performers
+  - Click chart segments to display specific counts in center
+  - Click center to return to total count
+- **Weekly Applicant Trends**:
+  - Line chart showing applicant trends for active jobs
+  - Color-coded lines for each job
+  - Interactive tooltips with daily/weekly counts
+  - Automatic data point visualization
+
+### 💼 Jobs Management
+- **Job Table**: Paginated table with Job ID, Title, Description, and Status
+- **Create New Job**: Modal form to add new job postings
+- **Status Badges**: Visual indicators for Active/Closed jobs
+- **Form Controls**: Clear, Cancel, and Submit actions
+
+### 📈 Applicants Statistics
+- **Dynamic Filters**:
+  - Filter by Job Status (Active/Closed)
+  - Duration options: Last 30 Days or Custom Date Range
+  - Default: Active jobs from last 30 days
+- **Adaptive Chart Display**:
+  - Week-based view for durations > 7 days
+  - Day-based view for shorter durations
+  - Automatic Y-axis scaling based on data
+  - Multi-line charts for comparing different jobs
+
+### 👥 Explore Applicants
+- **Applicant Table**: 
+  - Paginated list with ID, Name, Email, Job Match status
+  - Color-coded pill-shaped badges for performance levels
+  - Quick View action to see details
+- **Individual Applicant Details**:
+  - Comprehensive applicant information
+  - Years of Experience (multi-line display)
+  - Notable Qualifications (multi-line display)
+  - Notable Work Experience (multi-line display)
+  - Job Match status with visual indicators
+  - Approve/Decline actions with status tracking
+
+### 🧭 Navigation
+- **Fixed Header**:
+  - Logo in left corner
+  - Search bar in middle (for future section search)
+  - Theme toggle button
+  - Profile dropdown menu
+- **Side Navbar**:
+  - Always visible with icon + text buttons
+  - Home, Jobs, Applicants Statistics, Explore Applicants Data
+  - Active state highlighting
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 20+ 
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Run the development server:
+```bash
+pnpm dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Build for Production
 
-## Learn More
+```bash
+pnpm build
+pnpm start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **UI Library**: React 19
+- **Styling**: Tailwind CSS v4
+- **Components**: shadcn/ui (Radix UI primitives)
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **Theme**: next-themes
+- **Date Utilities**: date-fns
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Project Structure
 
-## Deploy on Vercel
+```
+recruitly/
+├── app/
+│   ├── applicants/
+│   │   ├── [id]/page.tsx          # Individual applicant detail page
+│   │   └── page.tsx               # Applicants list page
+│   ├── jobs/page.tsx              # Jobs management page
+│   ├── statistics/page.tsx        # Statistics and filtering page
+│   ├── globals.css                # Global styles and theme
+│   ├── layout.tsx                 # Root layout
+│   └── page.tsx                   # Home/Dashboard page
+├── components/
+│   ├── ui/                        # shadcn/ui components
+│   ├── app-layout.tsx             # Main layout with header & sidebar
+│   └── theme-provider.tsx         # Theme provider wrapper
+├── lib/
+│   ├── data.ts                    # Mock data and helper functions
+│   ├── types.ts                   # TypeScript type definitions
+│   └── utils.ts                   # Utility functions
+└── public/                        # Static assets
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Key Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Interactive Charts
+- **Doughnut Charts**: Click segments to update center display
+- **Line Charts**: Hover over data points for detailed tooltips
+- **Responsive**: Charts adapt to container size
+- **Color Coded**: Consistent color scheme across all visualizations
+
+### Performance Badges
+- 🟢 **Top Performer**: Green badge
+- 🟡 **Potential**: Yellow badge
+- 🔴 **Under Performer**: Red badge
+
+### Status Management
+- Jobs: Active (green) / Closed (gray)
+- Applicants: Pending / Approved (green) / Declined (red)
+
+## 🎨 Design System
+
+### Color Palette
+- **Primary**: Blue (#3b82f6)
+- **Success**: Green (#22c55e)
+- **Warning**: Yellow (#eab308)
+- **Danger**: Red (#ef4444)
+
+### Typography
+- **Font**: Inter (Google Fonts)
+- **Borders**: Semi-rounded (0.75rem - 1rem)
+
+## 📝 Future Enhancements
+
+- Real backend API integration
+- User authentication
+- Advanced search functionality
+- Export data to CSV/PDF
+- Resume file upload and viewing
+- Email notifications
+- Calendar integration for interviews
+
+---
+
+Built with ❤️ using modern web technologies.
