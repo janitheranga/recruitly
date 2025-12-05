@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea"; // Corrected import path
 import { Plus } from "lucide-react";
 import { mockJobs } from "@/lib/data";
 import { Job } from "@/lib/types";
@@ -48,6 +48,16 @@ export default function JobsPage() {
     setJobs([...jobs, newJob]);
     handleClear();
     setIsDialogOpen(false);
+  };
+
+  const handleToggleStatus = (jobId: string) => {
+    setJobs((prev) =>
+      prev.map((job) =>
+        job.id === jobId
+          ? { ...job, status: job.status === "Active" ? "Closed" : "Active" }
+          : job
+      )
+    );
   };
 
   const handleClear = () => {
@@ -143,6 +153,7 @@ export default function JobsPage() {
                   Job Description
                 </TableHead>
                 <TableHead>Job Status</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -160,11 +171,22 @@ export default function JobsPage() {
                       className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                         job.status === "Active"
                           ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-400"
+                          : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
                       }`}
                     >
                       {job.status}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <label className="relative inline-flex items-center gap-2 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={job.status === "Active"}
+                        onChange={() => handleToggleStatus(job.id)}
+                        className="peer h-5 w-9 appearance-none rounded-full bg-gray-300 transition-colors duration-200 checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                      />
+                      <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
+                    </label>
                   </TableCell>
                 </TableRow>
               ))}
