@@ -67,7 +67,10 @@ export default function JobsPage() {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button size="lg" className="w-full sm:w-auto">
+          <Button
+            size="lg"
+            className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-900"
+          >
             <Plus className="mr-2 h-5 w-5" />
             Create New Job
           </Button>
@@ -104,17 +107,24 @@ export default function JobsPage() {
               </div>
             </div>
             <DialogFooter className="gap-2">
-              <Button type="button" variant="outline" onClick={handleClear}>
+              <Button
+                type="button"
+                className="bg-amber-50 hover:bg-amber-100 text-amber-900"
+                onClick={handleClear}
+              >
                 Clear
               </Button>
               <Button
                 type="button"
-                variant="outline"
+                className="bg-red-50 hover:bg-red-100 text-red-900"
                 onClick={() => setIsDialogOpen(false)}
               >
                 Cancel
               </Button>
-              <Button type="submit" variant="outline">
+              <Button
+                type="submit"
+                className="bg-blue-50 hover:bg-blue-100 text-blue-900"
+              >
                 Submit
               </Button>
             </DialogFooter>

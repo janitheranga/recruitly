@@ -18,6 +18,10 @@ export default function ApplicantDetailPage() {
   const [status, setStatus] = useState<"pending" | "approved" | "declined">(
     "pending"
   );
+  const [pendingAction, setPendingAction] = useState<
+    "approve" | "decline" | null
+  >(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   if (!applicant) {
     return (
@@ -56,13 +60,28 @@ export default function ApplicantDetailPage() {
   };
 
   const handleApprove = () => {
-    setStatus("approved");
-    // In a real app, this would make an API call
+    setPendingAction("approve");
   };
 
   const handleDecline = () => {
-    setStatus("declined");
+    setPendingAction("decline");
+  };
+
+  const handleConfirm = () => {
+    if (pendingAction === "approve") {
+      setStatus("approved");
+    } else if (pendingAction === "decline") {
+      setStatus("declined");
+    }
+    setIsConfirmed(true);
+    setPendingAction(null);
     // In a real app, this would make an API call
+  };
+
+  const handleReset = () => {
+    setStatus("pending");
+    setPendingAction(null);
+    setIsConfirmed(false);
   };
 
   return (
@@ -150,9 +169,12 @@ export default function ApplicantDetailPage() {
               </div>
             </div>
 
-            {status === "pending" && (
+            {status === "pending" && !pendingAction && (
               <div className="flex gap-2 pt-4">
-                <Button onClick={handleApprove} className="flex-1 bg-green-200 hover:bg-green-300 text-green-900">
+                <Button
+                  onClick={handleApprove}
+                  className="flex-1 bg-green-200 hover:bg-green-300 text-green-900"
+                >
                   <Check className="mr-2 h-4 w-4" />
                   Approve
                 </Button>
@@ -167,10 +189,28 @@ export default function ApplicantDetailPage() {
               </div>
             )}
 
-            {status !== "pending" && (
+            {pendingAction && (
+              <div className="space-y-2 pt-4">
+                <Button
+                  onClick={handleConfirm}
+                  className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900"
+                >
+                  Confirm {pendingAction === "approve" ? "Approval" : "Decline"}
+                </Button>
+                <Button
+                  onClick={() => setPendingAction(null)}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Reset Status
+                </Button>
+              </div>
+            )}
+
+            {status !== "pending" && !pendingAction && !isConfirmed && (
               <div className="pt-4">
                 <Button
-                  onClick={() => setStatus("pending")}
+                  onClick={handleReset}
                   variant="outline"
                   className="w-full"
                 >

@@ -158,18 +158,24 @@ export default function StatisticsPage() {
             <Label className="text-sm">Job Status</Label>
             <div className="flex gap-2">
               <Button
-                variant={jobStatus === "Active" ? "outline" : "default"}
                 onClick={() => setJobStatus("Active")}
                 size="sm"
-                className="flex-1 sm:flex-initial"
+                className={`flex-1 sm:flex-initial ${
+                  jobStatus === "Active"
+                    ? "bg-green-50 hover:bg-green-100 text-green-900"
+                    : ""
+                }`}
               >
                 Active
               </Button>
               <Button
-                variant={jobStatus === "Closed" ? "outline" : "default"}
                 onClick={() => setJobStatus("Closed")}
                 size="sm"
-                className="flex-1 sm:flex-initial"
+                className={`flex-1 sm:flex-initial ${
+                  jobStatus === "Closed"
+                    ? "bg-red-50 hover:bg-red-100 text-red-900"
+                    : ""
+                }`}
               >
                 Closed
               </Button>
@@ -180,10 +186,13 @@ export default function StatisticsPage() {
             <Label className="text-sm">Duration</Label>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button
-                variant={durationType === "30days" ? "outline" : "default"}
                 onClick={() => setDurationType("30days")}
                 size="sm"
-                className="w-full sm:w-auto"
+                className={`w-full sm:w-auto ${
+                  durationType === "30days"
+                    ? "bg-amber-50 hover:bg-amber-100 text-amber-900"
+                    : ""
+                }`}
               >
                 Last 30 Days
               </Button>
@@ -193,9 +202,12 @@ export default function StatisticsPage() {
               >
                 <DialogTrigger asChild>
                   <Button
-                    variant={durationType === "custom" ? "outline" : "default"}
                     size="sm"
-                    className="w-full sm:w-auto"
+                    className={`w-full sm:w-auto ${
+                      durationType === "custom"
+                        ? "bg-blue-50 hover:bg-blue-100 text-blue-900"
+                        : ""
+                    }`}
                   >
                     <Calendar className="mr-2 h-4 w-4" />
                     Custom
@@ -231,12 +243,15 @@ export default function StatisticsPage() {
                   <DialogFooter>
                     <Button
                       type="button"
-                      variant="outline"
+                      className="bg-red-50 hover:bg-red-100 text-red-900"
                       onClick={() => setIsCustomDialogOpen(false)}
                     >
                       Cancel
                     </Button>
-                    <Button onClick={handleApplyCustomRange} variant="outline">
+                    <Button
+                      onClick={handleApplyCustomRange}
+                      className="bg-blue-50 hover:bg-blue-100 text-blue-900"
+                    >
                       Apply
                     </Button>
                   </DialogFooter>

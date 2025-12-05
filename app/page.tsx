@@ -21,8 +21,8 @@ type ChartClickType = "total" | "active" | "closed";
 type ApplicantChartClickType = "total" | "top" | "potential" | "under";
 
 const COLORS = {
-  active: "#3b82f6",
-  closed: "#6366f1",
+  active: "#22c55e",
+  closed: "#ef4444",
   topPerformer: "#22c55e",
   potential: "#eab308",
   underPerformer: "#ef4444",
