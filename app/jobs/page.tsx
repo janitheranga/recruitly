@@ -183,7 +183,7 @@ export default function JobsPage() {
                         type="checkbox"
                         checked={job.status === "Active"}
                         onChange={() => handleToggleStatus(job.id)}
-                        className="peer h-5 w-9 appearance-none rounded-full bg-gray-300 transition-colors duration-200 checked:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                        className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                       />
                       <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
                     </label>
