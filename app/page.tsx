@@ -156,10 +156,14 @@ export default function HomePage() {
                     if (index === 0) setJobChartCenter("active");
                     else if (index === 1) setJobChartCenter("closed");
                   }}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", outline: "none" }}
                 >
                   {jobData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.color}
+                      stroke="none"
+                    />
                   ))}
                 </Pie>
                 <text
@@ -169,7 +173,11 @@ export default function HomePage() {
                   dominantBaseline="middle"
                   className="text-4xl font-bold"
                   onClick={() => setJobChartCenter("total")}
-                  style={{ cursor: "pointer", fill: "var(--color-foreground)" }}
+                  style={{
+                    cursor: "pointer",
+                    fill: "var(--color-foreground)",
+                    outline: "none",
+                  }}
                 >
                   {getJobCenterText()}
                 </text>
@@ -215,10 +223,14 @@ export default function HomePage() {
                     else if (index === 1) setApplicantChartCenter("potential");
                     else if (index === 2) setApplicantChartCenter("under");
                   }}
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: "pointer", outline: "none" }}
                 >
                   {applicantData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.color}
+                      stroke="none"
+                    />
                   ))}
                 </Pie>
                 <text
@@ -228,7 +240,11 @@ export default function HomePage() {
                   dominantBaseline="middle"
                   className="text-4xl font-bold"
                   onClick={() => setApplicantChartCenter("total")}
-                  style={{ cursor: "pointer", fill: "var(--color-foreground)" }}
+                  style={{
+                    cursor: "pointer",
+                    fill: "var(--color-foreground)",
+                    outline: "none",
+                  }}
                 >
                   {getApplicantCenterText()}
                 </text>

@@ -51,4 +51,6 @@
   --font-sans: var(--font-inter);
 }
 
-
+.recharts-surface {
+  outline: none !important;
+}
