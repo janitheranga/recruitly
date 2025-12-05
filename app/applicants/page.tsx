@@ -15,7 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Eye } from "lucide-react";
 import { mockApplicants } from "@/lib/data";
-import { JobMatchLevel } from "@/lib/types";
+import { JobMatchLevel, ApplicationStatus } from "@/lib/types";
 
 export default function ApplicantsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,6 +44,20 @@ export default function ApplicantsPage() {
     }
   };
 
+  // Get badge variant based on application status
+  const getStatusBadgeVariant = (status: ApplicationStatus) => {
+    switch (status) {
+      case "Approved":
+        return "success";
+      case "Pending Review":
+        return "warning";
+      case "Rejected":
+        return "danger";
+      default:
+        return "default";
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6">
       <h1 className="text-2xl sm:text-3xl font-bold">Job Applicant Data</h1>
@@ -57,6 +71,7 @@ export default function ApplicantsPage() {
                 <TableHead>Name</TableHead>
                 <TableHead className="hidden md:table-cell">Email</TableHead>
                 <TableHead>Job Match</TableHead>
+                <TableHead>Application Status</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
@@ -71,6 +86,15 @@ export default function ApplicantsPage() {
                   <TableCell>
                     <Badge variant={getMatchBadgeVariant(applicant.jobMatch)}>
                       {applicant.jobMatch}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Badge
+                      variant={getStatusBadgeVariant(
+                        applicant.applicationStatus
+                      )}
+                    >
+                      {applicant.applicationStatus}
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
@@ -97,6 +121,7 @@ export default function ApplicantsPage() {
         <div className="flex items-center justify-center gap-2">
           <Button
             variant="outline"
+            className="cursor-pointer"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
           >
@@ -107,6 +132,7 @@ export default function ApplicantsPage() {
           </span>
           <Button
             variant="outline"
+            className="cursor-pointer"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }

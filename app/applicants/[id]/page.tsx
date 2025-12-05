@@ -28,7 +28,7 @@ export default function ApplicantDetailPage() {
       <div className="space-y-6">
         <div className="flex items-center gap-4">
           <Link href="/applicants">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="cursor-pointer">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
@@ -88,7 +88,7 @@ export default function ApplicantDetailPage() {
     <div className="space-y-4 sm:space-y-6">
       <div className="flex items-center gap-2 sm:gap-4">
         <Link href="/applicants">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" className="cursor-pointer">
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
@@ -152,7 +152,7 @@ export default function ApplicantDetailPage() {
               </label>
               <div className="mt-2">
                 {status === "pending" && (
-                  <Badge variant="outline" className="text-sm px-3 py-1">
+                  <Badge variant="warning" className="text-sm px-3 py-1">
                     Pending Review
                   </Badge>
                 )}
@@ -163,7 +163,7 @@ export default function ApplicantDetailPage() {
                 )}
                 {status === "declined" && (
                   <Badge variant="danger" className="text-sm px-3 py-1">
-                    Declined
+                    Rejected
                   </Badge>
                 )}
               </div>
@@ -173,7 +173,7 @@ export default function ApplicantDetailPage() {
               <div className="flex gap-2 pt-4">
                 <Button
                   onClick={handleApprove}
-                  className="flex-1 bg-green-200 hover:bg-green-300 text-green-900"
+                  className="flex-1 bg-green-200 hover:bg-green-300 text-green-900 cursor-pointer"
                 >
                   <Check className="mr-2 h-4 w-4" />
                   Approve
@@ -181,10 +181,10 @@ export default function ApplicantDetailPage() {
                 <Button
                   onClick={handleDecline}
                   variant="destructive"
-                  className="flex-1 bg-red-200 hover:bg-red-300 text-red-900"
+                  className="flex-1 bg-red-200 hover:bg-red-300 text-red-900 cursor-pointer"
                 >
                   <X className="mr-2 h-4 w-4" />
-                  Decline
+                  Reject
                 </Button>
               </div>
             )}
@@ -193,14 +193,14 @@ export default function ApplicantDetailPage() {
               <div className="space-y-2 pt-4">
                 <Button
                   onClick={handleConfirm}
-                  className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900"
+                  className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
                 >
                   Confirm {pendingAction === "approve" ? "Approval" : "Decline"}
                 </Button>
                 <Button
                   onClick={() => setPendingAction(null)}
                   variant="outline"
-                  className="w-full"
+                  className="w-full cursor-pointer"
                 >
                   Reset Status
                 </Button>
@@ -212,7 +212,7 @@ export default function ApplicantDetailPage() {
                 <Button
                   onClick={handleReset}
                   variant="outline"
-                  className="w-full"
+                  className="w-full cursor-pointer"
                 >
                   Reset Status
                 </Button>

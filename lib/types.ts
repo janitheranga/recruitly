@@ -2,6 +2,8 @@ export type JobStatus = "Active" | "Closed";
 
 export type JobMatchLevel = "Top Performer" | "Potential" | "Under Performer";
 
+export type ApplicationStatus = "Pending Review" | "Approved" | "Rejected";
+
 export interface Job {
   id: string;
   title: string;
@@ -15,6 +17,7 @@ export interface Applicant {
   email: string;
   jobId: string;
   jobMatch: JobMatchLevel;
+  applicationStatus: ApplicationStatus;
   yearsOfExperience: string;
   notableQualifications: string;
   notableWorkExperience: string;

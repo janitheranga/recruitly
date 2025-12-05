@@ -44,9 +44,12 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background" style={{
-        backgroundColor: "var(--color-background)"
-    }}>
+    <div
+      className="min-h-screen bg-background"
+      style={{
+        backgroundColor: "var(--color-background)",
+      }}
+    >
       {/* Header - Full Width */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
         <div className="flex h-16 items-center justify-between px-4 sm:px-6 gap-2 sm:gap-4">
@@ -56,7 +59,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="lg:hidden cursor-pointer"
               onClick={() => setSidebarOpen(!sidebarOpen)}
             >
               {sidebarOpen ? (
@@ -91,6 +94,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             <Button
               variant="ghost"
               size="icon"
+              className="cursor-pointer"
               onClick={() =>
                 setTheme(resolvedTheme === "dark" ? "light" : "dark")
               }
@@ -107,7 +111,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="cursor-pointer">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>

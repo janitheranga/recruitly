@@ -61,12 +61,14 @@ export const mockJobs: Job[] = [
 
 // Mock Applicants
 export const mockApplicants: Applicant[] = [
+  // ...existing 12 applicants...
   {
     id: "APP-001",
     name: "John Smith",
     email: "john.smith@example.com",
     jobId: "JOB-001",
     jobMatch: "Top Performer",
+    applicationStatus: "Approved",
     yearsOfExperience:
       "7 years in frontend development\n5 years with React\n3 years with TypeScript",
     notableQualifications:
@@ -81,6 +83,7 @@ export const mockApplicants: Applicant[] = [
     email: "sarah.johnson@example.com",
     jobId: "JOB-001",
     jobMatch: "Potential",
+    applicationStatus: "Pending Review",
     yearsOfExperience:
       "4 years in web development\n2 years with React\n1 year with TypeScript",
     notableQualifications:
@@ -95,6 +98,7 @@ export const mockApplicants: Applicant[] = [
     email: "michael.brown@example.com",
     jobId: "JOB-002",
     jobMatch: "Top Performer",
+    applicationStatus: "Approved",
     yearsOfExperience:
       "8 years in backend development\n6 years with Node.js\n4 years with microservices",
     notableQualifications:
@@ -109,6 +113,7 @@ export const mockApplicants: Applicant[] = [
     email: "emily.davis@example.com",
     jobId: "JOB-002",
     jobMatch: "Under Performer",
+    applicationStatus: "Pending Review",
     yearsOfExperience: "2 years in backend development\n1 year with Node.js",
     notableQualifications: "Bachelor's in Information Technology",
     notableWorkExperience: "Junior Backend Developer at StartupCo (2022-2024)",
@@ -120,6 +125,7 @@ export const mockApplicants: Applicant[] = [
     email: "david.wilson@example.com",
     jobId: "JOB-003",
     jobMatch: "Top Performer",
+    applicationStatus: "Approved",
     yearsOfExperience:
       "6 years full stack development\n4 years with React and Node.js\n3 years with AWS",
     notableQualifications:
@@ -134,6 +140,7 @@ export const mockApplicants: Applicant[] = [
     email: "lisa.anderson@example.com",
     jobId: "JOB-003",
     jobMatch: "Potential",
+    applicationStatus: "Pending Review",
     yearsOfExperience:
       "3 years full stack development\n2 years with React\n2 years with Express.js",
     notableQualifications:
@@ -147,6 +154,7 @@ export const mockApplicants: Applicant[] = [
     email: "james.martinez@example.com",
     jobId: "JOB-006",
     jobMatch: "Top Performer",
+    applicationStatus: "Approved",
     yearsOfExperience:
       "5 years in data science\n4 years with Python and ML\n3 years with TensorFlow",
     notableQualifications:
@@ -161,6 +169,7 @@ export const mockApplicants: Applicant[] = [
     email: "jennifer.taylor@example.com",
     jobId: "JOB-006",
     jobMatch: "Under Performer",
+    applicationStatus: "Pending Review",
     yearsOfExperience: "1 year in data analysis\n6 months with Python",
     notableQualifications: "Bachelor's in Statistics",
     notableWorkExperience: "Junior Data Analyst at Analytics Inc (2023-2024)",
@@ -172,6 +181,7 @@ export const mockApplicants: Applicant[] = [
     email: "robert.thomas@example.com",
     jobId: "JOB-007",
     jobMatch: "Potential",
+    applicationStatus: "Pending Review",
     yearsOfExperience:
       "4 years in product management\n2 years in agile environments",
     notableQualifications:
@@ -186,6 +196,7 @@ export const mockApplicants: Applicant[] = [
     email: "amanda.white@example.com",
     jobId: "JOB-007",
     jobMatch: "Top Performer",
+    applicationStatus: "Approved",
     yearsOfExperience:
       "7 years in product management\n5 years leading product teams\n3 years in SaaS",
     notableQualifications:
@@ -200,6 +211,7 @@ export const mockApplicants: Applicant[] = [
     email: "chris.harris@example.com",
     jobId: "JOB-001",
     jobMatch: "Under Performer",
+    applicationStatus: "Pending Review",
     yearsOfExperience: "1.5 years in web development\n8 months with React",
     notableQualifications: "Bootcamp Graduate\nFreeCodeCamp Certified",
     notableWorkExperience: "Junior Developer at WebAgency (2023-2024)",
@@ -211,6 +223,7 @@ export const mockApplicants: Applicant[] = [
     email: "patricia.clark@example.com",
     jobId: "JOB-002",
     jobMatch: "Potential",
+    applicationStatus: "Pending Review",
     yearsOfExperience:
       "3.5 years in backend development\n2 years with Node.js and Express\n1 year with PostgreSQL",
     notableQualifications:

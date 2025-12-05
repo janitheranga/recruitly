@@ -278,9 +278,9 @@ export default function HomePage() {
           <ResponsiveContainer
             width="100%"
             height={300}
-            className="sm:h-[400px]"
+            className="sm:h-[400px] cursor-pointer"
           >
-            <LineChart data={lineChartData}>
+            <LineChart data={lineChartData} style={{ cursor: "pointer" }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis dataKey="day" className="text-xs" />
               <YAxis className="text-xs" />

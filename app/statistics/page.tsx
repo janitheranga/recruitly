@@ -160,7 +160,7 @@ export default function StatisticsPage() {
               <Button
                 onClick={() => setJobStatus("Active")}
                 size="sm"
-                className={`flex-1 sm:flex-initial ${
+                className={`cursor-pointer flex-1 sm:flex-initial ${
                   jobStatus === "Active"
                     ? "bg-green-50 hover:bg-green-100 text-green-900"
                     : ""
@@ -171,7 +171,7 @@ export default function StatisticsPage() {
               <Button
                 onClick={() => setJobStatus("Closed")}
                 size="sm"
-                className={`flex-1 sm:flex-initial ${
+                className={`cursor-pointer flex-1 sm:flex-initial ${
                   jobStatus === "Closed"
                     ? "bg-red-50 hover:bg-red-100 text-red-900"
                     : ""
@@ -188,7 +188,7 @@ export default function StatisticsPage() {
               <Button
                 onClick={() => setDurationType("30days")}
                 size="sm"
-                className={`w-full sm:w-auto ${
+                className={`cursor-pointer w-full sm:w-auto ${
                   durationType === "30days"
                     ? "bg-amber-50 hover:bg-amber-100 text-amber-900"
                     : ""
@@ -203,7 +203,7 @@ export default function StatisticsPage() {
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
-                    className={`w-full sm:w-auto ${
+                    className={`cursor-pointer w-full sm:w-auto ${
                       durationType === "custom"
                         ? "bg-blue-50 hover:bg-blue-100 text-blue-900"
                         : ""
@@ -243,14 +243,14 @@ export default function StatisticsPage() {
                   <DialogFooter>
                     <Button
                       type="button"
-                      className="bg-red-50 hover:bg-red-100 text-red-900"
+                      className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-900"
                       onClick={() => setIsCustomDialogOpen(false)}
                     >
                       Cancel
                     </Button>
                     <Button
                       onClick={handleApplyCustomRange}
-                      className="bg-blue-50 hover:bg-blue-100 text-blue-900"
+                      className="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-900"
                     >
                       Apply
                     </Button>
@@ -280,9 +280,9 @@ export default function StatisticsPage() {
           <ResponsiveContainer
             width="100%"
             height={300}
-            className="sm:h-[400px]"
+            className="sm:h-[400px] cursor-pointer"
           >
-            <LineChart data={chartData}>
+            <LineChart data={chartData} style={{ cursor: "pointer" }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis dataKey="period" className="text-xs" />
               <YAxis domain={[0, maxValue]} className="text-xs" />

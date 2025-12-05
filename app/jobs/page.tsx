@@ -79,7 +79,7 @@ export default function JobsPage() {
         <DialogTrigger asChild>
           <Button
             size="lg"
-            className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-900"
+            className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
           >
             <Plus className="mr-2 h-5 w-5" />
             Create New Job
@@ -119,21 +119,21 @@ export default function JobsPage() {
             <DialogFooter className="gap-2">
               <Button
                 type="button"
-                className="bg-amber-50 hover:bg-amber-100 text-amber-900"
+                className="bg-amber-50 hover:bg-amber-100 text-amber-900 cursor-pointer"
                 onClick={handleClear}
               >
                 Clear
               </Button>
               <Button
                 type="button"
-                className="bg-red-50 hover:bg-red-100 text-red-900"
+                className="bg-red-50 hover:bg-red-100 text-red-900 cursor-pointer"
                 onClick={() => setIsDialogOpen(false)}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="bg-blue-50 hover:bg-blue-100 text-blue-900"
+                className="bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
               >
                 Submit
               </Button>
@@ -183,7 +183,7 @@ export default function JobsPage() {
                         type="checkbox"
                         checked={job.status === "Active"}
                         onChange={() => handleToggleStatus(job.id)}
-                        className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                        className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
                       />
                       <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
                     </label>
@@ -200,6 +200,7 @@ export default function JobsPage() {
         <div className="flex items-center justify-center gap-2">
           <Button
             variant="outline"
+            className="cursor-pointer"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
           >
@@ -210,6 +211,7 @@ export default function JobsPage() {
           </span>
           <Button
             variant="outline"
+            className="cursor-pointer"
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
