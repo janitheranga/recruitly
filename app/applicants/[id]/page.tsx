@@ -152,14 +152,14 @@ export default function ApplicantDetailPage() {
 
             {status === "pending" && (
               <div className="flex gap-2 pt-4">
-                <Button onClick={handleApprove} className="flex-1">
+                <Button onClick={handleApprove} className="flex-1 bg-green-200 hover:bg-green-300 text-green-900">
                   <Check className="mr-2 h-4 w-4" />
                   Approve
                 </Button>
                 <Button
                   onClick={handleDecline}
                   variant="destructive"
-                  className="flex-1"
+                  className="flex-1 bg-red-200 hover:bg-red-300 text-red-900"
                 >
                   <X className="mr-2 h-4 w-4" />
                   Decline

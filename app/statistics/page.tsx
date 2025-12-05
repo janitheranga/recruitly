@@ -158,7 +158,7 @@ export default function StatisticsPage() {
             <Label className="text-sm">Job Status</Label>
             <div className="flex gap-2">
               <Button
-                variant={jobStatus === "Active" ? "default" : "outline"}
+                variant={jobStatus === "Active" ? "outline" : "default"}
                 onClick={() => setJobStatus("Active")}
                 size="sm"
                 className="flex-1 sm:flex-initial"
@@ -166,7 +166,7 @@ export default function StatisticsPage() {
                 Active
               </Button>
               <Button
-                variant={jobStatus === "Closed" ? "default" : "outline"}
+                variant={jobStatus === "Closed" ? "outline" : "default"}
                 onClick={() => setJobStatus("Closed")}
                 size="sm"
                 className="flex-1 sm:flex-initial"
@@ -180,7 +180,7 @@ export default function StatisticsPage() {
             <Label className="text-sm">Duration</Label>
             <div className="flex flex-col sm:flex-row gap-2">
               <Button
-                variant={durationType === "30days" ? "default" : "outline"}
+                variant={durationType === "30days" ? "outline" : "default"}
                 onClick={() => setDurationType("30days")}
                 size="sm"
                 className="w-full sm:w-auto"
@@ -193,7 +193,7 @@ export default function StatisticsPage() {
               >
                 <DialogTrigger asChild>
                   <Button
-                    variant={durationType === "custom" ? "default" : "outline"}
+                    variant={durationType === "custom" ? "outline" : "default"}
                     size="sm"
                     className="w-full sm:w-auto"
                   >
@@ -236,7 +236,9 @@ export default function StatisticsPage() {
                     >
                       Cancel
                     </Button>
-                    <Button onClick={handleApplyCustomRange}>Apply</Button>
+                    <Button onClick={handleApplyCustomRange} variant="outline">
+                      Apply
+                    </Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>

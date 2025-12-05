@@ -114,7 +114,9 @@ export default function JobsPage() {
               >
                 Cancel
               </Button>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" variant="outline">
+                Submit
+              </Button>
             </DialogFooter>
           </form>
         </DialogContent>

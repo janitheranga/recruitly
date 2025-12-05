@@ -78,7 +78,7 @@ export default function ApplicantsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-xs sm:text-sm"
+                        className="text-xs text-(--color-primary) sm:text-sm cursor-pointer hover:bg-(--color-primary)/10"
                       >
                         <Eye className="h-4 w-4 mr-2" />
                         View
