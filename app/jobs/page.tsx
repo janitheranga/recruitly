@@ -62,12 +62,12 @@ export default function JobsPage() {
   const totalPages = Math.ceil(jobs.length / jobsPerPage);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Job Data</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold">Job Data</h1>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
-          <Button size="lg" className="w-full md:w-auto">
+          <Button size="lg" className="w-full sm:w-auto">
             <Plus className="mr-2 h-5 w-5" />
             Create New Job
           </Button>
@@ -121,7 +121,7 @@ export default function JobsPage() {
       </Dialog>
 
       <Card>
-        <CardContent className="p-0">
+        <CardContent className="p-0 overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -136,9 +136,11 @@ export default function JobsPage() {
             <TableBody>
               {currentJobs.map((job) => (
                 <TableRow key={job.id}>
-                  <TableCell className="font-medium">{job.id}</TableCell>
-                  <TableCell>{job.title}</TableCell>
-                  <TableCell className="hidden md:table-cell max-w-md truncate">
+                  <TableCell className="font-medium text-sm">
+                    {job.id}
+                  </TableCell>
+                  <TableCell className="text-sm">{job.title}</TableCell>
+                  <TableCell className="hidden md:table-cell max-w-md truncate text-sm">
                     {job.description}
                   </TableCell>
                   <TableCell>

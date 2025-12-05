@@ -66,23 +66,25 @@ export default function ApplicantDetailPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex items-center gap-2 sm:gap-4">
         <Link href="/applicants">
           <Button variant="ghost" size="icon">
             <ArrowLeft className="h-5 w-5" />
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold">Applicant Details</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Applicant Details</h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Basic Information */}
         <Card>
-          <CardHeader>
-            <CardTitle>Basic Information</CardTitle>
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-xl">
+              Basic Information
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
                 Name
@@ -119,10 +121,12 @@ export default function ApplicantDetailPage() {
 
         {/* Status & Actions */}
         <Card>
-          <CardHeader>
-            <CardTitle>Application Status</CardTitle>
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-lg sm:text-xl">
+              Application Status
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
             <div>
               <label className="text-sm font-medium text-muted-foreground">
                 Current Status
@@ -180,11 +184,13 @@ export default function ApplicantDetailPage() {
 
       {/* Experience */}
       <Card>
-        <CardHeader>
-          <CardTitle>Years of Experience</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">
+            Years of Experience
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <pre className="whitespace-pre-wrap text-sm leading-relaxed">
+        <CardContent className="p-4 sm:p-6">
+          <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
             {applicant.yearsOfExperience}
           </pre>
         </CardContent>
@@ -192,11 +198,13 @@ export default function ApplicantDetailPage() {
 
       {/* Qualifications */}
       <Card>
-        <CardHeader>
-          <CardTitle>Notable Qualifications</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">
+            Notable Qualifications
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <pre className="whitespace-pre-wrap text-sm leading-relaxed">
+        <CardContent className="p-4 sm:p-6">
+          <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
             {applicant.notableQualifications}
           </pre>
         </CardContent>
@@ -204,11 +212,13 @@ export default function ApplicantDetailPage() {
 
       {/* Work Experience */}
       <Card>
-        <CardHeader>
-          <CardTitle>Notable Work Experience</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">
+            Notable Work Experience
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <pre className="whitespace-pre-wrap text-sm leading-relaxed">
+        <CardContent className="p-4 sm:p-6">
+          <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
             {applicant.notableWorkExperience}
           </pre>
         </CardContent>

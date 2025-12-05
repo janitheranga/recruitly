@@ -9,6 +9,8 @@ import {
   Moon,
   Sun,
   User,
+  Menu,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,6 +24,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { useState, useEffect } from "react";
 
 const navigation = [
   { name: "Home", href: "/", icon: Home },
@@ -32,40 +35,71 @@ const navigation = [
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-16 items-center px-6 gap-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-              <span className="text-white font-bold text-lg">R</span>
-            </div>
-            <span className="font-bold text-xl hidden sm:inline-block">
-              Recruitly
-            </span>
-          </Link>
+      {/* Header - Full Width */}
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-6 gap-2 sm:gap-4">
+          {/* Left Section: Mobile Menu + Logo */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="lg:hidden"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+              <span className="sr-only">Toggle menu</span>
+            </Button>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-4">
+            {/* Logo */}
+            <Link href="/" className="flex items-center space-x-2">
+              <div className="h-8 w-8 rounded-xl bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+                <span className="text-white font-bold text-lg">R</span>
+              </div>
+              <span className="font-bold text-xl hidden sm:inline-block">
+                Recruitly
+              </span>
+            </Link>
+          </div>
+
+          {/* Center Section: Search Bar */}
+          <div className="flex-1 max-w-md mx-4 hidden md:block">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input placeholder="Search sections..." className="pl-9" />
             </div>
           </div>
 
-          {/* Right side buttons */}
-          <div className="flex items-center gap-2">
+          {/* Right Section: Theme & Profile */}
+          <div className="flex items-center gap-1 sm:gap-2">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() =>
+                setTheme(resolvedTheme === "dark" ? "light" : "dark")
+              }
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              {!mounted ? (
+                <Moon className="h-5 w-5" />
+              ) : resolvedTheme === "dark" ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
               <span className="sr-only">Toggle theme</span>
             </Button>
 
@@ -86,8 +120,21 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       </header>
 
       <div className="flex">
+        {/* Mobile Overlay */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-40 bg-black/50 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         {/* Sidebar */}
-        <aside className="fixed left-0 top-16 z-30 h-[calc(100vh-4rem)] w-64 border-r bg-background">
+        <aside
+          className={cn(
+            "fixed left-0 top-16 z-40 h-[calc(100vh-4rem)] w-64 border-r bg-background transition-transform duration-200 ease-in-out lg:translate-x-0",
+            sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          )}
+        >
           <nav className="flex flex-col gap-1 p-4">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
@@ -95,6 +142,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.name}
                   href={item.href}
+                  onClick={() => setSidebarOpen(false)}
                   className={cn(
                     "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                     isActive
@@ -111,7 +159,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 ml-64 p-6">{children}</main>
+        <main className="flex-1 lg:ml-64 p-4 sm:p-6 w-full min-w-0">
+          <div className="mx-auto max-w-7xl">{children}</div>
+        </main>
       </div>
     </div>
   );

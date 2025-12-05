@@ -143,39 +143,47 @@ export default function StatisticsPage() {
   const lineColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Job Applicant Statistics</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold">
+        Job Applicant Statistics
+      </h1>
 
       {/* Filters */}
       <Card>
-        <CardHeader>
-          <CardTitle>Filters</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Filters</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-4">
-          <div className="flex flex-col gap-2">
-            <Label>Job Status</Label>
+        <CardContent className="flex flex-col sm:flex-row flex-wrap gap-4 p-4 sm:p-6">
+          <div className="flex flex-col gap-2 w-full sm:w-auto">
+            <Label className="text-sm">Job Status</Label>
             <div className="flex gap-2">
               <Button
                 variant={jobStatus === "Active" ? "default" : "outline"}
                 onClick={() => setJobStatus("Active")}
+                size="sm"
+                className="flex-1 sm:flex-initial"
               >
                 Active
               </Button>
               <Button
                 variant={jobStatus === "Closed" ? "default" : "outline"}
                 onClick={() => setJobStatus("Closed")}
+                size="sm"
+                className="flex-1 sm:flex-initial"
               >
                 Closed
               </Button>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <Label>Duration</Label>
-            <div className="flex gap-2">
+          <div className="flex flex-col gap-2 w-full sm:w-auto">
+            <Label className="text-sm">Duration</Label>
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button
                 variant={durationType === "30days" ? "default" : "outline"}
                 onClick={() => setDurationType("30days")}
+                size="sm"
+                className="w-full sm:w-auto"
               >
                 Last 30 Days
               </Button>
@@ -186,9 +194,11 @@ export default function StatisticsPage() {
                 <DialogTrigger asChild>
                   <Button
                     variant={durationType === "custom" ? "default" : "outline"}
+                    size="sm"
+                    className="w-full sm:w-auto"
                   >
                     <Calendar className="mr-2 h-4 w-4" />
-                    Custom Duration
+                    Custom
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
@@ -237,8 +247,8 @@ export default function StatisticsPage() {
 
       {/* Chart */}
       <Card>
-        <CardHeader>
-          <CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-base sm:text-lg md:text-xl break-words">
             Applicant Trends - {jobStatus} Jobs
             {durationType === "custom" &&
               customStartDate &&
@@ -249,8 +259,12 @@ export default function StatisticsPage() {
               )} - ${format(new Date(customEndDate), "MMM dd, yyyy")})`}
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
+        <CardContent className="p-4 sm:p-6">
+          <ResponsiveContainer
+            width="100%"
+            height={300}
+            className="sm:h-[400px]"
+          >
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis dataKey="period" className="text-xs" />

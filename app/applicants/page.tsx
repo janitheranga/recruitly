@@ -45,11 +45,11 @@ export default function ApplicantsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Job Applicant Data</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold">Job Applicant Data</h1>
 
       <Card>
-        <CardContent className="p-0">
+        <CardContent className="p-0 overflow-x-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -75,7 +75,11 @@ export default function ApplicantsPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <Link href={`/applicants/${applicant.id}`}>
-                      <Button variant="ghost" size="sm">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs sm:text-sm"
+                      >
                         <Eye className="h-4 w-4 mr-2" />
                         View
                       </Button>

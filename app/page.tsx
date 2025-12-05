@@ -132,11 +132,11 @@ export default function HomePage() {
   const lineColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Dashboard</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
 
       {/* Doughnut Charts Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Job Count Chart */}
         <Card className="bg-transparent">
           <CardHeader>
@@ -175,9 +175,9 @@ export default function HomePage() {
                 </text>
               </PieChart>
             </ResponsiveContainer>
-            <div className="flex justify-center gap-4 mt-4">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-4">
               {jobData.map((entry, index) => (
-                <div key={index} className="flex items-center gap-2">
+                <div key={index} className="flex items-center gap-2 text-sm">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: entry.color }}
@@ -196,8 +196,12 @@ export default function HomePage() {
           <CardHeader>
             <CardTitle>Applicant Performance</CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="p-4 sm:p-6">
+            <ResponsiveContainer
+              width="100%"
+              height={250}
+              className="sm:h-[300px]"
+            >
               <PieChart>
                 <Pie
                   data={applicantData}
@@ -232,7 +236,7 @@ export default function HomePage() {
             </ResponsiveContainer>
             <div className="flex flex-col gap-2 mt-4">
               {applicantData.map((entry, index) => (
-                <div key={index} className="flex items-center gap-2">
+                <div key={index} className="flex items-center gap-2 text-sm">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: entry.color }}
@@ -249,11 +253,17 @@ export default function HomePage() {
 
       {/* Line Chart */}
       <Card>
-        <CardHeader>
-          <CardTitle>Weekly Applicant Trends</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">
+            Weekly Applicant Trends
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
+        <CardContent className="p-4 sm:p-6">
+          <ResponsiveContainer
+            width="100%"
+            height={300}
+            className="sm:h-[400px]"
+          >
             <LineChart data={lineChartData}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis dataKey="day" className="text-xs" />
