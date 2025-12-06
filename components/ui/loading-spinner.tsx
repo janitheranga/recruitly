@@ -12,7 +12,10 @@ export function LoadingSpinner({
 }: LoadingSpinnerProps) {
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="flex flex-col items-center justify-center gap-4 border-0 bg-transparent shadow-none">
+      <DialogContent
+        hideCloseButton
+        className="flex flex-col items-center justify-center gap-4 border-0 bg-transparent shadow-none"
+      >
         <DialogTitle className="sr-only">Loading</DialogTitle>
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <p className="text-center text-sm font-medium text-foreground">

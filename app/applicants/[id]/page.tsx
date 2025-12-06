@@ -98,8 +98,11 @@ export default function ApplicantDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="p-6 text-center text-muted-foreground">
-        Loading applicant...
+      <div className="space-y-4 sm:space-y-6">
+        <LoadingSpinner
+          isOpen={isLoading}
+          message="Loading applicant details..."
+        />
       </div>
     );
   }
