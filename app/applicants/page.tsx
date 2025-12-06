@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Eye } from "lucide-react";
 import { mockApplicants } from "@/lib/data";
 import { JobMatchLevel, ApplicationStatus } from "@/lib/types";
@@ -88,6 +89,7 @@ export default function ApplicantsPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      <LoadingSpinner isOpen={isLoading} message="Loading applicants..." />
       <h1 className="text-2xl sm:text-3xl font-bold">Job Applicant Data</h1>
 
       <Card>
@@ -114,7 +116,12 @@ export default function ApplicantsPage() {
                     key={useSupabase ? applicant.applicant_id : applicant.id}
                   >
                     <TableCell className="font-medium">
-                      {useSupabase ? `APP-${String(applicant.applicant_id).padStart(3, "0")}` : applicant.id}
+                      {useSupabase
+                        ? `APP-${String(applicant.applicant_id).padStart(
+                            3,
+                            "0"
+                          )}`
+                        : applicant.id}
                     </TableCell>
                     <TableCell>
                       {useSupabase ? applicant.applicant_name : applicant.name}

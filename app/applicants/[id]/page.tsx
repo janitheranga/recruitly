@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ArrowLeft, Check, X } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -169,6 +170,10 @@ export default function ApplicantDetailPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      <LoadingSpinner
+        isOpen={isLoading}
+        message="Loading applicant details..."
+      />
       <div className="flex items-center gap-2 sm:gap-4">
         <Link href="/applicants">
           <Button variant="ghost" size="icon" className="cursor-pointer">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/lib/database.types";
 import {
@@ -42,10 +43,12 @@ export default function HomePage() {
     SupabaseApplicant[]
   >([]);
   const [useSupabase, setUseSupabase] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load jobs from Supabase
   useEffect(() => {
     const loadJobs = async () => {
+      setIsLoading(true);
       const { data, error } = await supabase
         .from("jobs")
         .select("*")
@@ -56,6 +59,7 @@ export default function HomePage() {
         setSupabaseJobs(data);
         setUseSupabase(true);
       }
+      setIsLoading(false);
     };
     loadJobs();
   }, []);
@@ -63,6 +67,7 @@ export default function HomePage() {
   // Load applicants from Supabase
   useEffect(() => {
     const loadApplicants = async () => {
+      setIsLoading(true);
       const { data, error } = await supabase
         .from("applicants")
         .select("*")
@@ -72,6 +77,7 @@ export default function HomePage() {
       } else {
         setSupabaseApplicants(data);
       }
+      setIsLoading(false);
     };
     loadApplicants();
   }, []);
@@ -208,6 +214,7 @@ export default function HomePage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
+      <LoadingSpinner isOpen={isLoading} message="Loading dashboard..." />
       <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
 
       {/* Doughnut Charts Row */}
