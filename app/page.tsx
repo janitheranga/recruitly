@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { supabase } from "@/lib/supabase";
+import { Database } from "@/lib/database.types";
 import {
   PieChart,
   Pie,
@@ -28,15 +30,59 @@ const COLORS = {
   underPerformer: "#ef4444",
 };
 
+type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
+type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
+
 export default function HomePage() {
   const [jobChartCenter, setJobChartCenter] = useState<ChartClickType>("total");
   const [applicantChartCenter, setApplicantChartCenter] =
     useState<ApplicantChartClickType>("total");
+  const [supabaseJobs, setSupabaseJobs] = useState<SupabaseJob[]>([]);
+  const [supabaseApplicants, setSupabaseApplicants] = useState<
+    SupabaseApplicant[]
+  >([]);
+  const [useSupabase, setUseSupabase] = useState(false);
 
-  // Calculate job counts
-  const activeJobs = mockJobs.filter((job) => job.status === "Active").length;
-  const closedJobs = mockJobs.filter((job) => job.status === "Closed").length;
-  const totalJobs = mockJobs.length;
+  // Load jobs from Supabase
+  useEffect(() => {
+    const loadJobs = async () => {
+      const { data, error } = await supabase
+        .from("jobs")
+        .select("*")
+        .order("job_id", { ascending: true });
+      if (error || !data || data.length === 0) {
+        setUseSupabase(false);
+      } else {
+        setSupabaseJobs(data);
+        setUseSupabase(true);
+      }
+    };
+    loadJobs();
+  }, []);
+
+  // Load applicants from Supabase
+  useEffect(() => {
+    const loadApplicants = async () => {
+      const { data, error } = await supabase
+        .from("applicants")
+        .select("*")
+        .order("applicant_id", { ascending: true });
+      if (error || !data || data.length === 0) {
+        setUseSupabase(false);
+      } else {
+        setSupabaseApplicants(data);
+      }
+    };
+    loadApplicants();
+  }, []);
+  const jobsToUse = useSupabase ? supabaseJobs : mockJobs;
+  const activeJobs = useSupabase
+    ? supabaseJobs.filter((job) => job.job_status === "Active").length
+    : mockJobs.filter((job) => job.status === "Active").length;
+  const closedJobs = useSupabase
+    ? supabaseJobs.filter((job) => job.job_status === "Closed").length
+    : mockJobs.filter((job) => job.status === "Closed").length;
+  const totalJobs = useSupabase ? supabaseJobs.length : mockJobs.length;
 
   const jobData = [
     { name: "Active", value: activeJobs, color: COLORS.active },
@@ -44,16 +90,25 @@ export default function HomePage() {
   ];
 
   // Calculate applicant counts
-  const topPerformers = mockApplicants.filter(
-    (app) => app.jobMatch === "Top Performer"
-  ).length;
-  const potential = mockApplicants.filter(
-    (app) => app.jobMatch === "Potential"
-  ).length;
-  const underPerformers = mockApplicants.filter(
-    (app) => app.jobMatch === "Under Performer"
-  ).length;
-  const totalApplicants = mockApplicants.length;
+  const applicantsToUse = useSupabase ? supabaseApplicants : mockApplicants;
+  const topPerformers = useSupabase
+    ? supabaseApplicants.filter(
+        (app) => app.applicant_job_match === "Top Performer"
+      ).length
+    : mockApplicants.filter((app) => app.jobMatch === "Top Performer").length;
+  const potential = useSupabase
+    ? supabaseApplicants.filter(
+        (app) => app.applicant_job_match === "Potential"
+      ).length
+    : mockApplicants.filter((app) => app.jobMatch === "Potential").length;
+  const underPerformers = useSupabase
+    ? supabaseApplicants.filter(
+        (app) => app.applicant_job_match === "Under Performer"
+      ).length
+    : mockApplicants.filter((app) => app.jobMatch === "Under Performer").length;
+  const totalApplicants = useSupabase
+    ? supabaseApplicants.length
+    : mockApplicants.length;
 
   const applicantData = [
     {
@@ -271,7 +326,7 @@ export default function HomePage() {
       <Card>
         <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">
-            Weekly Applicant Trends
+            Weekly Applicant Trends - Active Jobs
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
