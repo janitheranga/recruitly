@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import { Input } from "./ui/input";
@@ -35,9 +35,16 @@ const navigation = [
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchFocused, setSearchFocused] = useState(false);
+
+  const filteredNavigation = navigation.filter((item) =>
+    item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -83,10 +90,57 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
           {/* Center Section: Search Bar */}
           <div className="flex-1 max-w-md mx-4 hidden md:block">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search sections..." className="pl-9" />
-            </div>
+            <form
+              className="relative"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (filteredNavigation[0]) {
+                  router.push(filteredNavigation[0].href);
+                  setSearchQuery("");
+                  setSearchFocused(false);
+                }
+              }}
+            >
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground transition-transform duration-200" />
+              <Input
+                placeholder="Search sections..."
+                className="pl-9 pr-3 transition-all duration-200 focus:shadow-lg"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
+              />
+
+              {searchQuery.trim().length > 0 && searchFocused && (
+                <div className="absolute left-0 right-0 mt-2 origin-top rounded-xl border bg-(--color-background)/95 backdrop-blur shadow-xl transition-all duration-200 ease-out opacity-100 scale-100">
+                  {filteredNavigation.length === 0 ? (
+                    <div className="px-4 py-3 text-sm text-muted-foreground">
+                      No matches
+                    </div>
+                  ) : (
+                    <ul className="py-2">
+                      {filteredNavigation.map((item) => (
+                        <li key={item.href}>
+                          <button
+                            type="button"
+                            className="flex w-full items-center gap-3 px-4 py-2 text-left text-sm rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors duration-150"
+                            onMouseDown={(e) => e.preventDefault()}
+                            onClick={() => {
+                              router.push(item.href);
+                              setSearchQuery("");
+                              setSearchFocused(false);
+                            }}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            {item.name}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </form>
           </div>
 
           {/* Right Section: Theme & Profile */}
@@ -115,7 +169,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="bg-(--color-background)/95">
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Logout</DropdownMenuItem>
