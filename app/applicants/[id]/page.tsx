@@ -1,27 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Check, X } from "lucide-react";
-import { getApplicantById, getJobById } from "@/lib/data";
-import { JobMatchLevel } from "@/lib/types";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
+import { Database } from "@/lib/database.types";
+import { mockApplicants, mockJobs } from "@/lib/data";
+
+type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
+type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
 
 export default function ApplicantDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const applicantId = params.id as string;
-  const applicant = getApplicantById(applicantId);
-  const [status, setStatus] = useState<"pending" | "approved" | "declined">(
-    "pending"
-  );
-  const [pendingAction, setPendingAction] = useState<
-    "approve" | "decline" | null
-  >(null);
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [applicant, setApplicant] = useState<SupabaseApplicant | null>(null);
+  const [job, setJob] = useState<SupabaseJob | null>(null);
+  const [useSupabase, setUseSupabase] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [status, setStatus] = useState<string>("Pending Review");
+
+  useEffect(() => {
+    const loadApplicant = async () => {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from("applicants")
+        .select("*")
+        .eq("applicant_id", Number(applicantId))
+        .single();
+      if (error || !data) {
+        // fallback to mock data
+        const fallback = mockApplicants.find(
+          (a) => String(a.id) === String(applicantId)
+        );
+        if (fallback) {
+          setApplicant({
+            applicant_id: Number(fallback.id),
+            created_at: "",
+            job_id: Number(fallback.jobId),
+            applicant_name: fallback.name,
+            applicant_email: fallback.email,
+            applicant_job_match: fallback.jobMatch,
+            years_of_experience: fallback.yearsOfExperience,
+            notable_work_experience: fallback.notableWorkExperience,
+            notable_qualifications: fallback.notableQualifications,
+            application_status: fallback.applicationStatus,
+          });
+          setUseSupabase(false);
+        } else {
+          setApplicant(null);
+        }
+      } else {
+        setApplicant(data as SupabaseApplicant);
+        setStatus((data as SupabaseApplicant).application_status);
+        setUseSupabase(true);
+      }
+      setIsLoading(false);
+    };
+    loadApplicant();
+  }, [applicantId]);
+
+  useEffect(() => {
+    if (applicant && applicant.job_id) {
+      const loadJob = async () => {
+        const { data, error } = await supabase
+          .from("jobs")
+          .select("*")
+          .eq("job_id", applicant.job_id)
+          .single();
+        if (error || !data) {
+          // fallback to mock data
+          const fallback = mockJobs.find(
+            (j) => String(j.id) === String(applicant.job_id)
+          );
+          if (fallback) {
+            setJob({
+              job_id: Number(fallback.id),
+              job_title: fallback.title,
+              job_description: fallback.description,
+              job_status: fallback.status,
+              created_at: "",
+            });
+          } else {
+            setJob(null);
+          }
+        } else {
+          setJob(data as SupabaseJob);
+        }
+      };
+      loadJob();
+    }
+  }, [applicant]);
+
+  if (isLoading) {
+    return (
+      <div className="p-6 text-center text-muted-foreground">
+        Loading applicant...
+      </div>
+    );
+  }
 
   if (!applicant) {
     return (
@@ -43,10 +123,8 @@ export default function ApplicantDetailPage() {
     );
   }
 
-  const job = getJobById(applicant.jobId);
-
   // Get badge variant based on job match
-  const getMatchBadgeVariant = (match: JobMatchLevel) => {
+  const getMatchBadgeVariant = (match: string) => {
     switch (match) {
       case "Top Performer":
         return "success";
@@ -59,29 +137,34 @@ export default function ApplicantDetailPage() {
     }
   };
 
-  const handleApprove = () => {
-    setPendingAction("approve");
-  };
-
-  const handleDecline = () => {
-    setPendingAction("decline");
-  };
-
-  const handleConfirm = () => {
-    if (pendingAction === "approve") {
-      setStatus("approved");
-    } else if (pendingAction === "decline") {
-      setStatus("declined");
+  const handleApprove = async () => {
+    const newStatus = "Approved";
+    setStatus(newStatus);
+    if (useSupabase && applicant) {
+      const { error } = await (supabase as any)
+        .from("applicants")
+        .update({ application_status: newStatus })
+        .eq("applicant_id", applicant.applicant_id);
+      if (error) {
+        alert("Failed to update status in Supabase");
+        setStatus("Pending Review");
+      }
     }
-    setIsConfirmed(true);
-    setPendingAction(null);
-    // In a real app, this would make an API call
   };
 
-  const handleReset = () => {
-    setStatus("pending");
-    setPendingAction(null);
-    setIsConfirmed(false);
+  const handleReject = async () => {
+    const newStatus = "Rejected";
+    setStatus(newStatus);
+    if (useSupabase && applicant) {
+      const { error } = await (supabase as any)
+        .from("applicants")
+        .update({ application_status: newStatus })
+        .eq("applicant_id", applicant.applicant_id);
+      if (error) {
+        alert("Failed to update status in Supabase");
+        setStatus("Pending Review");
+      }
+    }
   };
 
   return (
@@ -108,19 +191,21 @@ export default function ApplicantDetailPage() {
               <label className="text-sm font-medium text-muted-foreground">
                 Name
               </label>
-              <p className="text-lg font-semibold">{applicant.name}</p>
+              <p className="text-lg font-semibold">
+                {applicant.applicant_name}
+              </p>
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">
                 Email Address
               </label>
-              <p className="text-lg">{applicant.email}</p>
+              <p className="text-lg">{applicant.applicant_email}</p>
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">
                 Applied For
               </label>
-              <p className="text-lg">{job?.title || "Unknown Job"}</p>
+              <p className="text-lg">{job?.job_title || "Unknown Job"}</p>
             </div>
             <div>
               <label className="text-sm font-medium text-muted-foreground">
@@ -128,10 +213,10 @@ export default function ApplicantDetailPage() {
               </label>
               <div className="mt-1">
                 <Badge
-                  variant={getMatchBadgeVariant(applicant.jobMatch)}
+                  variant={getMatchBadgeVariant(applicant.applicant_job_match)}
                   className="text-sm px-3 py-1"
                 >
-                  {applicant.jobMatch}
+                  {applicant.applicant_job_match}
                 </Badge>
               </div>
             </div>
@@ -151,17 +236,17 @@ export default function ApplicantDetailPage() {
                 Current Status
               </label>
               <div className="mt-2">
-                {status === "pending" && (
+                {status === "Pending Review" && (
                   <Badge variant="warning" className="text-sm px-3 py-1">
                     Pending Review
                   </Badge>
                 )}
-                {status === "approved" && (
+                {status === "Approved" && (
                   <Badge variant="success" className="text-sm px-3 py-1">
                     Approved
                   </Badge>
                 )}
-                {status === "declined" && (
+                {status === "Rejected" && (
                   <Badge variant="danger" className="text-sm px-3 py-1">
                     Rejected
                   </Badge>
@@ -169,7 +254,7 @@ export default function ApplicantDetailPage() {
               </div>
             </div>
 
-            {status === "pending" && !pendingAction && (
+            {status === "Pending Review" && (
               <div className="flex gap-2 pt-4">
                 <Button
                   onClick={handleApprove}
@@ -179,42 +264,12 @@ export default function ApplicantDetailPage() {
                   Approve
                 </Button>
                 <Button
-                  onClick={handleDecline}
+                  onClick={handleReject}
                   variant="destructive"
                   className="flex-1 bg-red-200 hover:bg-red-300 text-red-900 cursor-pointer"
                 >
                   <X className="mr-2 h-4 w-4" />
                   Reject
-                </Button>
-              </div>
-            )}
-
-            {pendingAction && (
-              <div className="space-y-2 pt-4">
-                <Button
-                  onClick={handleConfirm}
-                  className="w-full bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
-                >
-                  Confirm {pendingAction === "approve" ? "Approval" : "Decline"}
-                </Button>
-                <Button
-                  onClick={() => setPendingAction(null)}
-                  variant="outline"
-                  className="w-full cursor-pointer"
-                >
-                  Reset Status
-                </Button>
-              </div>
-            )}
-
-            {status !== "pending" && !pendingAction && !isConfirmed && (
-              <div className="pt-4">
-                <Button
-                  onClick={handleReset}
-                  variant="outline"
-                  className="w-full cursor-pointer"
-                >
-                  Reset Status
                 </Button>
               </div>
             )}
@@ -231,7 +286,7 @@ export default function ApplicantDetailPage() {
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
           <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
-            {applicant.yearsOfExperience}
+            {applicant.years_of_experience}
           </pre>
         </CardContent>
       </Card>
@@ -245,7 +300,7 @@ export default function ApplicantDetailPage() {
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
           <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
-            {applicant.notableQualifications}
+            {applicant.notable_qualifications}
           </pre>
         </CardContent>
       </Card>
@@ -259,7 +314,7 @@ export default function ApplicantDetailPage() {
         </CardHeader>
         <CardContent className="p-4 sm:p-6">
           <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed">
-            {applicant.notableWorkExperience}
+            {applicant.notable_work_experience}
           </pre>
         </CardContent>
       </Card>

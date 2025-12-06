@@ -53,7 +53,7 @@ export async function POST() {
     }
 
     // Insert jobs
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from("jobs")
       .insert(jobsData)
       .select();
