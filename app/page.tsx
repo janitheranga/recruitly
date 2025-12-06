@@ -159,25 +159,45 @@ export default function HomePage() {
 
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  const activeJobIds = mockJobs
-    .filter((job) => job.status === "Active")
-    .map((job) => job.id);
+  const activeJobIds = useSupabase
+    ? supabaseJobs
+        .filter((job) => job.job_status === "Active")
+        .map((job) => job.job_id.toString())
+    : mockJobs.filter((job) => job.status === "Active").map((job) => job.id);
 
   const lineChartData = last7Days.map((date) => {
     const dayName = dayNames[date.getDay()];
     const dataPoint: any = { day: dayName };
 
     activeJobIds.forEach((jobId) => {
-      const job = mockJobs.find((j) => j.id === jobId);
-      const applicantsForDay = mockApplicantData.filter(
-        (data) =>
-          data.jobId === jobId &&
-          data.date.toDateString() === date.toDateString()
-      );
+      let jobTitle = "";
+      let count = 0;
 
-      const count = applicantsForDay.reduce((sum, item) => sum + item.count, 0);
-      if (job) {
-        dataPoint[job.title] = count;
+      if (useSupabase) {
+        // Get applicants created on this date for this job
+        const applicantsForDay = supabaseApplicants.filter((app) => {
+          const appDate = new Date(app.created_at).toDateString();
+          return (
+            app.job_id === Number(jobId) && appDate === date.toDateString()
+          );
+        });
+        count = applicantsForDay.length;
+        const job = supabaseJobs.find((j) => j.job_id === Number(jobId));
+        jobTitle = job?.job_title || "Unknown";
+      } else {
+        // Use mock data
+        const job = mockJobs.find((j) => j.id === jobId);
+        const applicantsForDay = mockApplicantData.filter(
+          (data) =>
+            data.jobId === jobId &&
+            data.date.toDateString() === date.toDateString()
+        );
+        count = applicantsForDay.reduce((sum, item) => sum + item.count, 0);
+        jobTitle = job?.title || "Unknown";
+      }
+
+      if (jobTitle) {
+        dataPoint[jobTitle] = count;
       }
     });
 
@@ -348,18 +368,34 @@ export default function HomePage() {
               />
               <Legend />
               {activeJobIds.map((jobId, index) => {
-                const job = mockJobs.find((j) => j.id === jobId);
-                return job ? (
-                  <Line
-                    key={jobId}
-                    type="monotone"
-                    dataKey={job.title}
-                    stroke={lineColors[index % lineColors.length]}
-                    strokeWidth={2}
-                    dot={{ r: 4 }}
-                    activeDot={{ r: 6 }}
-                  />
-                ) : null;
+                let job: any;
+                if (useSupabase) {
+                  job = supabaseJobs.find((j) => j.job_id === Number(jobId));
+                  return job ? (
+                    <Line
+                      key={jobId}
+                      type="monotone"
+                      dataKey={job.job_title}
+                      stroke={lineColors[index % lineColors.length]}
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  ) : null;
+                } else {
+                  job = mockJobs.find((j) => j.id === jobId);
+                  return job ? (
+                    <Line
+                      key={jobId}
+                      type="monotone"
+                      dataKey={job.title}
+                      stroke={lineColors[index % lineColors.length]}
+                      strokeWidth={2}
+                      dot={{ r: 4 }}
+                      activeDot={{ r: 6 }}
+                    />
+                  ) : null;
+                }
               })}
             </LineChart>
           </ResponsiveContainer>
