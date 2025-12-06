@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
+import { Database } from "@/lib/database.types";
 import {
   LineChart,
   Line,
@@ -31,14 +33,53 @@ import { Label } from "@/components/ui/label";
 
 type DurationType = "30days" | "custom";
 
+type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
+type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
+
 export default function StatisticsPage() {
   const [jobStatus, setJobStatus] = useState<JobStatus>("Active");
   const [durationType, setDurationType] = useState<DurationType>("30days");
   const [customStartDate, setCustomStartDate] = useState("");
   const [customEndDate, setCustomEndDate] = useState("");
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
+  const [supabaseJobs, setSupabaseJobs] = useState<SupabaseJob[]>([]);
+  const [supabaseApplicants, setSupabaseApplicants] = useState<
+    SupabaseApplicant[]
+  >([]);
+  const [useSupabase, setUseSupabase] = useState(false);
 
-  // Apply custom date range
+  // Load jobs from Supabase
+  useEffect(() => {
+    const loadJobs = async () => {
+      const { data, error } = await supabase
+        .from("jobs")
+        .select("*")
+        .order("job_id", { ascending: true });
+      if (error || !data || data.length === 0) {
+        setUseSupabase(false);
+      } else {
+        setSupabaseJobs(data);
+        setUseSupabase(true);
+      }
+    };
+    loadJobs();
+  }, []);
+
+  // Load applicants from Supabase
+  useEffect(() => {
+    const loadApplicants = async () => {
+      const { data, error } = await supabase
+        .from("applicants")
+        .select("*")
+        .order("applicant_id", { ascending: true });
+      if (error || !data || data.length === 0) {
+        setUseSupabase(false);
+      } else {
+        setSupabaseApplicants(data);
+      }
+    };
+    loadApplicants();
+  }, []);
   const handleApplyCustomRange = () => {
     setDurationType("custom");
     setIsCustomDialogOpen(false);
@@ -65,19 +106,49 @@ export default function StatisticsPage() {
   const showWeekly = daysDiff > 7;
 
   // Filter jobs by status
-  const filteredJobs = mockJobs.filter((job) => job.status === jobStatus);
-  const filteredJobIds = filteredJobs.map((job) => job.id);
+  const jobsToUse = useSupabase ? supabaseJobs : mockJobs;
+  const filteredJobs = useSupabase
+    ? supabaseJobs.filter((job) =>
+        jobStatus === "Active"
+          ? job.job_status === "Active"
+          : job.job_status === "Closed"
+      )
+    : mockJobs.filter((job) => job.status === jobStatus);
+  const filteredJobIds: (number | string)[] = useSupabase
+    ? (filteredJobs as SupabaseJob[]).map((job) => job.job_id)
+    : (filteredJobs as typeof mockJobs).map((job) => job.id);
 
   // Prepare chart data
   const chartData = useMemo(() => {
-    const filteredData = mockApplicantData.filter(
-      (item) =>
-        filteredJobIds.includes(item.jobId) &&
-        isWithinInterval(item.date, {
-          start: dateRange.start,
-          end: dateRange.end,
+    let filteredData: any[] = [];
+
+    if (useSupabase) {
+      // Filter applicants by job_id and date range
+      filteredData = supabaseApplicants
+        .filter((app) => filteredJobIds.includes(app.job_id))
+        .filter((app) => {
+          const appDate = new Date(app.created_at);
+          return isWithinInterval(appDate, {
+            start: dateRange.start,
+            end: dateRange.end,
+          });
         })
-    );
+        .map((app) => ({
+          jobId: app.job_id,
+          date: new Date(app.created_at),
+          count: 1, // Each applicant counts as 1
+        }));
+    } else {
+      // Use mock data
+      filteredData = mockApplicantData.filter(
+        (item) =>
+          filteredJobIds.includes(item.jobId) &&
+          isWithinInterval(item.date, {
+            start: dateRange.start,
+            end: dateRange.end,
+          })
+      );
+    }
 
     if (showWeekly) {
       // Group by week
@@ -91,10 +162,18 @@ export default function StatisticsPage() {
           weeklyData.set(weekKey, { period: weekKey, weekStart });
         }
 
-        const job = mockJobs.find((j) => j.id === item.jobId);
-        if (job) {
+        let jobTitle = "";
+        if (useSupabase) {
+          const job = supabaseJobs.find((j) => j.job_id === item.jobId);
+          jobTitle = job?.job_title || "Unknown";
+        } else {
+          const job = mockJobs.find((j) => j.id === item.jobId);
+          jobTitle = job?.title || "Unknown";
+        }
+
+        if (jobTitle) {
           const current = weeklyData.get(weekKey);
-          current[job.title] = (current[job.title] || 0) + item.count;
+          current[jobTitle] = (current[jobTitle] || 0) + item.count;
         }
       });
 
@@ -114,10 +193,18 @@ export default function StatisticsPage() {
           dailyData.set(dateKey, { period: dayKey, date: item.date });
         }
 
-        const job = mockJobs.find((j) => j.id === item.jobId);
-        if (job) {
+        let jobTitle = "";
+        if (useSupabase) {
+          const job = supabaseJobs.find((j) => j.job_id === item.jobId);
+          jobTitle = job?.job_title || "Unknown";
+        } else {
+          const job = mockJobs.find((j) => j.id === item.jobId);
+          jobTitle = job?.title || "Unknown";
+        }
+
+        if (jobTitle) {
           const current = dailyData.get(dateKey);
-          current[job.title] = (current[job.title] || 0) + item.count;
+          current[jobTitle] = (current[jobTitle] || 0) + item.count;
         }
       });
 
@@ -125,20 +212,33 @@ export default function StatisticsPage() {
         .sort((a, b) => a.date.getTime() - b.date.getTime())
         .map(({ date, ...rest }) => rest);
     }
-  }, [filteredJobIds, dateRange, showWeekly]);
+  }, [
+    filteredJobIds,
+    dateRange,
+    showWeekly,
+    useSupabase,
+    supabaseJobs,
+    supabaseApplicants,
+  ]);
 
   // Calculate max Y value
   const maxValue = useMemo(() => {
     let max = 0;
     chartData.forEach((item) => {
-      filteredJobs.forEach((job) => {
-        if (item[job.title] && item[job.title] > max) {
-          max = item[job.title];
+      const jobs = useSupabase
+        ? (filteredJobs as SupabaseJob[])
+        : (filteredJobs as typeof mockJobs);
+      jobs.forEach((job) => {
+        const jobTitle = useSupabase
+          ? (job as SupabaseJob).job_title
+          : (job as (typeof mockJobs)[0]).title;
+        if (item[jobTitle] && item[jobTitle] > max) {
+          max = item[jobTitle];
         }
       });
     });
     return Math.ceil(max * 1.1); // Add 10% padding
-  }, [chartData, filteredJobs]);
+  }, [chartData, filteredJobs, useSupabase]);
 
   const lineColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
 
@@ -294,17 +394,28 @@ export default function StatisticsPage() {
                 }}
               />
               <Legend />
-              {filteredJobs.map((job, index) => (
-                <Line
-                  key={job.id}
-                  type="monotone"
-                  dataKey={job.title}
-                  stroke={lineColors[index % lineColors.length]}
-                  strokeWidth={2}
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-              ))}
+              {(useSupabase
+                ? (filteredJobs as SupabaseJob[])
+                : (filteredJobs as typeof mockJobs)
+              ).map((job, index) => {
+                const jobTitle = useSupabase
+                  ? (job as SupabaseJob).job_title
+                  : (job as (typeof mockJobs)[0]).title;
+                const jobKey = useSupabase
+                  ? (job as SupabaseJob).job_id
+                  : (job as (typeof mockJobs)[0]).id;
+                return (
+                  <Line
+                    key={jobKey}
+                    type="monotone"
+                    dataKey={jobTitle}
+                    stroke={lineColors[index % lineColors.length]}
+                    strokeWidth={2}
+                    dot={{ r: 4 }}
+                    activeDot={{ r: 6 }}
+                  />
+                );
+              })}
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
