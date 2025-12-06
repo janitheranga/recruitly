@@ -72,7 +72,7 @@ export default function ApplicantsPage() {
                 <TableHead className="hidden md:table-cell">Email</TableHead>
                 <TableHead>Job Match</TableHead>
                 <TableHead>Application Status</TableHead>
-                <TableHead className="text-right">Action</TableHead>
+                <TableHead className="text-center">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -102,7 +102,7 @@ export default function ApplicantsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="text-xs sm:text-sm cursor-pointer text-amber-800 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/30"
+                        className="text-xs sm:text-sm cursor-pointer bg-amber-50 text-amber-600 hover:text-amber-700 dark:hover:bg-amber-900/30 dark:text-amber-400"
                       >
                         <Eye className="h-4 w-4 mr-2" />
                         View

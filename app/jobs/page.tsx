@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,41 +23,148 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea"; // Corrected import path
-import { Plus } from "lucide-react";
+import { Plus, Pencil } from "lucide-react";
 import { mockJobs } from "@/lib/data";
 import { Job } from "@/lib/types";
+import { supabase } from "@/lib/supabase";
+import { JobInsert, JobUpdate } from "@/lib/database.types";
+
+interface SupabaseJob {
+  job_id: number;
+  job_title: string;
+  job_description: string;
+  job_status: string;
+  created_at: string;
+}
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState<Job[]>(mockJobs);
+  const [supabaseJobs, setSupabaseJobs] = useState<SupabaseJob[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [useSupabase, setUseSupabase] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingJobId, setEditingJobId] = useState<string | number | null>(
+    null
+  );
+  const [editingDescription, setEditingDescription] = useState("");
   const jobsPerPage = 10;
+
+  // Load jobs from Supabase
+  useEffect(() => {
+    const loadJobs = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from("jobs")
+          .select("*")
+          .order("job_id", { ascending: true });
+
+        if (error) {
+          console.error("Error loading jobs from Supabase:", error);
+          setUseSupabase(false);
+        } else if (data && data.length > 0) {
+          setSupabaseJobs(data);
+          setUseSupabase(true);
+        } else {
+          setUseSupabase(false);
+        }
+      } catch (err) {
+        console.error("Failed to load jobs:", err);
+        setUseSupabase(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadJobs();
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newJob: Job = {
-      id: `JOB-${String(jobs.length + 1).padStart(3, "0")}`,
-      title: jobTitle,
-      description: jobDescription,
-      status: "Active",
-    };
+    if (useSupabase) {
+      // Save to Supabase
+      const insertData: Omit<SupabaseJob, "job_id" | "created_at"> = {
+        job_title: jobTitle,
+        job_description: jobDescription,
+        job_status: "Active",
+      };
 
-    setJobs([...jobs, newJob]);
-    handleClear();
-    setIsDialogOpen(false);
+      supabase
+        .from("jobs")
+        .insert([insertData] as any)
+        .then(({ data, error }) => {
+          if (error) {
+            console.error("Error creating job:", error);
+            alert("Failed to create job");
+          } else {
+            // Reload jobs from Supabase
+            supabase
+              .from("jobs")
+              .select("*")
+              .order("job_id", { ascending: true })
+              .then(({ data: updatedData }) => {
+                if (updatedData) {
+                  setSupabaseJobs(updatedData as SupabaseJob[]);
+                }
+              });
+            handleClear();
+            setIsDialogOpen(false);
+          }
+        });
+    } else {
+      // Fallback to local state
+      const newJob: Job = {
+        id: `JOB-${String(jobs.length + 1).padStart(3, "0")}`,
+        title: jobTitle,
+        description: jobDescription,
+        status: "Active",
+      };
+
+      setJobs([...jobs, newJob]);
+      handleClear();
+      setIsDialogOpen(false);
+    }
   };
 
-  const handleToggleStatus = (jobId: string) => {
-    setJobs((prev) =>
-      prev.map((job) =>
-        job.id === jobId
-          ? { ...job, status: job.status === "Active" ? "Closed" : "Active" }
-          : job
-      )
-    );
+  const handleToggleStatus = (jobId: string | number) => {
+    if (useSupabase) {
+      // Update in Supabase
+      const job = supabaseJobs.find((j) => j.job_id === jobId);
+      if (job) {
+        const newStatus = job.job_status === "Active" ? "Closed" : "Active";
+
+        (supabase.from("jobs") as any)
+          .update({ job_status: newStatus })
+          .eq("job_id", jobId)
+          .then(({ error }: any) => {
+            if (error) {
+              console.error("Error updating job status:", error);
+              alert("Failed to update job status");
+            } else {
+              // Update local state
+              setSupabaseJobs((prev) =>
+                prev.map((j) =>
+                  j.job_id === jobId ? { ...j, job_status: newStatus } : j
+                )
+              );
+            }
+          });
+      }
+    } else {
+      // Update local state
+      setJobs((prev) =>
+        prev.map((job) =>
+          job.id === jobId
+            ? { ...job, status: job.status === "Active" ? "Closed" : "Active" }
+            : job
+        )
+      );
+    }
   };
 
   const handleClear = () => {
@@ -65,21 +172,122 @@ export default function JobsPage() {
     setJobDescription("");
   };
 
+  const handleEdit = (jobId: string | number, currentDescription: string) => {
+    setEditingJobId(jobId);
+    setEditingDescription(currentDescription);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (!editingJobId) return;
+
+    if (useSupabase) {
+      // Update in Supabase
+      (supabase.from("jobs") as any)
+        .update({ job_description: editingDescription })
+        .eq("job_id", editingJobId)
+        .then(({ error }: any) => {
+          if (error) {
+            console.error("Error updating job description:", error);
+            alert("Failed to update job description");
+          } else {
+            // Update local state
+            setSupabaseJobs((prev) =>
+              prev.map((j) =>
+                j.job_id === editingJobId
+                  ? { ...j, job_description: editingDescription }
+                  : j
+              )
+            );
+            setIsEditModalOpen(false);
+            setEditingJobId(null);
+            setEditingDescription("");
+          }
+        });
+    } else {
+      // Update local state
+      setJobs((prev) =>
+        prev.map((job) =>
+          job.id === editingJobId
+            ? { ...job, description: editingDescription }
+            : job
+        )
+      );
+      setIsEditModalOpen(false);
+      setEditingJobId(null);
+      setEditingDescription("");
+    }
+  };
+
   // Pagination logic
+  const dataToDisplay = useSupabase ? supabaseJobs : jobs;
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
-  const totalPages = Math.ceil(jobs.length / jobsPerPage);
+  const currentJobs = dataToDisplay.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(dataToDisplay.length / jobsPerPage);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-4 sm:space-y-6">
+        <h1 className="text-2xl sm:text-3xl font-bold">Job Data</h1>
+        <Card>
+          <CardContent className="p-6 text-center">
+            <p className="text-muted-foreground">Loading jobs...</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4 sm:space-y-6">
       <h1 className="text-2xl sm:text-3xl font-bold">Job Data</h1>
 
+      {/* Edit Job Modal */}
+      <Dialog open={isEditModalOpen} onOpenChange={setIsEditModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Job Description</DialogTitle>
+            <DialogDescription>
+              Update the job description below.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="edit-description">Job Description</Label>
+              <Textarea
+                id="edit-description"
+                placeholder="Enter job description..."
+                value={editingDescription}
+                onChange={(e) => setEditingDescription(e.target.value)}
+                rows={6}
+              />
+            </div>
+          </div>
+          <DialogFooter className="gap-2">
+            <Button
+              type="button"
+              className="bg-red-50 hover:bg-red-100 text-red-900 cursor-pointer"
+              onClick={() => setIsEditModalOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              className="bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
+              onClick={handleSaveEdit}
+            >
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <Button
             size="lg"
-            className="w-full sm:w-auto bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
+            className="w-full sm:w-auto bg-green-50 hover:bg-green-100 text-green-900 cursor-pointer"
           >
             <Plus className="mr-2 h-5 w-5" />
             Create New Job
@@ -133,7 +341,7 @@ export default function JobsPage() {
               </Button>
               <Button
                 type="submit"
-                className="bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
+                className="bg-green-50 hover:bg-green-100 text-green-900 cursor-pointer"
               >
                 Submit
               </Button>
@@ -154,42 +362,71 @@ export default function JobsPage() {
                 </TableHead>
                 <TableHead>Job Status</TableHead>
                 <TableHead>Action</TableHead>
+                <TableHead className="text-center">Edit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentJobs.map((job) => (
-                <TableRow key={job.id}>
-                  <TableCell className="font-medium text-sm">
-                    {job.id}
-                  </TableCell>
-                  <TableCell className="text-sm">{job.title}</TableCell>
-                  <TableCell className="hidden md:table-cell max-w-md truncate text-sm">
-                    {job.description}
-                  </TableCell>
-                  <TableCell>
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-                        job.status === "Active"
-                          ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
-                      }`}
-                    >
-                      {job.status}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <label className="relative inline-flex items-center gap-2 cursor-pointer select-none">
-                      <input
-                        type="checkbox"
-                        checked={job.status === "Active"}
-                        onChange={() => handleToggleStatus(job.id)}
-                        className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
-                      />
-                      <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
-                    </label>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {currentJobs.map((job) => {
+                const isSupabaseJob = useSupabase && "job_id" in job;
+                const jobId = isSupabaseJob
+                  ? (job as SupabaseJob).job_id
+                  : (job as Job).id;
+                const jobTitle = isSupabaseJob
+                  ? (job as SupabaseJob).job_title
+                  : (job as Job).title;
+                const jobDescription = isSupabaseJob
+                  ? (job as SupabaseJob).job_description
+                  : (job as Job).description;
+                const jobStatus = isSupabaseJob
+                  ? (job as SupabaseJob).job_status
+                  : (job as Job).status;
+
+                return (
+                  <TableRow key={jobId}>
+                    <TableCell className="font-medium text-sm">
+                      {isSupabaseJob
+                        ? `JOB-${String(jobId).padStart(3, "0")}`
+                        : jobId}
+                    </TableCell>
+                    <TableCell className="text-sm">{jobTitle}</TableCell>
+                    <TableCell className="hidden md:table-cell max-w-md truncate text-sm">
+                      {jobDescription}
+                    </TableCell>
+                    <TableCell>
+                      <span
+                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          jobStatus === "Active"
+                            ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
+                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                        }`}
+                      >
+                        {jobStatus}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <label className="relative inline-flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={jobStatus === "Active"}
+                          onChange={() => handleToggleStatus(jobId)}
+                          className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+                        />
+                        <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
+                      </label>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <button
+                        onClick={() => handleEdit(jobId, jobDescription)}
+                        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-amber-50 text-amber-600 hover:text-amber-700 dark:hover:bg-amber-900/30 dark:text-amber-400 transition-colors cursor-pointer text-sm font-medium"
+                        title="Edit job description"
+                      >
+                        <Pencil className="h-4 w-4" />
+                        <span>Edit</span>
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </CardContent>

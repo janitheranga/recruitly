@@ -6,6 +6,18 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[];
 
+export type JobInsert = {
+  job_title: string;
+  job_description: string;
+  job_status: string;
+};
+
+export type JobUpdate = {
+  job_title?: string;
+  job_description?: string;
+  job_status?: string;
+};
+
 export interface Database {
   public: {
     Tables: {
@@ -17,20 +29,8 @@ export interface Database {
           job_status: string;
           created_at: string;
         };
-        Insert: {
-          job_id?: number;
-          job_title: string;
-          job_description: string;
-          job_status: string;
-          created_at?: string;
-        };
-        Update: {
-          job_id?: number;
-          job_title?: string;
-          job_description?: string;
-          job_status?: string;
-          created_at?: string;
-        };
+        Insert: JobInsert;
+        Update: JobUpdate;
       };
       applicants: {
         Row: {
