@@ -42,6 +42,8 @@ export default function StatisticsPage() {
   const [customStartDate, setCustomStartDate] = useState("");
   const [customEndDate, setCustomEndDate] = useState("");
   const [isCustomDialogOpen, setIsCustomDialogOpen] = useState(false);
+  const [tempStartDate, setTempStartDate] = useState("");
+  const [tempEndDate, setTempEndDate] = useState("");
   const [supabaseJobs, setSupabaseJobs] = useState<SupabaseJob[]>([]);
   const [supabaseApplicants, setSupabaseApplicants] = useState<
     SupabaseApplicant[]
@@ -81,8 +83,16 @@ export default function StatisticsPage() {
     loadApplicants();
   }, []);
   const handleApplyCustomRange = () => {
+    setCustomStartDate(tempStartDate);
+    setCustomEndDate(tempEndDate);
     setDurationType("custom");
     setIsCustomDialogOpen(false);
+  };
+
+  const handleOpenDialog = () => {
+    setTempStartDate(customStartDate);
+    setTempEndDate(customEndDate);
+    setIsCustomDialogOpen(true);
   };
 
   // Calculate date range
@@ -303,6 +313,7 @@ export default function StatisticsPage() {
                 <DialogTrigger asChild>
                   <Button
                     size="sm"
+                    onClick={handleOpenDialog}
                     className={`cursor-pointer w-full sm:w-auto ${
                       durationType === "custom"
                         ? "bg-blue-50 hover:bg-blue-100 text-blue-900"
@@ -326,8 +337,8 @@ export default function StatisticsPage() {
                       <Input
                         id="start-date"
                         type="date"
-                        value={customStartDate}
-                        onChange={(e) => setCustomStartDate(e.target.value)}
+                        value={tempStartDate}
+                        onChange={(e) => setTempStartDate(e.target.value)}
                       />
                     </div>
                     <div className="grid gap-2">
@@ -335,8 +346,8 @@ export default function StatisticsPage() {
                       <Input
                         id="end-date"
                         type="date"
-                        value={customEndDate}
-                        onChange={(e) => setCustomEndDate(e.target.value)}
+                        value={tempEndDate}
+                        onChange={(e) => setTempEndDate(e.target.value)}
                       />
                     </div>
                   </div>
