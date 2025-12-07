@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { generateUniqueColors } from "@/lib/colors";
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/lib/database.types";
 import {
@@ -51,6 +52,7 @@ export default function StatisticsPage() {
   >([]);
   const [useSupabase, setUseSupabase] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [lineColors, setLineColors] = useState<string[]>([]);
 
   // Load jobs from Supabase
   useEffect(() => {
@@ -88,6 +90,12 @@ export default function StatisticsPage() {
     };
     loadApplicants();
   }, []);
+
+  // Generate random colors on mount
+  useEffect(() => {
+    setLineColors(generateUniqueColors(5));
+  }, []);
+
   const handleApplyCustomRange = () => {
     setCustomStartDate(tempStartDate);
     setCustomEndDate(tempEndDate);
@@ -255,8 +263,6 @@ export default function StatisticsPage() {
     });
     return Math.ceil(max * 1.1); // Add 10% padding
   }, [chartData, filteredJobs, useSupabase]);
-
-  const lineColors = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981"];
 
   return (
     <div className="space-y-4 sm:space-y-6">
