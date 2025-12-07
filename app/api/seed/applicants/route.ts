@@ -251,7 +251,7 @@ export async function POST() {
     const results = [];
 
     for (const batch of batches) {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from("applicants")
         .insert(batch)
         .select();
