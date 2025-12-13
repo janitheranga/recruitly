@@ -293,11 +293,7 @@ export default function HomePage() {
             <CardTitle>Applicant Performance</CardTitle>
           </CardHeader>
           <CardContent className="p-4 sm:p-6">
-            <ResponsiveContainer
-              width="100%"
-              height={250}
-              className="sm:h-[300px]"
-            >
+            <ResponsiveContainer width="100%" height={250} className="sm:h-75">
               <PieChart>
                 <Pie
                   data={applicantData}
@@ -366,7 +362,7 @@ export default function HomePage() {
           <ResponsiveContainer
             width="100%"
             height={300}
-            className="sm:h-[400px] cursor-pointer"
+            className="sm:h-100 cursor-pointer"
           >
             <LineChart data={lineChartData} style={{ cursor: "pointer" }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />

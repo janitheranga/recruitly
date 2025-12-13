@@ -404,7 +404,7 @@ export default function StatisticsPage() {
           <ResponsiveContainer
             width="100%"
             height={300}
-            className="sm:h-[400px] cursor-pointer"
+            className="sm:h-100 cursor-pointer"
           >
             <LineChart data={chartData} style={{ cursor: "pointer" }}>
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
