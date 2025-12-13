@@ -31,7 +31,7 @@ export function ContactSection() {
     >
       {/* Light mode fallback background */}
       <div
-        className="absolute inset-0 block dark:hidden"
+        className="absolute inset-0 block"
         style={{
           background:
             "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
@@ -39,7 +39,7 @@ export function ContactSection() {
       />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-15"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
@@ -56,10 +56,10 @@ export function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-white mb-4">
+              <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
                 Get in Touch
               </h2>
-              <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300">
+              <p className="text-lg text-dust-grey-600">
                 Have questions? We'd love to hear from you. Send us a message
                 and we'll respond as soon as possible.
               </p>
@@ -80,16 +80,14 @@ export function ContactSection() {
                   whileHover={{ x: 10 }}
                   className="flex gap-4"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-honeydew-100 dark:bg-indigo-velvet-800/50 flex items-center justify-center shrink-0">
-                    <contact.icon className="h-6 w-6 text-honeydew-500 dark:text-honeydew-400" />
+                  <div className="w-12 h-12 rounded-lg bg-honeydew-100/50 flex items-center justify-center shrink-0">
+                    <contact.icon className="h-6 w-6 text-honeydew-500" />
                   </div>
                   <div>
-                    <p className="font-semibold text-dust-grey-900 dark:text-white">
+                    <p className="font-semibold text-dust-grey-900">
                       {contact.label}
                     </p>
-                    <p className="text-dust-grey-600 dark:text-dust-grey-400">
-                      {contact.value}
-                    </p>
+                    <p className="text-dust-grey-600">{contact.value}</p>
                   </div>
                 </motion.div>
               ))}
@@ -103,22 +101,15 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="relative p-8 rounded-2xl border border-dust-grey-200 dark:border-indigo-velvet-700/50 shadow-lg overflow-hidden"
+            className="relative p-8 rounded-2xl border border-dust-grey-200/50 shadow-lg overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
             }}
           >
-            <div
-              className="absolute inset-0 rounded-2xl dark:block hidden -z-10"
-              style={{
-                background:
-                  "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
-              }}
-            />
             <div className="relative z-10 space-y-6">
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
                   Name
                 </label>
                 <Input
@@ -133,7 +124,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
                   Email
                 </label>
                 <Input
@@ -148,7 +139,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
                   Message
                 </label>
                 <Textarea

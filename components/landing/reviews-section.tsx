@@ -108,17 +108,9 @@ export function ReviewsSection() {
           "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
       }}
     >
-      {/* Dark mode gradient background */}
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(16.35% 0.034 302.99) 0%, oklch(19.20% 0.047 304.43) 100%)",
-        }}
-      />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-10"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 100%, oklch(70.96% 0.218 317.01 / 0.2) 0px, transparent 50%), radial-gradient(at 100% 0%, oklch(51.60% 0.173 302.32 / 0.2) 0px, transparent 50%)",
@@ -132,10 +124,10 @@ export function ReviewsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-dust-grey-50 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
             Loved by Our Customers
           </h2>
-          <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300">
+          <p className="text-lg text-dust-grey-600">
             See what our users are saying
           </p>
         </motion.div>
@@ -150,7 +142,7 @@ export function ReviewsSection() {
             {[...reviews, ...reviews].map((review, index) => (
               <motion.div
                 key={index}
-                className="shrink-0 w-96 p-6 rounded-xl bg-white dark:bg-indigo-velvet-800 border border-honeydew-200/50 dark:border-indigo-velvet-700/50 shadow-md hover:shadow-glow smooth-transition"
+                className="shrink-0 w-96 p-6 rounded-xl bg-white border border-honeydew-200/50/50 shadow-md hover:shadow-glow smooth-transition"
                 whileHover={{ y: -5, scale: 1.02 }}
               >
                 <div className="flex gap-1 mb-4">
@@ -165,10 +157,10 @@ export function ReviewsSection() {
                     />
                   ))}
                 </div>
-                <p className="text-dust-grey-700 dark:text-dust-grey-300 mb-4 line-clamp-3">
+                <p className="text-dust-grey-700 mb-4 line-clamp-3">
                   "{review.content}"
                 </p>
-                <div className="flex items-center gap-3 mt-4 pt-4 border-t border-dust-grey-200 dark:border-indigo-velvet-700">
+                <div className="flex items-center gap-3 mt-4 pt-4 border-t border-dust-grey-200">
                   <div className="relative w-10 h-10 shrink-0 rounded-full overflow-hidden">
                     <Image
                       src={review.image}
@@ -179,10 +171,10 @@ export function ReviewsSection() {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-dust-grey-900 dark:text-white truncate">
+                    <p className="font-semibold text-dust-grey-900 truncate">
                       {review.name}
                     </p>
-                    <p className="text-xs text-dust-grey-600 dark:text-dust-grey-400 truncate">
+                    <p className="text-xs text-dust-grey-600 truncate">
                       {review.role} @ {review.company}
                     </p>
                   </div>

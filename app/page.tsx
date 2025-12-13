@@ -20,7 +20,7 @@ export default function LandingPage() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-indigo-velvet-950">
+    <div className="min-h-screen bg-white">
       <LandingHeader onLoginClick={() => setIsLoginOpen(true)} />
       <LoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
       <HeroSection />

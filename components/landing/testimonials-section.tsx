@@ -43,17 +43,9 @@ export function TestimonialsSection() {
           "linear-gradient(135deg, oklch(95.95% 0.003 308.43) 0%, oklch(91.30% 0.023 302.50) 100%)",
       }}
     >
-      {/* Dark mode gradient background */}
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
-        }}
-      />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-10"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.2) 0px, transparent 50%)",
@@ -75,10 +67,10 @@ export function TestimonialsSection() {
           >
             Testimonials
           </motion.span>
-          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
             What Our Clients Say
           </h2>
-          <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300">
+          <p className="text-lg text-dust-grey-600">
             Real stories from companies that transformed their hiring
           </p>
         </motion.div>
@@ -92,7 +84,7 @@ export function TestimonialsSection() {
               transition={{ delay: index * 0.15, duration: 0.6 }}
               viewport={{ once: true }}
               whileHover={{ y: -10, scale: 1.02 }}
-              className="group relative bg-white dark:bg-indigo-velvet-800 rounded-2xl p-8 border border-dust-grey-200 dark:border-indigo-velvet-700 shadow-md hover:shadow-glow smooth-transition"
+              className="group relative bg-white rounded-2xl p-8 border border-dust-grey-200 shadow-md hover:shadow-glow smooth-transition"
             >
               {/* Gradient overlay */}
               <div className="absolute inset-0 gradient-mesh opacity-0 group-hover:opacity-10 smooth-transition rounded-2xl" />
@@ -128,7 +120,7 @@ export function TestimonialsSection() {
               </div>
 
               {/* Content */}
-              <p className="relative text-dust-grey-700 dark:text-dust-grey-300 mb-6 leading-relaxed">
+              <p className="relative text-dust-grey-700 mb-6 leading-relaxed">
                 "{testimonial.content}"
               </p>
 
@@ -146,13 +138,13 @@ export function TestimonialsSection() {
                   />
                 </motion.div>
                 <div>
-                  <h4 className="font-bold text-dust-grey-900 dark:text-white">
+                  <h4 className="font-bold text-dust-grey-900">
                     {testimonial.name}
                   </h4>
-                  <p className="text-sm text-dust-grey-600 dark:text-dust-grey-400">
+                  <p className="text-sm text-dust-grey-600">
                     {testimonial.role}
                   </p>
-                  <p className="text-xs text-dust-grey-500 dark:text-dust-grey-500">
+                  <p className="text-xs text-dust-grey-500">
                     {testimonial.company}
                   </p>
                 </div>
@@ -168,7 +160,7 @@ export function TestimonialsSection() {
           transition={{ delay: 0.5 }}
           className="mt-16 flex flex-wrap justify-center items-center gap-8"
         >
-          <div className="flex items-center gap-2 text-dust-grey-600 dark:text-dust-grey-400">
+          <div className="flex items-center gap-2 text-dust-grey-600">
             <div className="gradient-primary rounded-full p-2">
               <svg
                 className="w-5 h-5 text-white"
@@ -184,7 +176,7 @@ export function TestimonialsSection() {
             </div>
             <span className="font-semibold">ISO 27001 Certified</span>
           </div>
-          <div className="flex items-center gap-2 text-dust-grey-600 dark:text-dust-grey-400">
+          <div className="flex items-center gap-2 text-dust-grey-600">
             <div className="gradient-primary rounded-full p-2">
               <svg
                 className="w-5 h-5 text-white"
@@ -200,7 +192,7 @@ export function TestimonialsSection() {
             </div>
             <span className="font-semibold">GDPR Compliant</span>
           </div>
-          <div className="flex items-center gap-2 text-dust-grey-600 dark:text-dust-grey-400">
+          <div className="flex items-center gap-2 text-dust-grey-600">
             <div className="gradient-primary rounded-full p-2">
               <svg
                 className="w-5 h-5 text-white"

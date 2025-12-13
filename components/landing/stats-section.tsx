@@ -93,13 +93,6 @@ export function StatsSection() {
             "linear-gradient(135deg, oklch(95.95% 0.003 308.43) 0%, white 50%, oklch(95.95% 0.003 308.43) 100%)",
         }}
       />
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(16.35% 0.034 302.99) 0%, oklch(19.20% 0.047 304.43) 50%, oklch(16.35% 0.034 302.99) 100%)",
-        }}
-      />
 
       {/* Animated gradient orbs */}
       <motion.div
@@ -134,10 +127,10 @@ export function StatsSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-white mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
             Trusted by Industry Leaders
           </h2>
-          <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300">
+          <p className="text-lg text-dust-grey-600">
             Join thousands of companies revolutionizing their hiring process
           </p>
         </motion.div>
@@ -151,7 +144,7 @@ export function StatsSection() {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.05, y: -5 }}
-              className="group relative bg-white dark:bg-indigo-velvet-800 rounded-2xl p-8 border border-dust-grey-200 dark:border-indigo-velvet-700 shadow-md hover:shadow-glow smooth-transition"
+              className="group relative bg-white rounded-2xl p-8 border border-dust-grey-200 shadow-md hover:shadow-glow smooth-transition"
             >
               {/* Gradient overlay */}
               <div className="absolute inset-0 gradient-mesh opacity-0 group-hover:opacity-20 smooth-transition rounded-2xl" />
@@ -169,11 +162,11 @@ export function StatsSection() {
               </motion.div>
 
               <div className="relative">
-                <div className="text-4xl font-bold text-dust-grey-900 dark:text-white mb-2">
+                <div className="text-4xl font-bold text-dust-grey-900 mb-2">
                   <Counter value={stat.value} />
                   {stat.suffix}
                 </div>
-                <p className="text-sm text-dust-grey-600 dark:text-dust-grey-400 font-medium">
+                <p className="text-sm text-dust-grey-600 font-medium">
                   {stat.label}
                 </p>
               </div>

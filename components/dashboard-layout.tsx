@@ -32,11 +32,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       <motion.aside
         animate={{ width: sidebarOpen ? 256 : 80 }}
         transition={{ duration: 0.3 }}
-        className="bg-white dark:bg-slate-900 border-r border-honeydew-200 dark:border-indigo-velvet-800 overflow-hidden"
+        className="bg-white border-r border-honeydew-200 overflow-hidden"
       >
         <div className="h-screen flex flex-col">
           {/* Logo */}
-          <div className="p-4 border-b border-honeydew-200 dark:border-indigo-velvet-800">
+          <div className="p-4 border-b border-honeydew-200">
             <motion.div
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-3"
@@ -45,7 +45,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <span className="text-white font-bold">R</span>
               </div>
               {sidebarOpen && (
-                <span className="font-bold text-slate-900 dark:text-white whitespace-nowrap">
+                <span className="font-bold text-slate-900 whitespace-nowrap">
                   Recruitly
                 </span>
               )}
@@ -63,8 +63,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     className={cn(
                       "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors cursor-pointer",
                       isActive
-                        ? "bg-honeydew-100 dark:bg-indigo-velvet-900 text-honeydew-700 dark:text-indigo-velvet-300"
-                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                        ? "bg-honeydew-100 text-honeydew-700"
+                        : "text-slate-600 hover:bg-slate-100:bg-slate-800"
                     )}
                   >
                     <item.icon className="h-5 w-5 shrink-0" />
@@ -80,8 +80,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-honeydew-200 dark:border-indigo-velvet-800">
-            <p className="text-xs text-slate-500 dark:text-slate-400 text-center">
+          <div className="p-4 border-t border-honeydew-200">
+            <p className="text-xs text-slate-500 text-center">
               © {new Date().getFullYear()} Recruitly
             </p>
           </div>
@@ -95,13 +95,13 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           initial={{ y: -50 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.3 }}
-          className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur border-b border-honeydew-200 dark:border-indigo-velvet-800 p-4"
+          className="sticky top-0 z-30 bg-white/80/80 backdrop-blur border-b border-honeydew-200 p-4"
         >
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg cursor-pointer"
+            className="p-2 hover:bg-slate-100:bg-slate-800 rounded-lg cursor-pointer"
           >
             {sidebarOpen ? (
               <ChevronLeft className="h-5 w-5" />
@@ -127,7 +127,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-slate-900 border-t border-honeydew-200 dark:border-indigo-velvet-800 p-6 text-center text-slate-600 dark:text-slate-400"
+          className="bg-white border-t border-honeydew-200 p-6 text-center text-slate-600"
         >
           <p>
             © {new Date().getFullYear()} Recruitly. All rights reserved. Built

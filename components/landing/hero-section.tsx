@@ -20,9 +20,9 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative py-20 sm:py-32 overflow-hidden bg-white dark:bg-indigo-velvet-950">
+    <section className="relative py-20 sm:py-32 overflow-hidden bg-white">
       {/* Animated gradient mesh background */}
-      <div className="absolute inset-0 gradient-mesh opacity-60 dark:opacity-30" />
+      <div className="absolute inset-0 gradient-mesh opacity-60" />
 
       {/* Animated gradient orbs */}
       <motion.div
@@ -84,7 +84,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="text-5xl sm:text-7xl font-bold text-dust-grey-900 dark:text-white leading-tight"
+              className="text-5xl sm:text-7xl font-bold text-dust-grey-900 leading-tight"
             >
               Find Your Perfect{" "}
               <span className="relative inline-block">
@@ -103,7 +103,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-xl text-dust-grey-600 dark:text-dust-grey-300 max-w-2xl leading-relaxed"
+              className="text-xl text-dust-grey-600 max-w-2xl leading-relaxed"
             >
               Streamline your hiring process with AI-powered candidate matching,
               real-time analytics, and collaborative tools designed for modern
@@ -156,14 +156,14 @@ export function HeroSection() {
             <motion.div
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
-              className="absolute inset-0 bg-linear-to-br from-honeydew-200/20 to-dark-amethyst-200/20 rounded-3xl backdrop-blur-sm border border-honeydew-200/30 dark:border-indigo-velvet-700/30"
+              className="absolute inset-0 bg-linear-to-br from-honeydew-200/20 to-dark-amethyst-200/20 rounded-3xl backdrop-blur-sm border border-honeydew-200/30/30"
             />
 
             <div className="absolute inset-0 flex items-center justify-center">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="w-64 h-64 rounded-full border-4 border-honeydew-300 dark:border-indigo-velvet-600 opacity-20"
+                className="w-64 h-64 rounded-full border-4 border-honeydew-300 opacity-20"
               />
             </div>
           </motion.div>

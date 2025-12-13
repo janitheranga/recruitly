@@ -396,8 +396,8 @@ export default function JobsPage() {
                       <span
                         className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                           jobStatus === "Active"
-                            ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400"
-                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
+                            ? "bg-green-100 text-green-800/30"
+                            : "bg-red-100 text-red-800/30"
                         }`}
                       >
                         {jobStatus}
@@ -417,7 +417,7 @@ export default function JobsPage() {
                     <TableCell className="text-right">
                       <button
                         onClick={() => handleEdit(jobId, jobDescription)}
-                        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-amber-50 text-amber-600 hover:text-amber-700 dark:hover:bg-amber-900/30 dark:text-amber-400 transition-colors cursor-pointer text-sm font-medium"
+                        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-amber-50 text-amber-600 hover:text-amber-700:bg-amber-900/30 transition-colors cursor-pointer text-sm font-medium"
                         title="Edit job description"
                       >
                         <Pencil className="h-4 w-4" />

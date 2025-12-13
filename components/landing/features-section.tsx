@@ -40,17 +40,9 @@ export function FeaturesSection() {
           "linear-gradient(135deg, oklch(95.95% 0.003 308.43) 0%, oklch(91.30% 0.023 302.50) 100%)",
       }}
     >
-      {/* Dark mode gradient background */}
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
-        }}
-      />
       {/* Animated gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-10"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.2) 0px, transparent 50%)",
@@ -64,10 +56,10 @@ export function FeaturesSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-dust-grey-50 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
             Powerful Features
           </h2>
-          <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300 max-w-2xl mx-auto">
+          <p className="text-lg text-dust-grey-600 max-w-2xl mx-auto">
             Everything you need to manage your recruitment process efficiently
           </p>
         </motion.div>
@@ -81,7 +73,7 @@ export function FeaturesSection() {
               transition={{ delay: index * 0.2, duration: 0.6 }}
               viewport={{ once: true }}
               whileHover={{ y: -12, scale: 1.02 }}
-              className="group relative p-8 rounded-2xl bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 cursor-pointer smooth-transition shadow-md hover:shadow-glow overflow-hidden"
+              className="group relative p-8 rounded-2xl bg-white border border-dust-grey-200/50 cursor-pointer smooth-transition shadow-md hover:shadow-glow overflow-hidden"
             >
               {/* Gradient overlay on hover */}
               <div
@@ -97,10 +89,10 @@ export function FeaturesSection() {
                 <feature.icon className="h-8 w-8 text-white" />
               </motion.div>
 
-              <h3 className="relative text-xl font-bold text-dust-grey-900 dark:text-dust-grey-50 mb-3 group-hover:text-gradient smooth-transition">
+              <h3 className="relative text-xl font-bold text-dust-grey-900 mb-3 group-hover:text-gradient smooth-transition">
                 {feature.title}
               </h3>
-              <p className="relative text-dust-grey-600 dark:text-dust-grey-400 leading-relaxed">
+              <p className="relative text-dust-grey-600 leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

@@ -51,17 +51,9 @@ export function BrandsSection() {
           "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
       }}
     >
-      {/* Dark mode gradient background */}
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(16.35% 0.034 302.99) 0%, oklch(19.20% 0.047 304.43) 100%)",
-        }}
-      />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-10"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
@@ -72,7 +64,7 @@ export function BrandsSection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-center text-dust-grey-600 dark:text-dust-grey-400 mb-12 font-semibold uppercase tracking-wider"
+          className="text-center text-dust-grey-600 mb-12 font-semibold uppercase tracking-wider"
         >
           Trusted by leading companies
         </motion.p>
@@ -92,14 +84,14 @@ export function BrandsSection() {
                   className="shrink-0"
                   whileHover={{ y: -5, scale: 1.05 }}
                 >
-                  <div className="px-8 py-6 rounded-xl bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700 shadow-md hover:shadow-glow smooth-transition flex flex-col items-center gap-4 min-w-48">
+                  <div className="px-8 py-6 rounded-xl bg-white border border-dust-grey-200 shadow-md hover:shadow-glow smooth-transition flex flex-col items-center gap-4 min-w-48">
                     <div
                       className="w-16 h-16 rounded-lg flex items-center justify-center"
                       style={{ background: brand.gradient }}
                     >
                       <Icon className="w-8 h-8 text-white" />
                     </div>
-                    <p className="font-semibold text-dust-grey-900 dark:text-white text-center whitespace-nowrap">
+                    <p className="font-semibold text-dust-grey-900 text-center whitespace-nowrap">
                       {brand.name}
                     </p>
                   </div>

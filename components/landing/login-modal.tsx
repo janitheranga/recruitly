@@ -39,13 +39,13 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white dark:bg-indigo-velvet-800 rounded-2xl p-8 w-full max-w-md relative shadow-2xl"
+            className="bg-white rounded-2xl p-8 w-full max-w-md relative shadow-2xl"
           >
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={onClose}
-              className="absolute right-4 top-4 p-2 hover:bg-dust-grey-100 dark:hover:bg-indigo-velvet-700 rounded-lg"
+              className="absolute right-4 top-4 p-2 hover:bg-dust-grey-100:bg-indigo-velvet-700 rounded-lg"
             >
               <X className="h-5 w-5" />
             </motion.button>
@@ -59,7 +59,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               <h2 className="text-4xl font-bold text-gradient mb-3">
                 Welcome Back
               </h2>
-              <p className="text-dust-grey-600 dark:text-dust-grey-400 mb-8">
+              <p className="text-dust-grey-600 mb-8">
                 Sign in to continue your recruitment journey
               </p>
             </motion.div>
@@ -72,7 +72,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
               className="space-y-4"
             >
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-dust-grey-50 mb-2">
+                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
                   Email
                 </label>
                 <input
@@ -80,12 +80,12 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-dust-grey-300 dark:border-indigo-velvet-600 bg-white dark:bg-indigo-velvet-700 text-dust-grey-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-honeydew-500 smooth-transition"
+                  className="w-full px-4 py-3 rounded-xl border border-dust-grey-300 bg-white text-dust-grey-900 focus:outline-none focus:ring-2 focus:ring-honeydew-500 smooth-transition"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-dust-grey-50 mb-2">
+                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
                   Password
                 </label>
                 <input
@@ -93,7 +93,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-dust-grey-300 dark:border-indigo-velvet-600 bg-white dark:bg-indigo-velvet-700 text-dust-grey-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-honeydew-500 smooth-transition"
+                  className="w-full px-4 py-3 rounded-xl border border-dust-grey-300 bg-white text-dust-grey-900 focus:outline-none focus:ring-2 focus:ring-honeydew-500 smooth-transition"
                 />
               </div>
 
@@ -110,7 +110,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 </Button>
               </motion.div>
 
-              <p className="text-center text-dust-grey-600 dark:text-dust-grey-400 mt-6">
+              <p className="text-center text-dust-grey-600 mt-6">
                 Don't have an account?{" "}
                 <button
                   type="button"

@@ -60,17 +60,9 @@ export function PricingSection() {
           "linear-gradient(135deg, oklch(91.30% 0.023 302.50) 0%, oklch(95.95% 0.003 308.43) 100%)",
       }}
     >
-      {/* Dark mode gradient background */}
-      <div
-        className="absolute inset-0 dark:block hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
-        }}
-      />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-15 dark:opacity-10"
+        className="absolute inset-0 opacity-15"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(70.96% 0.218 317.01 / 0.15) 0px, transparent 50%)",
@@ -84,10 +76,10 @@ export function PricingSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-dust-grey-50 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300 max-w-2xl mx-auto">
+          <p className="text-lg text-dust-grey-600 max-w-2xl mx-auto">
             Choose the perfect plan for your team
           </p>
         </motion.div>
@@ -104,7 +96,7 @@ export function PricingSection() {
               className={`group relative rounded-2xl cursor-pointer smooth-transition overflow-visible flex flex-col p-2 min-h-130 ${
                 plan.highlighted
                   ? "text-white shadow-glow-lg md:scale-105"
-                  : "bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 shadow-md hover:shadow-glow"
+                  : "bg-white border border-dust-grey-200/50 shadow-md hover:shadow-glow"
               }`}
               style={
                 plan.highlighted ? { background: accentGradient } : undefined
@@ -141,16 +133,14 @@ export function PricingSection() {
                 <div className="flex-1">
                   <h3
                     className={`text-2xl font-bold mb-2 ${
-                      !plan.highlighted && "text-dust-grey-900 dark:text-white"
+                      !plan.highlighted && "text-dust-grey-900"
                     }`}
                   >
                     {plan.name}
                   </h3>
                   <p
                     className={`mb-6 text-sm ${
-                      plan.highlighted
-                        ? "text-white/80"
-                        : "text-dust-grey-600 dark:text-dust-grey-400"
+                      plan.highlighted ? "text-white/80" : "text-dust-grey-600"
                     }`}
                   >
                     {plan.description}
@@ -159,8 +149,7 @@ export function PricingSection() {
                   <div className="mb-8">
                     <span
                       className={`text-4xl font-bold ${
-                        !plan.highlighted &&
-                        "text-dust-grey-900 dark:text-white"
+                        !plan.highlighted && "text-dust-grey-900"
                       }`}
                     >
                       {plan.price}
@@ -170,7 +159,7 @@ export function PricingSection() {
                         className={`text-sm ml-1 ${
                           plan.highlighted
                             ? "text-white/70"
-                            : "text-dust-grey-600 dark:text-dust-grey-400"
+                            : "text-dust-grey-600"
                         }`}
                       >
                         /month
@@ -185,14 +174,14 @@ export function PricingSection() {
                           className={`h-5 w-5 shrink-0 mt-0.5 ${
                             plan.highlighted
                               ? "text-white"
-                              : "text-honeydew-500 dark:text-honeydew-400"
+                              : "text-honeydew-500"
                           }`}
                         />
                         <span
                           className={`text-sm leading-relaxed ${
                             plan.highlighted
                               ? "text-white/90"
-                              : "text-dust-grey-700 dark:text-dust-grey-300"
+                              : "text-dust-grey-700"
                           }`}
                         >
                           {feature}

@@ -165,7 +165,7 @@ export default function DashboardPage() {
 
   // Prepare line chart data (last 7 days)
   const last7Days = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date();
+    const date = new Date("2025-11-24");
     date.setDate(date.getDate() - (6 - i));
     return date;
   });
@@ -227,7 +227,7 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1 }}
-        className="text-3xl font-bold text-slate-900 dark:text-white"
+        className="text-3xl font-bold text-slate-900"
       >
         Dashboard
       </motion.h1>
@@ -241,7 +241,7 @@ export default function DashboardPage() {
           transition={{ delay: 0.2 }}
           whileHover={{ y: -5 }}
         >
-          <Card className="bg-white dark:bg-slate-800 cursor-pointer">
+          <Card className="bg-white cursor-pointer">
             <CardHeader>
               <CardTitle>Job Status</CardTitle>
             </CardHeader>
@@ -313,7 +313,7 @@ export default function DashboardPage() {
           transition={{ delay: 0.3 }}
           whileHover={{ y: -5 }}
         >
-          <Card className="bg-white dark:bg-slate-800 cursor-pointer">
+          <Card className="bg-white cursor-pointer">
             <CardHeader>
               <CardTitle>Applicant Distribution</CardTitle>
             </CardHeader>
@@ -388,7 +388,7 @@ export default function DashboardPage() {
         transition={{ delay: 0.4 }}
         whileHover={{ y: -5 }}
       >
-        <Card className="bg-white dark:bg-slate-800 cursor-pointer">
+        <Card className="bg-white cursor-pointer">
           <CardHeader>
             <CardTitle>Applicants Trend (Last 7 Days)</CardTitle>
           </CardHeader>
@@ -397,7 +397,7 @@ export default function DashboardPage() {
               <LineChart data={lineChartData} style={{ cursor: "pointer" }}>
                 <CartesianGrid
                   strokeDasharray="3 3"
-                  className="stroke-slate-200 dark:stroke-slate-700"
+                  className="stroke-slate-200"
                 />
                 <XAxis dataKey="day" className="text-xs" />
                 <YAxis className="text-xs" />

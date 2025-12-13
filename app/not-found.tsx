@@ -7,7 +7,7 @@ import { ArrowLeft, Home } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-lilac-ash-50 to-lilac-ash-100 dark:from-indigo-velvet-950 dark:to-indigo-velvet-900 flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-linear-to-br from-lilac-ash-50 to-lilac-ash-100 flex flex-col items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -39,10 +39,10 @@ export default function NotFound() {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="space-y-4"
         >
-          <h1 className="text-5xl sm:text-6xl font-bold text-slate-900 dark:text-white">
+          <h1 className="text-5xl sm:text-6xl font-bold text-slate-900">
             Page Not Found
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-lg mx-auto">
+          <p className="text-xl text-slate-600 max-w-lg mx-auto">
             Sorry, the page you're looking for doesn't exist or has been moved.
             Let's get you back on track.
           </p>
@@ -97,7 +97,7 @@ export default function NotFound() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="absolute bottom-8 text-center text-slate-600 dark:text-slate-400"
+        className="absolute bottom-8 text-center text-slate-600"
       >
         <p>© {new Date().getFullYear()} Recruitly. All rights reserved.</p>
       </motion.footer>

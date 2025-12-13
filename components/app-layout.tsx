@@ -6,8 +6,6 @@ import {
   BarChart3,
   Users,
   Search,
-  Moon,
-  Sun,
   User,
   Menu,
   X,
@@ -15,7 +13,6 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "./ui/button";
-import { useTheme } from "next-themes";
 import { Input } from "./ui/input";
 import {
   DropdownMenu,
@@ -36,19 +33,13 @@ const navigation = [
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { theme, setTheme, resolvedTheme } = useTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
 
   const filteredNavigation = navigation.filter((item) =>
     item.name.toLowerCase().includes(searchQuery.trim().toLowerCase())
   );
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div
@@ -143,33 +134,18 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             </form>
           </div>
 
-          {/* Right Section: Theme & Profile */}
+          {/* Right Section: Profile */}
           <div className="flex items-center gap-1 sm:gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="cursor-pointer"
-              onClick={() =>
-                setTheme(resolvedTheme === "dark" ? "light" : "dark")
-              }
-            >
-              {!mounted ? (
-                <Moon className="h-5 w-5" />
-              ) : resolvedTheme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-              <span className="sr-only">Toggle theme</span>
-            </Button>
-
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="cursor-pointer">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-(--color-background)/95">
+              <DropdownMenuContent
+                align="end"
+                className="bg-(--color-background)/95"
+              >
                 <DropdownMenuItem>Profile</DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Logout</DropdownMenuItem>
