@@ -84,7 +84,7 @@ export function PricingSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto items-start">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -92,119 +92,140 @@ export function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
               viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className={`group relative rounded-2xl cursor-pointer smooth-transition overflow-visible flex flex-col p-2 min-h-130 ${
+              whileHover={{ y: -5 }}
+              className={`group relative rounded-3xl cursor-pointer smooth-transition flex flex-col ${
                 plan.highlighted
-                  ? "text-white shadow-glow-lg md:scale-105"
-                  : "bg-white border border-dust-grey-200/50 shadow-md hover:shadow-glow"
+                  ? "text-white shadow-2xl transform scale-105"
+                  : "bg-white/95 backdrop-blur-sm shadow-lg hover:shadow-xl"
               }`}
               style={
-                plan.highlighted ? { background: accentGradient } : undefined
+                plan.highlighted
+                  ? {
+                      background:
+                        "linear-gradient(135deg, oklch(81.74% 0.163 128.60) 0%, oklch(70.96% 0.218 317.01) 100%)",
+                    }
+                  : {
+                      border: "1px solid oklch(92.88% 0.007 115.71)",
+                    }
               }
             >
               {plan.highlighted && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20"
+                <div
+                  className="absolute -top-3 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold shadow-lg z-20 whitespace-nowrap"
                   style={{
-                    background:
-                      "linear-gradient(135deg, oklch(81.74% 0.163 128.60), oklch(70.96% 0.218 317.01))",
+                    background: "oklch(81.74% 0.163 128.60)",
                     color: "white",
                   }}
                 >
                   ⭐ Most Popular
-                </motion.div>
+                </div>
               )}
 
               {!plan.highlighted && (
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 smooth-transition rounded-2xl"
-                  style={{ background: meshGradient }}
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 smooth-transition rounded-3xl"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(77.63% 0.191 130.21), oklch(70.96% 0.218 317.01))",
+                  }}
                 />
               )}
 
               <div
-                className={`relative z-10 p-8 flex flex-col h-full ${
-                  plan.highlighted ? "pt-12" : ""
+                className={`relative z-10 p-8 flex flex-col ${
+                  plan.highlighted ? "pt-12" : "pt-8"
                 }`}
               >
-                <div className="flex-1">
+                {/* Header */}
+                <div className="mb-6">
                   <h3
-                    className={`text-2xl font-bold mb-2 ${
-                      !plan.highlighted && "text-dust-grey-900"
+                    className={`text-2xl font-extrabold mb-2 ${
+                      !plan.highlighted && "text-dust-grey-950"
                     }`}
                   >
                     {plan.name}
                   </h3>
                   <p
-                    className={`mb-6 text-sm ${
+                    className={`text-sm ${
                       plan.highlighted ? "text-white/80" : "text-dust-grey-600"
                     }`}
                   >
                     {plan.description}
                   </p>
+                </div>
 
-                  <div className="mb-8">
+                {/* Price */}
+                <div className="mb-8">
+                  <div className="flex items-baseline gap-1">
                     <span
-                      className={`text-4xl font-bold ${
-                        !plan.highlighted && "text-dust-grey-900"
+                      className={`text-5xl font-extrabold tracking-tight ${
+                        !plan.highlighted && "text-dust-grey-950"
                       }`}
                     >
                       {plan.price}
                     </span>
                     {plan.price !== "Custom" && (
                       <span
-                        className={`text-sm ml-1 ${
+                        className={`text-sm font-medium ${
                           plan.highlighted
-                            ? "text-white/70"
-                            : "text-dust-grey-600"
+                            ? "text-white/60"
+                            : "text-dust-grey-500"
                         }`}
                       >
                         /month
                       </span>
                     )}
                   </div>
-
-                  <ul className="space-y-4 mb-8">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <Check
-                          className={`h-5 w-5 shrink-0 mt-0.5 ${
-                            plan.highlighted
-                              ? "text-white"
-                              : "text-honeydew-500"
-                          }`}
-                        />
-                        <span
-                          className={`text-sm leading-relaxed ${
-                            plan.highlighted
-                              ? "text-white/90"
-                              : "text-dust-grey-700"
-                          }`}
-                        >
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
+                {/* Features */}
+                <ul className="space-y-4 mb-8 flex-grow">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3">
+                      <Check
+                        className={`h-5 w-5 shrink-0 mt-0.5 ${
+                          plan.highlighted ? "text-white" : "text-honeydew-600"
+                        }`}
+                      />
+                      <span
+                        className={`text-sm ${
+                          plan.highlighted
+                            ? "text-white/90"
+                            : "text-dust-grey-700"
+                        }`}
+                      >
+                        {feature}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Button */}
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-auto"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <Button
-                    className={`w-full cursor-pointer font-semibold ${
-                      plan.highlighted
-                        ? "bg-(--color-honeydew-500) text-white hover:bg-(--color-honeydew-400) border-2 border-(--color-honeydew-400)"
-                        : "bg-(--color-dust-grey-200) hover:bg-(--color-dust-grey-300) text-(--color-dust-grey-900) shadow-md border-2 border-(--color-dust-grey-100) hover:shadow-lg"
-                    }`}
-                  >
-                    Get Started
-                  </Button>
+                  {plan.highlighted ? (
+                    <Button
+                      className="w-full cursor-pointer font-bold text-base py-6 shadow-lg hover:shadow-xl transition-all"
+                      style={{
+                        background: "white",
+                        color: "oklch(77.63% 0.191 130.21)",
+                      }}
+                    >
+                      Get Started
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full cursor-pointer font-bold text-base py-6 transition-all"
+                      style={{
+                        background: "oklch(22.35% 0.010 116.36)",
+                        color: "white",
+                      }}
+                    >
+                      Get Started
+                    </Button>
+                  )}
                 </motion.div>
               </div>
             </motion.div>
