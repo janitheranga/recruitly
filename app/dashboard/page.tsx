@@ -22,16 +22,10 @@ import {
 import { mockJobs, mockApplicants, mockApplicantData } from "@/lib/data";
 import { useState, useEffect } from "react";
 
-type ChartClickType = "total" | "active" | "closed";
-type ApplicantChartClickType = "total" | "top" | "potential" | "under";
-
 type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
 type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
 
 export default function DashboardPage() {
-  const [jobChartCenter, setJobChartCenter] = useState<ChartClickType>("total");
-  const [applicantChartCenter, setApplicantChartCenter] =
-    useState<ApplicantChartClickType>("total");
   const [supabaseJobs, setSupabaseJobs] = useState<SupabaseJob[]>([]);
   const [supabaseApplicants, setSupabaseApplicants] = useState<
     SupabaseApplicant[]
@@ -39,8 +33,12 @@ export default function DashboardPage() {
   const [useSupabase, setUseSupabase] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [lineColors, setLineColors] = useState<string[]>([]);
-  const [jobStatusDoughnutColors, setJobStatusDoughnutColors] = useState<string[]>([]);
-  const [applicantDoughnutColors, setApplicantDoughnutColors] = useState<string[]>([]);
+  const [jobStatusDoughnutColors, setJobStatusDoughnutColors] = useState<
+    string[]
+  >([]);
+  const [applicantDoughnutColors, setApplicantDoughnutColors] = useState<
+    string[]
+  >([]);
 
   // Load jobs from Supabase
   useEffect(() => {
@@ -135,30 +133,6 @@ export default function DashboardPage() {
     },
   ];
 
-  const getJobCenterText = () => {
-    switch (jobChartCenter) {
-      case "active":
-        return activeJobs;
-      case "closed":
-        return closedJobs;
-      default:
-        return totalJobs;
-    }
-  };
-
-  const getApplicantCenterText = () => {
-    switch (applicantChartCenter) {
-      case "top":
-        return topPerformers;
-      case "potential":
-        return potential;
-      case "under":
-        return underPerformers;
-      default:
-        return totalApplicants;
-    }
-  };
-
   // Prepare line chart data (last 7 days)
   const last7Days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date("2025-11-24");
@@ -251,11 +225,6 @@ export default function DashboardPage() {
                     innerRadius={80}
                     outerRadius={120}
                     dataKey="value"
-                    onClick={(_, index) => {
-                      if (index === 0) setJobChartCenter("active");
-                      else if (index === 1) setJobChartCenter("closed");
-                    }}
-                    style={{ cursor: "pointer" }}
                   >
                     {jobData.map((entry, index) => (
                       <Cell
@@ -267,19 +236,29 @@ export default function DashboardPage() {
                   </Pie>
                   <text
                     x="50%"
-                    y="50%"
+                    y="48%"
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="text-2xl font-bold"
-                    onClick={() => setJobChartCenter("total")}
                     style={{
-                      cursor: "pointer",
+                      fontSize: "28px",
+                      fontWeight: 800,
+                      fill: "var(--color-dust-grey-900)",
                     }}
                   >
-                    {getJobCenterText()}
-                    <span className="text-(--color-honeydew-500) text-sm block font-normal">
-                      Total
-                    </span>
+                    {totalJobs}
+                  </text>
+                  <text
+                    x="50%"
+                    y="56%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      fill: "var(--color-honeydew-700)",
+                    }}
+                  >
+                    Total
                   </text>
                 </PieChart>
               </ResponsiveContainer>
@@ -325,13 +304,6 @@ export default function DashboardPage() {
                     innerRadius={80}
                     outerRadius={120}
                     dataKey="value"
-                    onClick={(_, index) => {
-                      if (index === 0) setApplicantChartCenter("top");
-                      else if (index === 1)
-                        setApplicantChartCenter("potential");
-                      else if (index === 2) setApplicantChartCenter("under");
-                    }}
-                    style={{ cursor: "pointer" }}
                   >
                     {applicantData.map((entry, index) => (
                       <Cell
@@ -343,17 +315,29 @@ export default function DashboardPage() {
                   </Pie>
                   <text
                     x="50%"
-                    y="50%"
+                    y="48%"
                     textAnchor="middle"
                     dominantBaseline="middle"
-                    className="text-2xl font-bold"
-                    onClick={() => setApplicantChartCenter("total")}
                     style={{
-                      cursor: "pointer",
-                      fill: "var(--color-foreground)",
+                      fontSize: "28px",
+                      fontWeight: 800,
+                      fill: "var(--color-dust-grey-900)",
                     }}
                   >
-                    {getApplicantCenterText()}
+                    {totalApplicants}
+                  </text>
+                  <text
+                    x="50%"
+                    y="56%"
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      fill: "var(--color-honeydew-700)",
+                    }}
+                  >
+                    Total
                   </text>
                 </PieChart>
               </ResponsiveContainer>
