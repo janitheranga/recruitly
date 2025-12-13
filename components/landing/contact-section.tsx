@@ -31,7 +31,7 @@ export function ContactSection() {
     >
       {/* Light mode fallback background */}
       <div
-        className="absolute inset-0 block"
+        className="absolute inset-0 block dark:hidden"
         style={{
           background:
             "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
@@ -39,7 +39,7 @@ export function ContactSection() {
       />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-20 dark:opacity-15"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
@@ -56,10 +56,10 @@ export function ContactSection() {
             className="space-y-8"
           >
             <div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 mb-4">
+              <h2 className="text-4xl sm:text-5xl font-bold text-dust-grey-900 dark:text-white mb-4">
                 Get in Touch
               </h2>
-              <p className="text-lg text-dust-grey-600">
+              <p className="text-lg text-dust-grey-600 dark:text-dust-grey-300">
                 Have questions? We'd love to hear from you. Send us a message
                 and we'll respond as soon as possible.
               </p>
@@ -80,14 +80,16 @@ export function ContactSection() {
                   whileHover={{ x: 10 }}
                   className="flex gap-4"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-honeydew-100/50 flex items-center justify-center shrink-0">
-                    <contact.icon className="h-6 w-6 text-honeydew-500" />
+                  <div className="w-12 h-12 rounded-lg bg-honeydew-100 dark:bg-indigo-velvet-800/50 flex items-center justify-center shrink-0">
+                    <contact.icon className="h-6 w-6 text-honeydew-500 dark:text-honeydew-400" />
                   </div>
                   <div>
-                    <p className="font-semibold text-dust-grey-900">
+                    <p className="font-semibold text-dust-grey-900 dark:text-white">
                       {contact.label}
                     </p>
-                    <p className="text-dust-grey-600">{contact.value}</p>
+                    <p className="text-dust-grey-600 dark:text-dust-grey-400">
+                      {contact.value}
+                    </p>
                   </div>
                 </motion.div>
               ))}
@@ -101,15 +103,36 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="relative p-8 rounded-2xl border border-dust-grey-200/50 shadow-lg overflow-hidden"
+            className="relative p-10 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm"
             style={{
               background:
-                "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
+                "linear-gradient(135deg, oklch(95.23% 0.043 125.79) 0%, oklch(91.88% 0.007 304.24) 50%, oklch(90.40% 0.033 307.15) 100%)",
+              border: "2px solid oklch(97.63% 0.022 123.62)",
+              boxShadow:
+                "0 20px 60px -15px oklch(77.63% 0.191 130.21 / 0.3), 0 0 0 1px oklch(95.23% 0.043 125.79 / 0.5)",
             }}
           >
+            {/* Gradient accent overlay */}
+            <div
+              className="absolute inset-0 opacity-40"
+              style={{
+                background:
+                  "radial-gradient(circle at top right, oklch(77.63% 0.191 130.21 / 0.2) 0%, transparent 60%), radial-gradient(circle at bottom left, oklch(70.96% 0.218 317.01 / 0.15) 0%, transparent 60%)",
+              }}
+            />
+
             <div className="relative z-10 space-y-6">
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold text-dust-grey-900 mb-2">
+                  Send us a message
+                </h3>
+                <p className="text-dust-grey-600">
+                  We'll get back to you within 24 hours
+                </p>
+              </div>
+
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
+                <label className="block text-base font-bold text-dust-grey-950 mb-2">
                   Name
                 </label>
                 <Input
@@ -119,12 +142,12 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
+                <label className="block text-base font-bold text-dust-grey-950 mb-2">
                   Email
                 </label>
                 <Input
@@ -134,12 +157,12 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-dust-grey-900 mb-2">
+                <label className="block text-base font-bold text-dust-grey-950 mb-2">
                   Message
                 </label>
                 <Textarea
@@ -148,18 +171,23 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all resize-none"
                   rows={5}
                 />
               </div>
 
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="pt-2"
               >
                 <Button
                   type="submit"
-                  className="w-full cursor-pointer bg-honeydew-500 hover:bg-honeydew-600 text-white font-semibold shadow-md"
+                  className="w-full cursor-pointer text-white font-bold text-lg py-7 shadow-xl hover:shadow-2xl transition-all"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(77.63% 0.191 130.21) 0%, oklch(70.96% 0.218 317.01) 100%)",
+                  }}
                 >
                   Send Message
                 </Button>
