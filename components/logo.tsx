@@ -27,8 +27,7 @@ export function Logo({
   };
 
   return (
-    <Link href="/">
-      <motion.div
+    <motion.div
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
@@ -108,6 +107,5 @@ export function Logo({
 
         {showText && <span>Recruitly</span>}
       </motion.div>
-    </Link>
   );
 }

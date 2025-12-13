@@ -48,7 +48,9 @@ export function LandingFooter() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Logo Section */}
           <motion.div whileHover={{ scale: 1.02 }} className="space-y-4">
-            <Logo size="sm" showText={true} />
+            <Link href="/">
+              <Logo size="sm" showText={true} />
+            </Link>
             <p className="text-dust-grey-300 leading-relaxed pt-4">
               Next-generation recruitment platform powered by AI, designed for
               modern, growing teams.

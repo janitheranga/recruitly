@@ -92,7 +92,7 @@ export function PricingSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -100,10 +100,10 @@ export function PricingSection() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
               viewport={{ once: true }}
-              whileHover={{ y: -12, scale: plan.highlighted ? 1.08 : 1.02 }}
-              className={`group relative p-8 rounded-2xl cursor-pointer smooth-transition overflow-hidden ${
+              whileHover={{ y: -8 }}
+              className={`group relative rounded-2xl cursor-pointer smooth-transition overflow-visible flex flex-col p-2 min-h-130 ${
                 plan.highlighted
-                  ? "text-white shadow-glow-lg scale-105"
+                  ? "text-white shadow-glow-lg md:scale-105"
                   : "bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 shadow-md hover:shadow-glow"
               }`}
               style={
@@ -115,7 +115,12 @@ export function PricingSection() {
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="absolute -top-4 left-8 px-4 py-1.5 bg-white text-dark-amethyst-600 rounded-full text-sm font-bold shadow-md"
+                  className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-4 py-1.5 rounded-full text-sm font-bold shadow-lg z-20"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(81.74% 0.163 128.60), oklch(70.96% 0.218 317.01))",
+                    color: "white",
+                  }}
                 >
                   ⭐ Most Popular
                 </motion.div>
@@ -123,60 +128,96 @@ export function PricingSection() {
 
               {!plan.highlighted && (
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 smooth-transition"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 smooth-transition rounded-2xl"
                   style={{ background: meshGradient }}
                 />
               )}
 
-              <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-              <p
-                className={`mb-6 ${
-                  plan.highlighted
-                    ? "text-white/80"
-                    : "text-dust-grey-600 dark:text-dust-grey-400"
+              <div
+                className={`relative z-10 p-8 flex flex-col h-full ${
+                  plan.highlighted ? "pt-12" : ""
                 }`}
               >
-                {plan.description}
-              </p>
-
-              <div className="mb-6">
-                <span className="text-4xl font-bold">{plan.price}</span>
-                {plan.price !== "Custom" && (
-                  <span
-                    className={
-                      plan.highlighted
-                        ? "text-white/70"
-                        : "text-dust-grey-600 dark:text-dust-grey-400"
-                    }
+                <div className="flex-1">
+                  <h3
+                    className={`text-2xl font-bold mb-2 ${
+                      !plan.highlighted && "text-dust-grey-900 dark:text-white"
+                    }`}
                   >
-                    /month
-                  </span>
-                )}
-              </div>
+                    {plan.name}
+                  </h3>
+                  <p
+                    className={`mb-6 text-sm ${
+                      plan.highlighted
+                        ? "text-white/80"
+                        : "text-dust-grey-600 dark:text-dust-grey-400"
+                    }`}
+                  >
+                    {plan.description}
+                  </p>
 
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  className={`w-full cursor-pointer mb-8 ${
-                    plan.highlighted
-                      ? "bg-white text-dark-amethyst-500 hover:bg-white/90"
-                      : "bg-honeydew-500 hover:bg-honeydew-600 text-white"
-                  }`}
+                  <div className="mb-8">
+                    <span
+                      className={`text-4xl font-bold ${
+                        !plan.highlighted &&
+                        "text-dust-grey-900 dark:text-white"
+                      }`}
+                    >
+                      {plan.price}
+                    </span>
+                    {plan.price !== "Custom" && (
+                      <span
+                        className={`text-sm ml-1 ${
+                          plan.highlighted
+                            ? "text-white/70"
+                            : "text-dust-grey-600 dark:text-dust-grey-400"
+                        }`}
+                      >
+                        /month
+                      </span>
+                    )}
+                  </div>
+
+                  <ul className="space-y-4 mb-8">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <Check
+                          className={`h-5 w-5 shrink-0 mt-0.5 ${
+                            plan.highlighted
+                              ? "text-white"
+                              : "text-honeydew-500 dark:text-honeydew-400"
+                          }`}
+                        />
+                        <span
+                          className={`text-sm leading-relaxed ${
+                            plan.highlighted
+                              ? "text-white/90"
+                              : "text-dust-grey-700 dark:text-dust-grey-300"
+                          }`}
+                        >
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="mt-auto"
                 >
-                  Get Started
-                </Button>
-              </motion.div>
-
-              <ul className="space-y-4">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3">
-                    <Check className="h-5 w-5 shrink-0" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
+                  <Button
+                    className={`w-full cursor-pointer font-semibold ${
+                      plan.highlighted
+                        ? "bg-(--color-honeydew-500) text-white hover:bg-(--color-honeydew-400) border-2 border-(--color-honeydew-400)"
+                        : "bg-(--color-dust-grey-200) hover:bg-(--color-dust-grey-300) text-(--color-dust-grey-900) shadow-md border-2 border-(--color-dust-grey-100) hover:shadow-lg"
+                    }`}
+                  >
+                    Get Started
+                  </Button>
+                </motion.div>
+              </div>
             </motion.div>
           ))}
         </div>

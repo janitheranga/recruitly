@@ -45,7 +45,7 @@ export function ContactSection() {
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
         }}
       />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Column - Info */}
           <motion.div
@@ -103,61 +103,77 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="p-8 rounded-2xl bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 space-y-6 shadow-sm"
+            className="relative p-8 rounded-2xl border border-dust-grey-200 dark:border-indigo-velvet-700/50 shadow-lg overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
+            }}
           >
-            <div>
-              <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
-                Name
-              </label>
-              <Input
-                type="text"
-                placeholder="Your name"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full"
-              />
-            </div>
+            <div
+              className="absolute inset-0 rounded-2xl dark:block hidden -z-10"
+              style={{
+                background:
+                  "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
+              }}
+            />
+            <div className="relative z-10 space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                  Name
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
-                Email
-              </label>
-              <Input
-                type="email"
-                placeholder="your@email.com"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full"
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full"
+                />
+              </div>
 
-            <div>
-              <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
-                Message
-              </label>
-              <Textarea
-                placeholder="Your message..."
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className="w-full"
-                rows={5}
-              />
-            </div>
+              <div>
+                <label className="block text-sm font-semibold text-dust-grey-900 dark:text-white mb-2">
+                  Message
+                </label>
+                <Textarea
+                  placeholder="Your message..."
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                  className="w-full"
+                  rows={5}
+                />
+              </div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button
-                type="submit"
-                className="w-full cursor-pointer bg-honeydew-500 hover:bg-honeydew-600 text-slate-900 font-semibold"
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Send Message
-              </Button>
-            </motion.div>
+                <Button
+                  type="submit"
+                  className="w-full cursor-pointer bg-honeydew-500 hover:bg-honeydew-600 text-white font-semibold shadow-md"
+                >
+                  Send Message
+                </Button>
+              </motion.div>
+            </div>
           </motion.form>
         </div>
       </div>
