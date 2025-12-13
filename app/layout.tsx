@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { AppLayout } from "@/components/app-layout";
+import { ReactNode } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,14 +10,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Recruitly - Applicant Tracking System",
-  description: "Modern recruiter platform to track and review job applicants",
+  title: "Recruitly - Modern Recruitment Platform",
+  description:
+    "Streamline your hiring with AI-powered candidate matching and real-time analytics",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -28,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AppLayout>{children}</AppLayout>
+          {children}
         </ThemeProvider>
       </body>
     </html>

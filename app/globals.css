@@ -2,53 +2,152 @@
 
 @layer theme {
   :root {
-    --color-background: oklch(100% 0 0);
-    --color-foreground: oklch(13.85% 0.0238 265.75);
-    --color-card: oklch(100% 0 0);
-    --color-card-foreground: oklch(13.85% 0.0238 265.75);
-    --color-popover: oklch(100% 0 0);
-    --color-popover-foreground: oklch(13.85% 0.0238 265.75);
-    --color-primary: oklch(56.79% 0.1737 262.29);
-    --color-primary-foreground: oklch(97.78% 0.0078 264.53);
-    --color-secondary: oklch(96.72% 0.0043 264.54);
-    --color-secondary-foreground: oklch(16.86% 0.0283 265.75);
-    --color-muted: oklch(96.72% 0.0043 264.54);
-    --color-muted-foreground: oklch(54.77% 0.0217 256.11);
-    --color-accent: oklch(96.72% 0.0043 264.54);
-    --color-accent-foreground: oklch(16.86% 0.0283 265.75);
-    --color-destructive: oklch(62.8% 0.2273 27.33);
-    --color-destructive-foreground: oklch(97.78% 0.0078 264.53);
-    --color-border: oklch(92.18% 0.0126 264.54);
-    --color-input: oklch(92.18% 0.0126 264.54);
-    --color-ring: oklch(56.79% 0.1737 262.29);
-    --radius: 0.5rem;
-  }
+    /* Honeydew Color Palette */
+    --color-honeydew-50: oklch(97.63% 0.022 123.62);
+    --color-honeydew-100: oklch(95.23% 0.043 125.79);
+    --color-honeydew-200: oklch(90.57% 0.086 126.53);
+    --color-honeydew-300: oklch(86.07% 0.127 127.44);
+    --color-honeydew-400: oklch(81.74% 0.163 128.60);
+    --color-honeydew-500: oklch(77.63% 0.191 130.21);
+    --color-honeydew-600: oklch(65.83% 0.160 130.08);
+    --color-honeydew-700: oklch(53.48% 0.128 129.90);
+    --color-honeydew-800: oklch(40.36% 0.093 129.56);
+    --color-honeydew-900: oklch(26.06% 0.054 128.79);
+    --color-honeydew-950: oklch(21.54% 0.041 127.81);
 
-  .dark {
-    --color-background: oklch(20% 0.0238 265.75);
-    --color-foreground: oklch(75% 0.0078 264.53);
-    --color-card: oklch(20% 0.0238 265.75);
-    --color-card-foreground: oklch(75% 0.0078 264.53);
-    --color-popover: oklch(20% 0.0238 265.75);
-    --color-popover-foreground: oklch(75% 0.0078 264.53);
-    --color-primary: oklch(64.53% 0.2545 264.46);
-    --color-primary-foreground: oklch(16.86% 0.0283 265.75);
-    --color-secondary: oklch(28% 0.0263 265.75);
-    --color-secondary-foreground: oklch(75% 0.0078 264.53);
-    --color-muted: oklch(28% 0.0263 265.75);
-    --color-muted-foreground: oklch(58% 0.0223 256.27);
-    --color-accent: oklch(28% 0.0263 265.75);
-    --color-accent-foreground: oklch(75% 0.0078 264.53);
-    --color-destructive: oklch(37.07% 0.1733 30.92);
-    --color-destructive-foreground: oklch(75% 0.0078 264.53);
-    --color-border: oklch(32% 0.0263 265.75);
-    --color-input: oklch(25% 0.0263 265.75);
-    --color-ring: oklch(51.35% 0.2255 266.29);
+    /* Dust Grey Color Palette */
+    --color-dust-grey-50: oklch(96.36% 0.003 106.45);
+    --color-dust-grey-100: oklch(92.88% 0.007 115.71);
+    --color-dust-grey-200: oklch(85.46% 0.011 112.40);
+    --color-dust-grey-300: oklch(78.05% 0.018 113.92);
+    --color-dust-grey-400: oklch(70.28% 0.023 112.77);
+    --color-dust-grey-500: oklch(62.49% 0.031 113.89);
+    --color-dust-grey-600: oklch(53.17% 0.024 113.01);
+    --color-dust-grey-700: oklch(43.63% 0.021 114.37);
+    --color-dust-grey-800: oklch(33.31% 0.014 112.93);
+    --color-dust-grey-900: oklch(22.35% 0.010 116.36);
+    --color-dust-grey-950: oklch(18.55% 0.006 106.97);
+
+    /* Lilac Ash Color Palette */
+    --color-lilac-ash-50: oklch(95.95% 0.003 308.43);
+    --color-lilac-ash-100: oklch(91.88% 0.007 304.24);
+    --color-lilac-ash-200: oklch(83.59% 0.014 304.10);
+    --color-lilac-ash-300: oklch(75.18% 0.019 299.96);
+    --color-lilac-ash-400: oklch(66.44% 0.027 300.84);
+    --color-lilac-ash-500: oklch(57.42% 0.036 301.13);
+    --color-lilac-ash-600: oklch(49.05% 0.029 300.53);
+    --color-lilac-ash-700: oklch(40.30% 0.022 299.46);
+    --color-lilac-ash-800: oklch(30.94% 0.018 303.49);
+    --color-lilac-ash-900: oklch(20.91% 0.010 303.65);
+    --color-lilac-ash-950: oklch(17.56% 0.006 300.91);
+
+    /* Dark Amethyst Color Palette */
+    --color-dark-amethyst-50: oklch(94.82% 0.035 317.31);
+    --color-dark-amethyst-100: oklch(89.55% 0.073 317.43);
+    --color-dark-amethyst-200: oklch(79.66% 0.148 317.18);
+    --color-dark-amethyst-300: oklch(70.96% 0.218 317.01);
+    --color-dark-amethyst-400: oklch(64.01% 0.270 315.85);
+    --color-dark-amethyst-500: oklch(59.66% 0.293 313.57);
+    --color-dark-amethyst-600: oklch(50.62% 0.247 313.83);
+    --color-dark-amethyst-700: oklch(41.15% 0.199 314.24);
+    --color-dark-amethyst-800: oklch(30.95% 0.148 314.35);
+    --color-dark-amethyst-900: oklch(19.97% 0.092 315.80);
+    --color-dark-amethyst-950: oklch(16.28% 0.075 317.51);
+
+    /* Indigo Velvet Color Palette */
+    --color-indigo-velvet-50: oklch(95.31% 0.016 306.41);
+    --color-indigo-velvet-100: oklch(90.40% 0.033 307.15);
+    --color-indigo-velvet-200: oklch(80.83% 0.065 306.59);
+    --color-indigo-velvet-300: oklch(70.92% 0.101 305.15);
+    --color-indigo-velvet-400: oklch(61.12% 0.138 304.15);
+    --color-indigo-velvet-500: oklch(51.60% 0.173 302.32);
+    --color-indigo-velvet-600: oklch(44.11% 0.144 302.38);
+    --color-indigo-velvet-700: oklch(36.30% 0.113 302.46);
+    --color-indigo-velvet-800: oklch(28.18% 0.080 303.72);
+    --color-indigo-velvet-900: oklch(19.20% 0.047 304.43);
+    --color-indigo-velvet-950: oklch(16.35% 0.034 302.99);
   }
 }
 
-@theme inline {
-  --font-sans: var(--font-inter);
+/* Modern Gradient Backgrounds */
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, 
+      oklch(77.63% 0.191 130.21) 0%, 
+      oklch(59.66% 0.293 313.57) 100%);
+  }
+  
+  .gradient-secondary {
+    background: linear-gradient(135deg, 
+      oklch(70.96% 0.218 317.01) 0%, 
+      oklch(51.60% 0.173 302.32) 100%);
+  }
+  
+  .gradient-accent {
+    background: linear-gradient(135deg, 
+      oklch(77.63% 0.191 130.21) 0%, 
+      oklch(70.96% 0.218 317.01) 50%,
+      oklch(51.60% 0.173 302.32) 100%);
+  }
+  
+  .gradient-mesh {
+    background: 
+      radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, oklch(70.96% 0.218 317.01 / 0.3) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.3) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%);
+  }
+  
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .text-gradient {
+    background: linear-gradient(135deg, 
+      oklch(77.63% 0.191 130.21) 0%, 
+      oklch(70.96% 0.218 317.01) 50%,
+      oklch(51.60% 0.173 302.32) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .smooth-transition {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+  }
+  
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .shadow-glow {
+    box-shadow: 0 0 40px -10px oklch(77.63% 0.191 130.21 / 0.4);
+  }
+  
+  .shadow-glow-lg {
+    box-shadow: 0 0 60px -10px oklch(77.63% 0.191 130.21 / 0.5);
+  }
 }
 
 .recharts-surface {
