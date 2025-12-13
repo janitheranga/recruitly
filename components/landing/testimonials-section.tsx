@@ -10,7 +10,8 @@ const testimonials = [
     role: "Head of Talent",
     company: "TechVision Inc.",
     image: "/images/people/Sarah_Chen.jpg",
-    content: "Recruitly has transformed our hiring process. We've reduced time-to-hire by 60% and improved candidate quality significantly. The AI matching is incredibly accurate!",
+    content:
+      "Recruitly has transformed our hiring process. We've reduced time-to-hire by 60% and improved candidate quality significantly. The AI matching is incredibly accurate!",
     rating: 5,
   },
   {
@@ -20,7 +21,7 @@ const testimonials = [
     image: "/images/people/Michael_Rodriguez.jpg",
     content:
       "As a fast-growing startup, we needed a recruitment solution that could scale with us. Recruitly delivered beyond our expectations. Game changer!",
-    rating: 5,
+    rating: 4,
   },
   {
     name: "Emily Thompson",
@@ -35,9 +36,29 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-20 sm:py-32 bg-white dark:bg-indigo-velvet-950 relative overflow-hidden">
-      {/* Gradient mesh background */}
-      <div className="absolute inset-0 gradient-mesh opacity-30" />
+    <section
+      className="py-20 sm:py-32 relative overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(95.95% 0.003 308.43) 0%, oklch(91.30% 0.023 302.50) 100%)",
+      }}
+    >
+      {/* Dark mode gradient background */}
+      <div
+        className="absolute inset-0 dark:block hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
+        }}
+      />
+      {/* Gradient mesh overlay */}
+      <div
+        className="absolute inset-0 opacity-20 dark:opacity-10"
+        style={{
+          background:
+            "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.2) 0px, transparent 50%)",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
@@ -95,7 +116,13 @@ export function TestimonialsSection() {
                     whileInView={{ scale: 1, rotate: 0 }}
                     transition={{ delay: index * 0.15 + 0.2 + i * 0.1 }}
                   >
-                    <Star className="h-5 w-5 fill-honeydew-500 text-honeydew-500" />
+                    <Star
+                      className="h-5 w-5"
+                      style={{
+                        fill: "oklch(81.74% 0.163 128.60)",
+                        color: "oklch(81.74% 0.163 128.60)",
+                      }}
+                    />
                   </motion.div>
                 ))}
               </div>

@@ -46,11 +46,36 @@ const plans = [
 ];
 
 export function PricingSection() {
+  const accentGradient =
+    "linear-gradient(135deg, oklch(77.63% 0.191 130.21), oklch(70.96% 0.218 317.01), oklch(51.60% 0.173 302.32))";
+  const meshGradient =
+    "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.3) 0px, transparent 50%), radial-gradient(at 100% 0%, oklch(70.96% 0.218 317.01 / 0.3) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.3) 0px, transparent 50%), radial-gradient(at 0% 100%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%)";
+
   return (
     <section
       id="pricing"
-      className="py-20 sm:py-32 bg-white dark:bg-indigo-velvet-950"
+      className="py-20 sm:py-32 relative overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(91.30% 0.023 302.50) 0%, oklch(95.95% 0.003 308.43) 100%)",
+      }}
     >
+      {/* Dark mode gradient background */}
+      <div
+        className="absolute inset-0 dark:block hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
+        }}
+      />
+      {/* Gradient mesh overlay */}
+      <div
+        className="absolute inset-0 opacity-15 dark:opacity-10"
+        style={{
+          background:
+            "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(70.96% 0.218 317.01 / 0.15) 0px, transparent 50%)",
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
@@ -78,9 +103,12 @@ export function PricingSection() {
               whileHover={{ y: -12, scale: plan.highlighted ? 1.08 : 1.02 }}
               className={`group relative p-8 rounded-2xl cursor-pointer smooth-transition overflow-hidden ${
                 plan.highlighted
-                  ? "gradient-accent text-white shadow-glow-lg scale-105 animate-gradient"
+                  ? "text-white shadow-glow-lg scale-105"
                   : "bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 shadow-md hover:shadow-glow"
               }`}
+              style={
+                plan.highlighted ? { background: accentGradient } : undefined
+              }
             >
               {plan.highlighted && (
                 <motion.div
@@ -94,7 +122,10 @@ export function PricingSection() {
               )}
 
               {!plan.highlighted && (
-                <div className="absolute inset-0 gradient-mesh opacity-0 group-hover:opacity-10 smooth-transition" />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-10 smooth-transition"
+                  style={{ background: meshGradient }}
+                />
               )}
 
               <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
@@ -115,7 +146,7 @@ export function PricingSection() {
                     className={
                       plan.highlighted
                         ? "text-white/70"
-                        : "text-slate-600 dark:text-slate-400"
+                        : "text-dust-grey-600 dark:text-dust-grey-400"
                     }
                   >
                     /month

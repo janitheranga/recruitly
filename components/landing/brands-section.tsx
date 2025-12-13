@@ -13,7 +13,29 @@ const brands = [
 
 export function BrandsSection() {
   return (
-    <section className="py-16 sm:py-24 overflow-hidden">
+    <section
+      className="py-16 sm:py-24 overflow-hidden relative"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
+      }}
+    >
+      {/* Dark mode gradient background */}
+      <div
+        className="absolute inset-0 dark:block hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(16.35% 0.034 302.99) 0%, oklch(19.20% 0.047 304.43) 100%)",
+        }}
+      />
+      {/* Gradient mesh overlay */}
+      <div
+        className="absolute inset-0 opacity-20 dark:opacity-10"
+        style={{
+          background:
+            "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.p
           initial={{ opacity: 0 }}

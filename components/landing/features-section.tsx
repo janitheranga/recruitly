@@ -25,12 +25,38 @@ const features = [
 ];
 
 export function FeaturesSection() {
+  const gradientStyles = {
+    accent:
+      "linear-gradient(135deg, oklch(77.63% 0.191 130.21), oklch(70.96% 0.218 317.01), oklch(51.60% 0.173 302.32))",
+    mesh: "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.3) 0px, transparent 50%), radial-gradient(at 100% 0%, oklch(70.96% 0.218 317.01 / 0.3) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.3) 0px, transparent 50%), radial-gradient(at 0% 100%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%)",
+  };
+
   return (
     <section
       id="features"
-      className="py-20 sm:py-32 bg-lilac-ash-50 dark:bg-indigo-velvet-900"
+      className="py-20 sm:py-32 relative overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(95.95% 0.003 308.43) 0%, oklch(91.30% 0.023 302.50) 100%)",
+      }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Dark mode gradient background */}
+      <div
+        className="absolute inset-0 dark:block hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
+        }}
+      />
+      {/* Animated gradient mesh overlay */}
+      <div
+        className="absolute inset-0 opacity-20 dark:opacity-10"
+        style={{
+          background:
+            "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.2) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.2) 0px, transparent 50%)",
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -58,11 +84,15 @@ export function FeaturesSection() {
               className="group relative p-8 rounded-2xl bg-white dark:bg-indigo-velvet-800 border border-dust-grey-200 dark:border-indigo-velvet-700/50 cursor-pointer smooth-transition shadow-md hover:shadow-glow overflow-hidden"
             >
               {/* Gradient overlay on hover */}
-              <div className="absolute inset-0 gradient-mesh opacity-0 group-hover:opacity-20 smooth-transition" />
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-20 smooth-transition"
+                style={{ background: gradientStyles.mesh }}
+              />
 
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 10 }}
-                className="relative w-16 h-16 rounded-xl gradient-accent flex items-center justify-center mb-6 shadow-glow"
+                className="relative w-16 h-16 rounded-xl flex items-center justify-center mb-6 shadow-glow"
+                style={{ background: gradientStyles.accent }}
               >
                 <feature.icon className="h-8 w-8 text-white" />
               </motion.div>

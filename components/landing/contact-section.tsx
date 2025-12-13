@@ -23,8 +23,28 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-20 sm:py-32 bg-white dark:bg-indigo-velvet-900"
+      className="py-20 sm:py-32 relative overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(19.20% 0.047 304.43) 0%, oklch(16.35% 0.034 302.99) 100%)",
+      }}
     >
+      {/* Light mode fallback background */}
+      <div
+        className="absolute inset-0 block dark:hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
+        }}
+      />
+      {/* Gradient mesh overlay */}
+      <div
+        className="absolute inset-0 opacity-20 dark:opacity-15"
+        style={{
+          background:
+            "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
+        }}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left Column - Info */}
@@ -60,8 +80,8 @@ export function ContactSection() {
                   whileHover={{ x: 10 }}
                   className="flex gap-4"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-honeydew-100 dark:bg-indigo-velvet-900/30 flex items-center justify-center shrink-0">
-                    <contact.icon className="h-6 w-6 text-honeydew-600 dark:text-indigo-velvet-400" />
+                  <div className="w-12 h-12 rounded-lg bg-honeydew-100 dark:bg-indigo-velvet-800/50 flex items-center justify-center shrink-0">
+                    <contact.icon className="h-6 w-6 text-honeydew-500 dark:text-honeydew-400" />
                   </div>
                   <div>
                     <p className="font-semibold text-dust-grey-900 dark:text-white">
