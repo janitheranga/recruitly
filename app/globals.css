@@ -71,6 +71,9 @@
 
 /* Modern Gradient Backgrounds */
 @layer utilities {
+  .border{
+    border: 1.5px solid var(--color-honeydew-300);
+  }
   .gradient-primary {
     background: linear-gradient(135deg, 
       oklch(77.63% 0.191 130.21) 0%, 

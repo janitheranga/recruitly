@@ -220,7 +220,7 @@ export default function DashboardPage() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
-      className="space-y-6"
+      className="space-y-6 "
     >
       <LoadingSpinner isOpen={isLoading} message="Loading dashboard..." />
       <motion.h1
@@ -241,7 +241,7 @@ export default function DashboardPage() {
           transition={{ delay: 0.2 }}
           whileHover={{ y: -5 }}
         >
-          <Card className="bg-white cursor-pointer">
+          <Card className="bg-transparent cursor-pointer">
             <CardHeader>
               <CardTitle>Job Status</CardTitle>
             </CardHeader>
@@ -313,7 +313,7 @@ export default function DashboardPage() {
           transition={{ delay: 0.3 }}
           whileHover={{ y: -5 }}
         >
-          <Card className="bg-white cursor-pointer">
+          <Card className="bg-transparent cursor-pointer">
             <CardHeader>
               <CardTitle>Applicant Distribution</CardTitle>
             </CardHeader>
@@ -388,7 +388,7 @@ export default function DashboardPage() {
         transition={{ delay: 0.4 }}
         whileHover={{ y: -5 }}
       >
-        <Card className="bg-white cursor-pointer">
+        <Card className="bg-transparent cursor-pointer">
           <CardHeader>
             <CardTitle>Applicants Trend (Last 7 Days)</CardTitle>
           </CardHeader>

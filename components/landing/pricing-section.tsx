@@ -179,7 +179,7 @@ export function PricingSection() {
                 </div>
 
                 {/* Features */}
-                <ul className="space-y-4 mb-8 flex-grow">
+                <ul className="space-y-4 mb-8 grow">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
                       <Check
