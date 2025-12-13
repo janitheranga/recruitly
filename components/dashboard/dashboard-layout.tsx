@@ -28,9 +28,9 @@ import {
 
 const navigation = [
   { name: "Home", href: "/dashboard", icon: Home },
-  { name: "Jobs", href: "/jobs", icon: Briefcase },
-  { name: "Statistics", href: "/statistics", icon: BarChart3 },
-  { name: "Applicants", href: "/applicants", icon: Users },
+  { name: "Jobs", href: "/dashboard/jobs", icon: Briefcase },
+  { name: "Statistics", href: "/dashboard/statistics", icon: BarChart3 },
+  { name: "Applicants", href: "/dashboard/applicants", icon: Users },
 ];
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -75,14 +75,81 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {/* Right - Notifications & Profile */}
           <div className="flex items-center gap-4">
             {/* Notifications */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative p-2 hover:bg-dust-grey-100 rounded-lg cursor-pointer"
-            >
-              <Bell className="h-5 w-5 text-dust-grey-600" />
-              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-honeydew-500" />
-            </motion.button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative p-2 hover:bg-dust-grey-100 rounded-lg cursor-pointer"
+                >
+                  <Bell className="h-5 w-5 text-dust-grey-600" />
+                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-honeydew-500" />
+                </motion.button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="w-80"
+                style={{ background: "white" }}
+              >
+                <div className="px-4 py-3 border-b border-dust-grey-200">
+                  <h3 className="font-semibold text-dust-grey-900">Notifications</h3>
+                  <p className="text-xs text-dust-grey-600 mt-1">You have 3 unread notifications</p>
+                </div>
+                
+                <div className="max-h-96 overflow-y-auto">
+                  <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">New job application received</p>
+                      <span className="text-xs text-dust-grey-500">2m ago</span>
+                    </div>
+                    <p className="text-xs text-dust-grey-600 ml-4">Sarah Martinez applied for Senior Frontend Developer</p>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">Interview scheduled</p>
+                      <span className="text-xs text-dust-grey-500">1h ago</span>
+                    </div>
+                    <p className="text-xs text-dust-grey-600 ml-4">Alex Kumar - Tomorrow at 2:00 PM</p>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">Candidate shortlisted</p>
+                      <span className="text-xs text-dust-grey-500">3h ago</span>
+                    </div>
+                    <p className="text-xs text-dust-grey-600 ml-4">John Smith moved to final round</p>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-dust-grey-50 flex flex-col items-start gap-1 opacity-60">
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-2 h-2 rounded-full bg-transparent border border-dust-grey-300 shrink-0" />
+                      <p className="font-medium text-sm text-dust-grey-700 flex-1">Job posting published</p>
+                      <span className="text-xs text-dust-grey-500">1d ago</span>
+                    </div>
+                    <p className="text-xs text-dust-grey-600 ml-4">Backend Engineer position is now live</p>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-dust-grey-50 flex flex-col items-start gap-1 opacity-60">
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="w-2 h-2 rounded-full bg-transparent border border-dust-grey-300 shrink-0" />
+                      <p className="font-medium text-sm text-dust-grey-700 flex-1">Team member added</p>
+                      <span className="text-xs text-dust-grey-500">2d ago</span>
+                    </div>
+                    <p className="text-xs text-dust-grey-600 ml-4">Emma Wilson joined the recruitment team</p>
+                  </DropdownMenuItem>
+                </div>
+
+                <div className="px-4 py-3 border-t border-dust-grey-200">
+                  <button className="text-sm text-honeydew-600 hover:text-honeydew-700 font-medium w-full text-center">
+                    View all notifications
+                  </button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Profile Dropdown */}
             <DropdownMenu>

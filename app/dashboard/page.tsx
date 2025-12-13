@@ -25,14 +25,6 @@ import { useState, useEffect } from "react";
 type ChartClickType = "total" | "active" | "closed";
 type ApplicantChartClickType = "total" | "top" | "potential" | "under";
 
-const COLORS = {
-  active: "#22c55e",
-  closed: "#ef4444",
-  topPerformer: "#22c55e",
-  potential: "#eab308",
-  underPerformer: "#ef4444",
-};
-
 type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
 type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
 
@@ -47,6 +39,8 @@ export default function DashboardPage() {
   const [useSupabase, setUseSupabase] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [lineColors, setLineColors] = useState<string[]>([]);
+  const [jobStatusDoughnutColors, setJobStatusDoughnutColors] = useState<string[]>([]);
+  const [applicantDoughnutColors, setApplicantDoughnutColors] = useState<string[]>([]);
 
   // Load jobs from Supabase
   useEffect(() => {
@@ -88,6 +82,8 @@ export default function DashboardPage() {
   // Generate random colors on mount
   useEffect(() => {
     setLineColors(generateUniqueColors(5));
+    setJobStatusDoughnutColors(generateUniqueColors(2));
+    setApplicantDoughnutColors(generateUniqueColors(3));
   }, []);
 
   const jobsToUse = useSupabase ? supabaseJobs : mockJobs;
@@ -100,8 +96,8 @@ export default function DashboardPage() {
   const totalJobs = useSupabase ? supabaseJobs.length : mockJobs.length;
 
   const jobData = [
-    { name: "Active", value: activeJobs, color: COLORS.active },
-    { name: "Closed", value: closedJobs, color: COLORS.closed },
+    { name: "Active", value: activeJobs, color: jobStatusDoughnutColors[0] },
+    { name: "Closed", value: closedJobs, color: jobStatusDoughnutColors[1] },
   ];
 
   // Calculate applicant counts
@@ -129,13 +125,13 @@ export default function DashboardPage() {
     {
       name: "Top Performers",
       value: topPerformers,
-      color: COLORS.topPerformer,
+      color: applicantDoughnutColors[0],
     },
-    { name: "Potential", value: potential, color: COLORS.potential },
+    { name: "Potential", value: potential, color: applicantDoughnutColors[1] },
     {
       name: "Under Performers",
       value: underPerformers,
-      color: COLORS.underPerformer,
+      color: applicantDoughnutColors[2],
     },
   ];
 
@@ -278,10 +274,12 @@ export default function DashboardPage() {
                     onClick={() => setJobChartCenter("total")}
                     style={{
                       cursor: "pointer",
-                      fill: "var(--color-foreground)",
                     }}
                   >
                     {getJobCenterText()}
+                    <span className="text-(--color-honeydew-500) text-sm block font-normal">
+                      Total
+                    </span>
                   </text>
                 </PieChart>
               </ResponsiveContainer>
@@ -403,8 +401,8 @@ export default function DashboardPage() {
                 <YAxis className="text-xs" />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "hsl(var(--color-card))",
-                    border: "1px solid hsl(var(--color-border))",
+                    backgroundColor: "var(--color-honeydew-50)",
+                    border: "1px solid var(--color-honeydew-300)",
                     borderRadius: "0.75rem",
                   }}
                 />

@@ -267,7 +267,7 @@ export default function JobsPage() {
           <DialogFooter className="gap-2">
             <Button
               type="button"
-              className="bg-red-50 hover:bg-red-100 text-red-900 cursor-pointer"
+              className="bg-(--color-indigo-velvet-50) hover:bg-(--color-indigo-velvet-100) text-(--color-indigo-velvet-900) cursor-pointer"
               onClick={() => setIsEditModalOpen(false)}
             >
               Cancel
@@ -287,7 +287,7 @@ export default function JobsPage() {
         <DialogTrigger asChild>
           <Button
             size="lg"
-            className="w-full sm:w-auto bg-green-50 hover:bg-green-100 text-green-900 cursor-pointer"
+            className="w-full sm:w-auto bg-(--color-honeydew-50) hover:bg-(--color-honeydew-100) text-(--color-honeydew-900) cursor-pointer border"
           >
             <Plus className="mr-2 h-5 w-5" />
             Create New Job
@@ -327,21 +327,21 @@ export default function JobsPage() {
             <DialogFooter className="gap-2">
               <Button
                 type="button"
-                className="bg-amber-50 hover:bg-amber-100 text-amber-900 cursor-pointer"
+                className="bg-(--color-lilac-ash-100) hover:bg-(--color-lilac-ash-200) text-(--color-lilac-ash-900) cursor-pointer"
                 onClick={handleClear}
               >
                 Clear
               </Button>
               <Button
                 type="button"
-                className="bg-red-50 hover:bg-red-100 text-red-900 cursor-pointer"
+                className="bg-(--color-dark-amethyst-100) hover:bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900) cursor-pointer"
                 onClick={() => setIsDialogOpen(false)}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="bg-green-50 hover:bg-green-100 text-green-900 cursor-pointer"
+                className="bg-(--color-honeydew-100) hover:bg-(--color-honeydew-200) text-(--color-honeydew-900) cursor-pointer"
               >
                 Submit
               </Button>
