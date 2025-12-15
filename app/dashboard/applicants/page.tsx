@@ -63,13 +63,13 @@ export default function ApplicantsPage() {
   const getMatchBadgeVariant = (match: string) => {
     switch (match) {
       case "Top Performer":
-        return "success";
+        return "bg-(--color-honeydew-200) text-(--color-honeydew-900)";
       case "Potential":
-        return "warning";
+        return "bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900)";
       case "Under Performer":
-        return "danger";
+        return "bg-(--color-dust-grey-200) text-(--color-dust-grey-900)";
       default:
-        return "default";
+        return "bg-(--color-lilac-ash-200) text-(--color-lilac-ash-900)";
     }
   };
 
@@ -77,13 +77,13 @@ export default function ApplicantsPage() {
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case "Approved":
-        return "success";
+        return "bg-(--color-honeydew-200) text-(--color-honeydew-900)";
       case "Pending Review":
-        return "warning";
+        return "bg-(--color-dust-grey-200) text-(--color-dust-grey-900)";
       case "Rejected":
-        return "danger";
+        return "bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900)";
       default:
-        return "default";
+        return "bg-(--color-lilac-ash-200) text-(--color-lilac-ash-900)";
     }
   };
 
@@ -133,11 +133,11 @@ export default function ApplicantsPage() {
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={getMatchBadgeVariant(
+                        className={`${getMatchBadgeVariant(
                           useSupabase
                             ? applicant.applicant_job_match
                             : applicant.jobMatch
-                        )}
+                        )} py-1 px-3`}
                       >
                         {useSupabase
                           ? applicant.applicant_job_match
@@ -146,11 +146,11 @@ export default function ApplicantsPage() {
                     </TableCell>
                     <TableCell>
                       <Badge
-                        variant={getStatusBadgeVariant(
+                        className={`${getStatusBadgeVariant(
                           useSupabase
                             ? applicant.application_status
                             : applicant.applicationStatus
-                        )}
+                        )} py-1 px-3`}
                       >
                         {useSupabase
                           ? applicant.application_status
@@ -159,14 +159,14 @@ export default function ApplicantsPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <Link
-                        href={`/applicants/${
+                        href={`applicants/${
                           useSupabase ? applicant.applicant_id : applicant.id
                         }`}
                       >
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-xs sm:text-sm cursor-pointer bg-amber-50 text-amber-600 hover:text-amber-700:bg-amber-900/30"
+                          className="text-xs sm:text-sm cursor-pointer bg-(--color-indigo-velvet-200) text-(--color-indigo-velvet-900) hover:text-(--color-indigo-velvet-900) hover:bg-(--color-indigo-velvet-300)"
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           View

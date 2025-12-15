@@ -131,13 +131,13 @@ export default function ApplicantDetailPage() {
   const getMatchBadgeVariant = (match: string) => {
     switch (match) {
       case "Top Performer":
-        return "success";
+        return "bg-(--color-honeydew-200) text-(--color-honeydew-900)";
       case "Potential":
-        return "warning";
+        return "bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900)";
       case "Under Performer":
-        return "danger";
+        return "bg-(--color-dust-grey-200) text-(--color-dust-grey-900)";
       default:
-        return "default";
+        return "bg-(--color-lilac-ash-200) text-(--color-lilac-ash-900)";
     }
   };
 
@@ -178,7 +178,7 @@ export default function ApplicantDetailPage() {
         message="Loading applicant details..."
       />
       <div className="flex items-center gap-2 sm:gap-4">
-        <Link href="/applicants">
+        <Link href="/dashboard/applicants">
           <Button variant="ghost" size="icon" className="cursor-pointer">
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -221,8 +221,7 @@ export default function ApplicantDetailPage() {
               </label>
               <div className="mt-1">
                 <Badge
-                  variant={getMatchBadgeVariant(applicant.applicant_job_match)}
-                  className="text-sm px-3 py-1"
+                  className={`${getMatchBadgeVariant(applicant.applicant_job_match)} text-sm px-3 py-1`}
                 >
                   {applicant.applicant_job_match}
                 </Badge>
@@ -245,17 +244,17 @@ export default function ApplicantDetailPage() {
               </label>
               <div className="mt-2">
                 {status === "Pending Review" && (
-                  <Badge variant="warning" className="text-sm px-3 py-1">
+                  <Badge className="bg-(--color-dust-grey-200) text-(--color-dust-grey-900) text-sm px-3 py-1">
                     Pending Review
                   </Badge>
                 )}
                 {status === "Approved" && (
-                  <Badge variant="success" className="text-sm px-3 py-1">
+                  <Badge className="bg-(--color-honeydew-200) text-(--color-honeydew-900) text-sm px-3 py-1">
                     Approved
                   </Badge>
                 )}
                 {status === "Rejected" && (
-                  <Badge variant="danger" className="text-sm px-3 py-1">
+                  <Badge className="bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900) text-sm px-3 py-1">
                     Rejected
                   </Badge>
                 )}

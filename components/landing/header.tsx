@@ -32,7 +32,7 @@ export function LandingHeader({ onLoginClick }: LandingHeaderProps) {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/">
-            <Logo size="sm" />
+            <Logo />
           </Link>
 
           {/* Desktop Navigation */}

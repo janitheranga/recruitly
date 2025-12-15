@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, Star } from "lucide-react";
 
 const plans = [
   {
@@ -93,10 +93,10 @@ export function PricingSection() {
               transition={{ delay: index * 0.2, duration: 0.6 }}
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
-              className={`group relative rounded-3xl cursor-pointer smooth-transition flex flex-col ${
+              className={`group relative rounded-3xl cursor-pointer smooth-transition flex flex-col border ${
                 plan.highlighted
-                  ? "text-white shadow-2xl transform scale-105"
-                  : "bg-white/95 backdrop-blur-sm shadow-lg hover:shadow-xl"
+                  ? "text-white shadow-2xl transform scale-105 border-(--color-honeydew-300)"
+                  : "bg-white/95 backdrop-blur-sm shadow-lg hover:shadow-xl border-(--color-honeydew-400)"
               }`}
               style={
                 plan.highlighted
@@ -104,20 +104,27 @@ export function PricingSection() {
                       background:
                         "linear-gradient(135deg, oklch(81.74% 0.163 128.60) 0%, oklch(70.96% 0.218 317.01) 100%)",
                     }
-                  : {
-                      border: "1px solid oklch(92.88% 0.007 115.71)",
-                    }
+                  : {}
               }
             >
               {plan.highlighted && (
                 <div
                   className="absolute -top-3 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold shadow-lg z-20 whitespace-nowrap"
                   style={{
-                    background: "oklch(81.74% 0.163 128.60)",
+                    background: "var(--color-honeydew-500)",
                     color: "white",
                   }}
                 >
-                  ⭐ Most Popular
+                  <div className="flex flex-row items-center justify-center gap-2">
+                    <Star
+                      className="w-5 h-5"
+                      style={{
+                        fill: "var(--color-dark-amethyst-400)",
+                        color: "var(--color-dark-amethyst-400)",
+                      }}
+                    />
+                    <span className="leading-none">Most Popular</span>
+                  </div>
                 </div>
               )}
 

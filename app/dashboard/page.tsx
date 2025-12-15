@@ -1,26 +1,17 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { generateUniqueColors } from "@/lib/colors";
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/lib/database.types";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
 import { mockJobs, mockApplicants, mockApplicantData } from "@/lib/data";
 import { useState, useEffect } from "react";
+import { DonutChart } from "@/components/dashboard/DonutChart";
+import {
+  LineChartCard,
+  LineSeries,
+} from "@/components/dashboard/LineChartCard";
 
 type SupabaseJob = Database["public"]["Tables"]["jobs"]["Row"];
 type SupabaseApplicant = Database["public"]["Tables"]["applicants"]["Row"];
@@ -185,6 +176,23 @@ export default function DashboardPage() {
     return dataPoint;
   });
 
+  const lineSeries: LineSeries[] = (
+    useSupabase
+      ? supabaseJobs.filter((job) => job.job_status === "Active")
+      : mockJobs.filter((job) => job.status === "Active")
+  )
+    .map((job, index) => {
+      const title = useSupabase
+        ? (job as SupabaseJob).job_title
+        : (job as (typeof mockJobs)[0]).title;
+      if (!title) return null;
+      return {
+        key: title,
+        color: lineColors[index % lineColors.length],
+      } satisfies LineSeries | null;
+    })
+    .filter(Boolean) as LineSeries[];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -204,220 +212,26 @@ export default function DashboardPage() {
 
       {/* Doughnut Charts Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Job Count Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          whileHover={{ y: -5 }}
-        >
-          <Card className="bg-transparent cursor-pointer">
-            <CardHeader>
-              <CardTitle>Job Status</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={jobData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={80}
-                    outerRadius={120}
-                    dataKey="value"
-                  >
-                    {jobData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.color}
-                        stroke="none"
-                      />
-                    ))}
-                  </Pie>
-                  <text
-                    x="50%"
-                    y="48%"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{
-                      fontSize: "28px",
-                      fontWeight: 800,
-                      fill: "var(--color-dust-grey-900)",
-                    }}
-                  >
-                    {totalJobs}
-                  </text>
-                  <text
-                    x="50%"
-                    y="56%"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      fill: "var(--color-honeydew-700)",
-                    }}
-                  >
-                    Total
-                  </text>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="flex flex-wrap justify-center gap-4 mt-4">
-                {jobData.map((entry, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.1 }}
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: entry.color }}
-                    />
-                    <span>
-                      {entry.name}: {entry.value}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Applicant Count Chart */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          whileHover={{ y: -5 }}
-        >
-          <Card className="bg-transparent cursor-pointer">
-            <CardHeader>
-              <CardTitle>Applicant Distribution</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={applicantData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={80}
-                    outerRadius={120}
-                    dataKey="value"
-                  >
-                    {applicantData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.color}
-                        stroke="none"
-                      />
-                    ))}
-                  </Pie>
-                  <text
-                    x="50%"
-                    y="48%"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{
-                      fontSize: "28px",
-                      fontWeight: 800,
-                      fill: "var(--color-dust-grey-900)",
-                    }}
-                  >
-                    {totalApplicants}
-                  </text>
-                  <text
-                    x="50%"
-                    y="56%"
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 600,
-                      fill: "var(--color-honeydew-700)",
-                    }}
-                  >
-                    Total
-                  </text>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="flex flex-wrap justify-center gap-4 mt-4">
-                {applicantData.map((entry, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ scale: 1.1 }}
-                    className="flex items-center gap-2 text-sm"
-                  >
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: entry.color }}
-                    />
-                    <span>
-                      {entry.name}: {entry.value}
-                    </span>
-                  </motion.div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+        <DonutChart
+          title="Job Status"
+          data={jobData}
+          total={totalJobs}
+          centerLabel="Total"
+        />
+        <DonutChart
+          title="Applicant Distribution"
+          data={applicantData}
+          total={totalApplicants}
+          centerLabel="Total"
+        />
       </div>
 
       {/* Line Chart */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-        whileHover={{ y: -5 }}
-      >
-        <Card className="bg-transparent cursor-pointer">
-          <CardHeader>
-            <CardTitle>Applicants Trend (Last 7 Days)</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={lineChartData} style={{ cursor: "pointer" }}>
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  className="stroke-slate-200"
-                />
-                <XAxis dataKey="day" className="text-xs" />
-                <YAxis className="text-xs" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "var(--color-honeydew-50)",
-                    border: "1px solid var(--color-honeydew-300)",
-                    borderRadius: "0.75rem",
-                  }}
-                />
-                <Legend />
-                {(useSupabase
-                  ? supabaseJobs.filter((j) => j.job_status === "Active")
-                  : mockJobs.filter((j) => j.status === "Active")
-                ).map((job, index) => {
-                  const jobTitle = useSupabase
-                    ? (job as SupabaseJob).job_title
-                    : (job as (typeof mockJobs)[0]).title;
-                  const jobKey = useSupabase
-                    ? (job as SupabaseJob).job_id
-                    : (job as (typeof mockJobs)[0]).id;
-                  return (
-                    <Line
-                      key={jobKey}
-                      type="monotone"
-                      dataKey={jobTitle}
-                      stroke={lineColors[index % lineColors.length]}
-                      strokeWidth={2}
-                      dot={{ r: 4 }}
-                      activeDot={{ r: 6 }}
-                    />
-                  );
-                })}
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </motion.div>
+      <LineChartCard
+        title="Applicants Trend (Last 7 Days)"
+        data={lineChartData}
+        series={lineSeries}
+      />
     </motion.div>
   );
 }

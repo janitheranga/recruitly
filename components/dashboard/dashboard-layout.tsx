@@ -52,12 +52,10 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       >
         <div className="px-6 py-4 flex items-center justify-between gap-6">
           {/* Left - Logo & Toggle */}
-          <div className="flex items-center gap-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2">
-              <Logo />
-            </Link>
-          </div>
+          {/* Logo */}
+          <Link href="/">
+            <Logo />
+          </Link>
 
           {/* Middle - Search Bar */}
           <div className="flex-1 max-w-md relative">
@@ -92,54 +90,78 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 style={{ background: "white" }}
               >
                 <div className="px-4 py-3 border-b border-dust-grey-200">
-                  <h3 className="font-semibold text-dust-grey-900">Notifications</h3>
-                  <p className="text-xs text-dust-grey-600 mt-1">You have 3 unread notifications</p>
+                  <h3 className="font-semibold text-dust-grey-900">
+                    Notifications
+                  </h3>
+                  <p className="text-xs text-dust-grey-600 mt-1">
+                    You have 3 unread notifications
+                  </p>
                 </div>
-                
+
                 <div className="max-h-96 overflow-y-auto">
                   <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2 w-full">
                       <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
-                      <p className="font-medium text-sm text-dust-grey-900 flex-1">New job application received</p>
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">
+                        New job application received
+                      </p>
                       <span className="text-xs text-dust-grey-500">2m ago</span>
                     </div>
-                    <p className="text-xs text-dust-grey-600 ml-4">Sarah Martinez applied for Senior Frontend Developer</p>
+                    <p className="text-xs text-dust-grey-600 ml-4">
+                      Sarah Martinez applied for Senior Frontend Developer
+                    </p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2 w-full">
                       <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
-                      <p className="font-medium text-sm text-dust-grey-900 flex-1">Interview scheduled</p>
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">
+                        Interview scheduled
+                      </p>
                       <span className="text-xs text-dust-grey-500">1h ago</span>
                     </div>
-                    <p className="text-xs text-dust-grey-600 ml-4">Alex Kumar - Tomorrow at 2:00 PM</p>
+                    <p className="text-xs text-dust-grey-600 ml-4">
+                      Alex Kumar - Tomorrow at 2:00 PM
+                    </p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-honeydew-50 flex flex-col items-start gap-1">
                     <div className="flex items-center gap-2 w-full">
                       <div className="w-2 h-2 rounded-full bg-honeydew-500 shrink-0" />
-                      <p className="font-medium text-sm text-dust-grey-900 flex-1">Candidate shortlisted</p>
+                      <p className="font-medium text-sm text-dust-grey-900 flex-1">
+                        Candidate shortlisted
+                      </p>
                       <span className="text-xs text-dust-grey-500">3h ago</span>
                     </div>
-                    <p className="text-xs text-dust-grey-600 ml-4">John Smith moved to final round</p>
+                    <p className="text-xs text-dust-grey-600 ml-4">
+                      John Smith moved to final round
+                    </p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-dust-grey-50 flex flex-col items-start gap-1 opacity-60">
                     <div className="flex items-center gap-2 w-full">
                       <div className="w-2 h-2 rounded-full bg-transparent border border-dust-grey-300 shrink-0" />
-                      <p className="font-medium text-sm text-dust-grey-700 flex-1">Job posting published</p>
+                      <p className="font-medium text-sm text-dust-grey-700 flex-1">
+                        Job posting published
+                      </p>
                       <span className="text-xs text-dust-grey-500">1d ago</span>
                     </div>
-                    <p className="text-xs text-dust-grey-600 ml-4">Backend Engineer position is now live</p>
+                    <p className="text-xs text-dust-grey-600 ml-4">
+                      Backend Engineer position is now live
+                    </p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-dust-grey-50 flex flex-col items-start gap-1 opacity-60">
                     <div className="flex items-center gap-2 w-full">
                       <div className="w-2 h-2 rounded-full bg-transparent border border-dust-grey-300 shrink-0" />
-                      <p className="font-medium text-sm text-dust-grey-700 flex-1">Team member added</p>
+                      <p className="font-medium text-sm text-dust-grey-700 flex-1">
+                        Team member added
+                      </p>
                       <span className="text-xs text-dust-grey-500">2d ago</span>
                     </div>
-                    <p className="text-xs text-dust-grey-600 ml-4">Emma Wilson joined the recruitment team</p>
+                    <p className="text-xs text-dust-grey-600 ml-4">
+                      Emma Wilson joined the recruitment team
+                    </p>
                   </DropdownMenuItem>
                 </div>
 
@@ -238,17 +260,16 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                     "flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all cursor-pointer group",
                     sidebarOpen ? "" : "justify-center px-0",
                     isActive
-                      ? "text-white font-semibold shadow-md"
-                      : "text-dust-grey-800 hover:text-dust-grey-900 hover:shadow hover:bg-(--color-honeydew-200)"
+                      ? "text-white font-semibold shadow-md bg-(--color-dark-amethyst-400) hover:bg-(--color-dark-amethyst-500)"
+                      : "text-(--color-honeydew-800) hover:text-(--color-honeydew-900) hover:shadow hover:bg-(--color-honeydew-200)"
                   )}
-                  style={isActive ? { background: activeGradient } : undefined}
                 >
                   <item.icon
                     className={cn(
                       "h-5 w-5 shrink-0 transition-colors",
                       isActive
                         ? "text-white"
-                        : "text-dust-grey-700 group-hover:text-dust-grey-900"
+                        : "text-(--color-honeydew-800) group-hover:text-(--color-honeydew-900)"
                     )}
                   />
                   {sidebarOpen && (

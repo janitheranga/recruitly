@@ -285,7 +285,7 @@ export default function StatisticsPage() {
                 size="sm"
                 className={`cursor-pointer flex-1 sm:flex-initial ${
                   jobStatus === "Active"
-                    ? "bg-green-50 hover:bg-green-100 text-green-900"
+                    ? "bg-(--color-honeydew-200) hover:bg-(--color-honeydew-300) text-(--color-honeydew-900)"
                     : ""
                 }`}
               >
@@ -296,7 +296,7 @@ export default function StatisticsPage() {
                 size="sm"
                 className={`cursor-pointer flex-1 sm:flex-initial ${
                   jobStatus === "Closed"
-                    ? "bg-red-50 hover:bg-red-100 text-red-900"
+                    ? "bg-(--color-dark-amethyst-200) hover:bg-(--color-dark-amethyst-300) text-(--color-dark-amethyst-900)"
                     : ""
                 }`}
               >
@@ -313,7 +313,7 @@ export default function StatisticsPage() {
                 size="sm"
                 className={`cursor-pointer w-full sm:w-auto ${
                   durationType === "30days"
-                    ? "bg-amber-50 hover:bg-amber-100 text-amber-900"
+                    ? "bg-(--color-indigo-velvet-200) hover:bg-(--color-indigo-velvet-300) text-(--color-indigo-velvet-900)"
                     : ""
                 }`}
               >
@@ -329,7 +329,7 @@ export default function StatisticsPage() {
                     onClick={handleOpenDialog}
                     className={`cursor-pointer w-full sm:w-auto ${
                       durationType === "custom"
-                        ? "bg-blue-50 hover:bg-blue-100 text-blue-900"
+                        ? "bg-(--color-dust-grey-200) hover:bg-(--color-dust-grey-300) text-(--color-dust-grey-900)"
                         : ""
                     }`}
                   >
@@ -367,14 +367,14 @@ export default function StatisticsPage() {
                   <DialogFooter>
                     <Button
                       type="button"
-                      className="cursor-pointer bg-red-50 hover:bg-red-100 text-red-900"
+                      className="cursor-pointer bg-(--color-dark-amethyst-200) hover:bg-(--color-dark-amethyst-300) text-(--color-dark-amethyst-900)"
                       onClick={() => setIsCustomDialogOpen(false)}
                     >
                       Cancel
                     </Button>
                     <Button
                       onClick={handleApplyCustomRange}
-                      className="cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-900"
+                      className="cursor-pointer bg-(--color-honeydew-200) hover:bg-(--color-honeydew-300) text-(--color-honeydew-900)"
                     >
                       Apply
                     </Button>

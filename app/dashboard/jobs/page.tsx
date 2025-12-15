@@ -267,14 +267,14 @@ export default function JobsPage() {
           <DialogFooter className="gap-2">
             <Button
               type="button"
-              className="bg-(--color-indigo-velvet-50) hover:bg-(--color-indigo-velvet-100) text-(--color-indigo-velvet-900) cursor-pointer"
+              className="bg-(--color-dark-amethyst-100) hover:bg-(--color-dark-amethyst-200) text-(--color-dark-amethyst-900) cursor-pointer"
               onClick={() => setIsEditModalOpen(false)}
             >
               Cancel
             </Button>
             <Button
               type="button"
-              className="bg-blue-50 hover:bg-blue-100 text-blue-900 cursor-pointer"
+              className="bg-(--color-honeydew-100) hover:bg-(--color-honeydew-200) text-(--color-honeydew-900) cursor-pointer"
               onClick={handleSaveEdit}
             >
               Save Changes
@@ -327,7 +327,7 @@ export default function JobsPage() {
             <DialogFooter className="gap-2">
               <Button
                 type="button"
-                className="bg-(--color-lilac-ash-100) hover:bg-(--color-lilac-ash-200) text-(--color-lilac-ash-900) cursor-pointer"
+                className="bg-(--color-indigo-velvet-100) hover:bg-(--color-indigo-velvet-200) text-(--color-indigo-velvet-900) cursor-pointer"
                 onClick={handleClear}
               >
                 Clear
@@ -394,10 +394,10 @@ export default function JobsPage() {
                     </TableCell>
                     <TableCell>
                       <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                        className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold ${
                           jobStatus === "Active"
-                            ? "bg-green-100 text-green-800/30"
-                            : "bg-red-100 text-red-800/30"
+                            ? "bg-(--color-honeydew-100) text-(--color-honeydew-800)"
+                            : "bg-(--color-dark-amethyst-100) text-(--color-dark-amethyst-800)"
                         }`}
                       >
                         {jobStatus}
@@ -409,7 +409,7 @@ export default function JobsPage() {
                           type="checkbox"
                           checked={jobStatus === "Active"}
                           onChange={() => handleToggleStatus(jobId)}
-                          className="peer h-5 w-9 appearance-none rounded-full bg-red-400 transition-colors duration-200 checked:bg-green-400 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
+                          className="peer h-5 w-9 appearance-none rounded-full bg-(--color-dark-amethyst-500) transition-colors duration-200 checked:bg-(--color-honeydew-500) focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer"
                         />
                         <span className="pointer-events-none absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
                       </label>
@@ -417,7 +417,7 @@ export default function JobsPage() {
                     <TableCell className="text-right">
                       <button
                         onClick={() => handleEdit(jobId, jobDescription)}
-                        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-amber-50 text-amber-600 hover:text-amber-700:bg-amber-900/30 transition-colors cursor-pointer text-sm font-medium"
+                        className="inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-(--color-indigo-velvet-200) text-(--color-indigo-velvet-800) hover:text-(--color-indigo-velvet-700) hover:bg-(--color-indigo-velvet-300) transition-colors cursor-pointer text-sm font-medium"
                         title="Edit job description"
                       >
                         <Pencil className="h-4 w-4" />

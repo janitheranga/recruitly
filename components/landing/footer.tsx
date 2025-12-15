@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+import { FaFacebookF, FaXTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa6";
 import { Logo } from "../logo";
 import Link from "next/link";
 
@@ -49,14 +49,14 @@ export function LandingFooter() {
           {/* Logo Section */}
           <motion.div whileHover={{ scale: 1.02 }} className="space-y-4">
             <Link href="/">
-              <Logo size="sm" showText={true} />
+              <Logo />
             </Link>
             <p className="text-dust-grey-300 leading-relaxed pt-4">
               Next-generation recruitment platform powered by AI, designed for
               modern, growing teams.
             </p>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
+              {[FaFacebookF, FaXTwitter, FaLinkedinIn, FaInstagram].map((Icon, i) => (
                 <motion.a
                   key={i}
                   href="#"

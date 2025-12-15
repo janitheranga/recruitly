@@ -35,7 +35,7 @@ export function Logo({
         className={`flex items-center gap-3 ${className}`}
       >
         <div
-          className={`${sizes[size].icon} rounded-2xl p-0.5 shadow-lg overflow-hidden`}
+          className={`${sizes[size].icon} rounded-full p-0.5 shadow-lg overflow-hidden`}
           style={{
             background:
               "linear-gradient(135deg, oklch(77.63% 0.191 130.21) 0%, oklch(59.66% 0.293 313.57) 50%, oklch(51.60% 0.173 302.32) 100%)",
@@ -43,7 +43,7 @@ export function Logo({
           }}
         >
           <motion.div
-            className="h-full w-full rounded-[14px] flex items-center justify-center relative overflow-hidden"
+            className="h-full w-full rounded-full flex items-center justify-center relative overflow-hidden"
             style={{
               background:
                 "linear-gradient(135deg, oklch(77.63% 0.191 130.21) 0%, oklch(70.96% 0.218 317.01) 50%, oklch(51.60% 0.173 302.32) 100%)",

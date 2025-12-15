@@ -31,7 +31,7 @@ export function ContactSection() {
     >
       {/* Light mode fallback background */}
       <div
-        className="absolute inset-0 block dark:hidden"
+        className="absolute inset-0 block"
         style={{
           background:
             "linear-gradient(135deg, oklch(98.0% 0.001 0) 0%, oklch(95.95% 0.003 308.43) 100%)",
@@ -39,7 +39,7 @@ export function ContactSection() {
       />
       {/* Gradient mesh overlay */}
       <div
-        className="absolute inset-0 opacity-20 dark:opacity-15"
+        className="absolute inset-0 opacity-20"
         style={{
           background:
             "radial-gradient(at 0% 0%, oklch(77.63% 0.191 130.21 / 0.15) 0px, transparent 50%), radial-gradient(at 100% 100%, oklch(51.60% 0.173 302.32 / 0.15) 0px, transparent 50%)",
@@ -103,11 +103,10 @@ export function ContactSection() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="relative p-10 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm"
+            className="relative p-10 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-sm border border-(--color-honeydew-100)"
             style={{
               background:
                 "linear-gradient(135deg, oklch(95.23% 0.043 125.79) 0%, oklch(91.88% 0.007 304.24) 50%, oklch(90.40% 0.033 307.15) 100%)",
-              border: "2px solid oklch(97.63% 0.022 123.62)",
               boxShadow:
                 "0 20px 60px -15px oklch(77.63% 0.191 130.21 / 0.3), 0 0 0 1px oklch(95.23% 0.043 125.79 / 0.5)",
             }}
@@ -132,7 +131,7 @@ export function ContactSection() {
               </div>
 
               <div>
-                <label className="block text-base font-bold text-dust-grey-950 mb-2">
+                <label className="block text-base font-bold text-(--color-dust-grey-900) mb-2">
                   Name
                 </label>
                 <Input
@@ -142,12 +141,12 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-(--color-honeydew-300) focus:border-(--color-honeydew-300) focus:ring-2 focus:ring-(--color-honeydew-300) transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-dust-grey-950 mb-2">
+                <label className="block text-base font-bold text-(--color-dust-grey-900) mb-2">
                   Email
                 </label>
                 <Input
@@ -157,12 +156,12 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-(--color-honeydew-300) focus:border-(--color-honeydew-300) focus:ring-2 focus:ring-(--color-honeydew-300) transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-base font-bold text-dust-grey-950 mb-2">
+                <label className="block text-base font-bold text-(--color-dust-grey-900) mb-2">
                   Message
                 </label>
                 <Textarea
@@ -171,7 +170,7 @@ export function ContactSection() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-dust-grey-300 focus:border-honeydew-500 focus:ring-2 focus:ring-honeydew-500/20 transition-all resize-none"
+                  className="w-full bg-white/80 backdrop-blur-sm border-2 border-(--color-honeydew-300) focus:border-(--color-honeydew-300) focus:ring-2 focus:ring-(--color-honeydew-300) transition-all resize-none"
                   rows={5}
                 />
               </div>
