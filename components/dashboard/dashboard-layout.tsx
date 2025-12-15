@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -15,6 +15,10 @@ import {
   Search,
   Bell,
   User,
+  X,
+  SlidersVertical,
+  LogOut,
+  Settings,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -35,12 +39,53 @@ const navigation = [
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const toggleGradientHover =
     "linear-gradient(135deg, var(--color-dark-amethyst-200), var(--color-indigo-velvet-100))";
   const activeGradient =
     "linear-gradient(135deg, var(--color-dark-amethyst-400), var(--color-indigo-velvet-600))";
+
+  const handleSearch = () => {
+    const trimmed = searchQuery.trim();
+    if (!trimmed) return;
+
+    const targetPage = navigation.find(
+      (page) => page.name.toLowerCase() === trimmed.toLowerCase()
+    );
+
+    if (targetPage) {
+      router.push(targetPage.href);
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  const exactMatch = navigation.some(
+    (page) => page.name.toLowerCase() === searchQuery.trim().toLowerCase()
+  );
+
+  // Filter navigation pages based on search query, but hide when it's an exact match
+  const filteredSuggestions =
+    searchQuery.trim() && !exactMatch
+      ? navigation.filter((page) =>
+          page.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      : [];
+
+  const handleSelectSuggestion = (page: (typeof navigation)[0]) => {
+    setSearchQuery(page.name);
+    router.push(page.href);
+  };
   return (
     <div className="min-h-screen bg-(--color-dark-amethyst-50) flex flex-col p-4">
       {/* Top Header - Logo & Navigation Bar */}
@@ -60,13 +105,41 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {/* Middle - Search Bar */}
           <div className="flex-1 max-w-md relative">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-dust-grey-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" />
               <Input
                 placeholder="Search jobs, candidates, teams..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-dust-grey-50 border-dust-grey-200 focus:bg-white"
+                onKeyDown={handleKeyDown}
+                className="pl-10 pr-10 bg-dust-grey-50 border-[var(--color-honeydew-200)] focus:ring-[var(--color-honeydew-300)] focus:bg-white"
               />
+              {searchQuery && (
+                <button
+                  onClick={handleClearSearch}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-dust-grey-200 rounded-full transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4 text-dust-grey-500 cursor-pointer" />
+                </button>
+              )}
+
+              {/* Suggestions Dropdown */}
+              {filteredSuggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-dust-grey-200 max-h-96 overflow-y-auto z-50">
+                  {filteredSuggestions.map((page) => (
+                    <button
+                      key={page.href}
+                      onClick={() => handleSelectSuggestion(page)}
+                      className="w-full text-left px-4 py-3 hover:bg-honeydew-50 transition-colors flex items-center gap-3 text-sm border-b border-dust-grey-100 last:border-b-0"
+                    >
+                      <page.icon className="h-5 w-5 text-dust-grey-600 flex-shrink-0" />
+                      <span className="text-dust-grey-900 font-medium">
+                        {page.name}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -200,22 +273,25 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
-                className="w-56"
+                className="w-56 p-2.5"
                 style={{
                   background: "white",
                 }}
               >
-                <DropdownMenuItem className="cursor-pointer">
-                  <User className="h-4 w-4 mr-2" />
+                <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-(--color-honeydew-100) flex items-center">
+                  <Settings className="h-4 w-4 mr-2" />
                   Profile Settings
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-(--color-honeydew-100) flex items-center">
+                  <User className="h-4 w-4 mr-2" />
                   Account
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer px-4 py-3 hover:bg-(--color-honeydew-100) flex items-center">
+                  <SlidersVertical className="h-4 w-4 mr-2" />
                   Preferences
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer text-red-600">
+                <DropdownMenuItem className="cursor-pointer px-4 py-3 text-red-600 hover:bg-(--color-honeydew-100) flex items-center">
+                  <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -257,11 +333,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all cursor-pointer group",
+                    "flex items-center gap-3 px-4 py-2.5 rounded-2xl transition-all cursor-pointer group",
                     sidebarOpen ? "" : "justify-center px-0",
                     isActive
                       ? "text-white font-semibold shadow-md bg-(--color-dark-amethyst-400) hover:bg-(--color-dark-amethyst-500)"
-                      : "text-(--color-honeydew-800) hover:text-(--color-honeydew-900) hover:shadow hover:bg-(--color-honeydew-200)"
+                      : "text-black hover:shadow hover:bg-(--color-honeydew-200)"
                   )}
                 >
                   <item.icon
@@ -269,7 +345,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       "h-5 w-5 shrink-0 transition-colors",
                       isActive
                         ? "text-white"
-                        : "text-(--color-honeydew-800) group-hover:text-(--color-honeydew-900)"
+                        : "text-black group-hover:text-black"
                     )}
                   />
                   {sidebarOpen && (

@@ -26,7 +26,7 @@ export function LandingHeader({ onLoginClick }: LandingHeaderProps) {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className="sticky top-0 z-50 backdrop-blur-xl bg-white/90/90 border-b border-dust-grey-200/50/50 shadow-sm"
+      className="sticky top-0 z-50 backdrop-blur-xl bg-white/90/90 border-b border-(--color-dark-amethyst-200) shadow-sm"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
