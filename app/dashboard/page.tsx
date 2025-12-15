@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { LoadingModal } from "@/components/dashboard/LoadingModal";
 import { generateUniqueColors } from "@/lib/colors";
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/lib/database.types";
@@ -200,7 +200,7 @@ export default function DashboardPage() {
       transition={{ duration: 0.3 }}
       className="space-y-6 "
     >
-      <LoadingSpinner isOpen={isLoading} message="Loading dashboard..." />
+      <LoadingModal open={isLoading} message="Loading dashboard..." />
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

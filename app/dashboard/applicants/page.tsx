@@ -13,7 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { LoadingModal } from "@/components/dashboard/LoadingModal";
 import { Eye } from "lucide-react";
 import { mockApplicants } from "@/lib/data";
 import { JobMatchLevel, ApplicationStatus } from "@/lib/types";
@@ -89,7 +89,7 @@ export default function ApplicantsPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <LoadingSpinner isOpen={isLoading} message="Loading applicants..." />
+      <LoadingModal open={isLoading} message="Loading applicants..." />
       <h1 className="text-2xl sm:text-3xl font-bold">Job Applicant Data</h1>
 
       <Card>

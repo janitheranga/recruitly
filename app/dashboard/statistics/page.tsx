@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { LoadingModal } from "@/components/dashboard/LoadingModal";
 import { generateUniqueColors } from "@/lib/colors";
 import { supabase } from "@/lib/supabase";
 import { Database } from "@/lib/database.types";
@@ -266,7 +266,7 @@ export default function StatisticsPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <LoadingSpinner isOpen={isLoading} message="Loading statistics..." />
+      <LoadingModal open={isLoading} message="Loading statistics..." />
       <h1 className="text-2xl sm:text-3xl font-bold">
         Job Applicant Statistics
       </h1>

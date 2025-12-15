@@ -28,6 +28,7 @@ import { mockJobs } from "@/lib/data";
 import { Job } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 import { JobInsert, JobUpdate } from "@/lib/database.types";
+import { LoadingModal } from "@/components/dashboard/LoadingModal";
 
 interface SupabaseJob {
   job_id: number;
@@ -229,12 +230,8 @@ export default function JobsPage() {
   if (isLoading) {
     return (
       <div className="space-y-4 sm:space-y-6">
+        <LoadingModal open={isLoading} message="Loading jobs..." />
         <h1 className="text-2xl sm:text-3xl font-bold">Job Data</h1>
-        <Card>
-          <CardContent className="p-6 text-center">
-            <p className="text-muted-foreground">Loading jobs...</p>
-          </CardContent>
-        </Card>
       </div>
     );
   }

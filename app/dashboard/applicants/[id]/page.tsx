@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { LoadingModal } from "@/components/dashboard/LoadingModal";
 import { ArrowLeft, Check, X } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -99,10 +99,7 @@ export default function ApplicantDetailPage() {
   if (isLoading) {
     return (
       <div className="space-y-4 sm:space-y-6">
-        <LoadingSpinner
-          isOpen={isLoading}
-          message="Loading applicant details..."
-        />
+        <LoadingModal open={isLoading} message="Loading applicant details..." />
       </div>
     );
   }
@@ -173,10 +170,7 @@ export default function ApplicantDetailPage() {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <LoadingSpinner
-        isOpen={isLoading}
-        message="Loading applicant details..."
-      />
+      <LoadingModal open={isLoading} message="Loading applicant details..." />
       <div className="flex items-center gap-2 sm:gap-4">
         <Link href="/dashboard/applicants">
           <Button variant="ghost" size="icon" className="cursor-pointer">
@@ -221,7 +215,9 @@ export default function ApplicantDetailPage() {
               </label>
               <div className="mt-1">
                 <Badge
-                  className={`${getMatchBadgeVariant(applicant.applicant_job_match)} text-sm px-3 py-1`}
+                  className={`${getMatchBadgeVariant(
+                    applicant.applicant_job_match
+                  )} text-sm px-3 py-1`}
                 >
                   {applicant.applicant_job_match}
                 </Badge>
