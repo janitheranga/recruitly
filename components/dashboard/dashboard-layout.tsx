@@ -111,7 +111,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="pl-10 pr-10 bg-dust-grey-50 border-[var(--color-honeydew-200)] focus:ring-[var(--color-honeydew-300)] focus:bg-white"
+                className="pl-10 pr-10 bg-dust-grey-50 border-(--color-honeydew-200) focus:ring-(--color-honeydew-300) focus:bg-white"
               />
               {searchQuery && (
                 <button
@@ -132,7 +132,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                       onClick={() => handleSelectSuggestion(page)}
                       className="w-full text-left px-4 py-3 hover:bg-honeydew-50 transition-colors flex items-center gap-3 text-sm border-b border-dust-grey-100 last:border-b-0"
                     >
-                      <page.icon className="h-5 w-5 text-dust-grey-600 flex-shrink-0" />
+                      <page.icon className="h-5 w-5 text-dust-grey-600 shrink-0" />
                       <span className="text-dust-grey-900 font-medium">
                         {page.name}
                       </span>
